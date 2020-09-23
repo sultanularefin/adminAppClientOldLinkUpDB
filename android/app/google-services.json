@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "51391858750",
+    "firebase_url": "https://linkupadminolddbandclientapp.firebaseio.com",
+    "project_id": "linkupadminolddbandclientapp",
+    "storage_bucket": "linkupadminolddbandclientapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51391858750:android:15511c6a97c353bf05296f",
+        "android_client_info": {
+          "package_name": "com.linkup.linkupadminolddb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51391858750-k4cf5qp84l9l4d50v81d3qgmscqrciec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHHmrdwZ-RiruJad6Jgqx5sNZruj0dooc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51391858750-k4cf5qp84l9l4d50v81d3qgmscqrciec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
