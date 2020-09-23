@@ -7,17 +7,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // EXTERNAL PKGS ABOVE.
 
-import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
-//import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
+//import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
 
 
-//import 'package:foodgallery/src
+//import 'package:linkupadminolddb/src
 // above are local files i.e. pages .
-import 'package:foodgallery/src/identity/loginPage.dart';
-//import 'package:foodgallery/src/identity/signup.dart';
-//import 'package:foodgallery/src/screens/drawerScreen/DrawerScreenFoodGallery.dart';
-//import 'package:foodgallery/src/screens/homeScreen/food_gallery.dart';
+import 'package:linkupadminolddb/src/identity/loginPage.dart';
+//import 'package:linkupadminolddb/src/identity/signup.dart';
+//import 'package:linkupadminolddb/src/screens/drawerScreen/DrawerScreenFoodGallery.dart';
+//import 'package:linkupadminolddb/src/screens/homeScreen/food_gallery.dart';
 // above are local file.
 
 
@@ -25,22 +25,22 @@ import 'package:foodgallery/src/identity/loginPage.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
 
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 //TODO STATE ful widget not required
 //class MyApp extends StatelessWidget {
 
 /*  Block related Files BELOW */
 
-import 'package:foodgallery/src/BLoC/bloc_provider.dart';
-import 'package:foodgallery/src/BLoC/identity_bloc.dart';
-import 'package:foodgallery/src/screens/foodGallery/foodgallery2.dart';
+import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
+import 'package:linkupadminolddb/src/BLoC/identity_bloc.dart';
+import 'package:linkupadminolddb/src/screens/foodGallery/foodgallery2.dart';
 
-//import 'package:foodgallery/src/BLoC/app_bloc.dart';
-//import 'package:foodgallery/src/BLoC/bloc_provider2.dart';
-import 'package:foodgallery/src/BLoC/foodGallery_bloc.dart';
-//import 'package:foodgallery/src/BLoC/foodItemDetails_bloc.dart';
-//import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+//import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
+//import 'package:linkupadminolddb/src/BLoC/bloc_provider2.dart';
+import 'package:linkupadminolddb/src/BLoC/foodGallery_bloc.dart';
+//import 'package:linkupadminolddb/src/BLoC/foodItemDetails_bloc.dart';
+//import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 

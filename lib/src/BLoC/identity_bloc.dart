@@ -7,17 +7,17 @@ import 'dart:async';
 
 
 //### LOCAL DATA RELATED RESOURCES
-import 'package:foodgallery/src/DataLayer/api/firebase_client.dart';
-import 'package:foodgallery/src/BLoC/bloc.dart';
+import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
+import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
 
 
-//import 'package:foodgallery/src/DataLayer/Order.dart';
-//import 'package:foodgallery/src/DataLayer/OrderTypeSingleSelect.dart';
-//import 'package:foodgallery/src/DataLayer/CustomerInformation.dart';
+//import 'package:linkupadminolddb/src/DataLayer/Order.dart';
+//import 'package:linkupadminolddb/src/DataLayer/OrderTypeSingleSelect.dart';
+//import 'package:linkupadminolddb/src/DataLayer/CustomerInformation.dart';
 
 
 //MODELS

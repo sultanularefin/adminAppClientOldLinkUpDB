@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:foodgallery/src/welcomePage.dart';
+import 'package:linkupadminolddb/src/welcomePage.dart';
 
 import './Widget/bezierContainer.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-import 'package:foodgallery/src/BLoC/bloc_provider.dart';
+import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
 
-import 'package:foodgallery/src/BLoC/identity_bloc.dart';
+import 'package:linkupadminolddb/src/BLoC/identity_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {

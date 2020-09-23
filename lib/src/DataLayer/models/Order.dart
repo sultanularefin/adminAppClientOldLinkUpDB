@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //
 
-//import 'package:foodgallery/src/models/IngredientItem.dart';
+//import 'package:linkupadminolddb/src/models/IngredientItem.dart';
 
 //CODE FORMAT ANDROID STUDIO CTRL +
 //ALT + I
@@ -14,9 +14,9 @@
 import 'dart:math';
 
 import 'package:esc_pos_bluetooth/esc_pos_bluetooth.dart';
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
-import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/SelectedFood.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CustomerInformation.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SelectedFood.dart';
 //import 'packages:foodgallery/src/DataLayer/models/NewIngredient.dart';
 //final String storageBucketURLPredicate_Same =
 //    'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/';

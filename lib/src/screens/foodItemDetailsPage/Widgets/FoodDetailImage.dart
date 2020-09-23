@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 //LOCAL RESOURCES
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 class FoodDetailImage extends StatelessWidget {
   final String imageURLBig;

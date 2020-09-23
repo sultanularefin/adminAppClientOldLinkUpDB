@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //
 
-//import 'package:foodgallery/src/models/IngredientItem.dart';
+//import 'package:linkupadminolddb/src/models/IngredientItem.dart';
 
 //CODE FORMAT ANDROID STUDIO CTRL +
 //ALT + I
@@ -16,7 +16,7 @@ import 'dart:core';
 //    'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/';
 
 
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 //import 'package:firebase_auth/firebase_auth.dart';
 

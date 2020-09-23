@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/OrderedItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CustomerInformation.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OrderedItem.dart';
 
 class OneOrderFirebase {
 

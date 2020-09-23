@@ -1,27 +1,27 @@
 
 // dependency files
 import 'package:flutter/material.dart';
-//import 'package:foodgallery/src/screens/adminFirebase/adminIngredientsForFood.dart';
-//import 'package:foodgallery/src/screens/adminFirebase/admin_firebase_ingredient.dart';
-//import 'package:foodgallery/src/screens/animatedSample/AnimatedListSample.dart';
-//import 'package:foodgallery/src/screens/homeScreen/food_gallery.dart';
-//import 'package:foodgallery/src/screens/productScan/product_scan_checkBox.dart';
-//import 'package:foodgallery/src/screens/storageTest.dart';
-//import 'package:foodgallery/src/screens/testPages/customClipper_test.dart';
-//import 'package:foodgallery/src/screens/wastedDetails/wasted_details.dart';
+//import 'package:linkupadminolddb/src/screens/adminFirebase/adminIngredientsForFood.dart';
+//import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_ingredient.dart';
+//import 'package:linkupadminolddb/src/screens/animatedSample/AnimatedListSample.dart';
+//import 'package:linkupadminolddb/src/screens/homeScreen/food_gallery.dart';
+//import 'package:linkupadminolddb/src/screens/productScan/product_scan_checkBox.dart';
+//import 'package:linkupadminolddb/src/screens/storageTest.dart';
+//import 'package:linkupadminolddb/src/screens/testPages/customClipper_test.dart';
+//import 'package:linkupadminolddb/src/screens/wastedDetails/wasted_details.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 // Screen files.
-import 'package:foodgallery/src/welcomePage.dart';
-//import 'package:foodgallery/src/screens/adminFirebase/admin_firebase_food.dart';
-//import 'package:foodgallery/src/screens/profileScreen/profileScreen.dart';
-//import 'package:foodgallery/src/welcomePage.dart';
-//import 'package:foodgallery/src/screens/productScan/product_scan_radio.dart';
-//import 'package:foodgallery/src/screens/spinkit_test.dart';
-//import 'package:foodgallery/src/screens/testPages/multipleSliver.dart';
-//import 'package:foodgallery/src/screens/row_column_test.dart';
+import 'package:linkupadminolddb/src/welcomePage.dart';
+//import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_food.dart';
+//import 'package:linkupadminolddb/src/screens/profileScreen/profileScreen.dart';
+//import 'package:linkupadminolddb/src/welcomePage.dart';
+//import 'package:linkupadminolddb/src/screens/productScan/product_scan_radio.dart';
+//import 'package:linkupadminolddb/src/screens/spinkit_test.dart';
+//import 'package:linkupadminolddb/src/screens/testPages/multipleSliver.dart';
+//import 'package:linkupadminolddb/src/screens/row_column_test.dart';
 
 
 class DrawerScreenFoodGallery extends StatelessWidget {

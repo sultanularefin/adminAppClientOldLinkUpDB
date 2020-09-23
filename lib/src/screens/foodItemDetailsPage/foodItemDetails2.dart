@@ -5,44 +5,44 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
-//import 'package:foodgallery/src/BLoC/app_bloc.dart';
-//import 'package:foodgallery/src/BLoC/bloc_provider2.dart';
-//import 'package:foodgallery/src/BLoC/foodGallery_bloc.dart';
-//import 'package:foodgallery/src/BLoC/shoppingCart_bloc.dart';
-import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocIDViewModel.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+//import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
+//import 'package:linkupadminolddb/src/BLoC/bloc_provider2.dart';
+//import 'package:linkupadminolddb/src/BLoC/foodGallery_bloc.dart';
+//import 'package:linkupadminolddb/src/BLoC/shoppingCart_bloc.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocIDViewModel.dart';
 //import 'file:///C:/Users/Taxi/Progrms/linkup/lib/src/DataLayer/models/FoodItemWithDocIDViewModel.dart';
-//import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
-//import 'package:foodgallery/src/screens/foodGallery/UNPaidPage.dart';
-//import 'package:foodgallery/src/screens/shoppingCart/ShoppingCart.dart';
+//import 'package:linkupadminolddb/src/DataLayer/models/CustomerInformation.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
+//import 'package:linkupadminolddb/src/screens/foodGallery/UNPaidPage.dart';
+//import 'package:linkupadminolddb/src/screens/shoppingCart/ShoppingCart.dart';
 import 'package:logger/logger.dart';
 //import 'package:neumorphic/neumorphic.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:foodgallery/src/DataLayer/models/SauceItem.dart';
-import 'package:foodgallery/src/screens/foodItemDetailsPage/Widgets/FoodDetailImageSmaller.dart';
-import 'package:foodgallery/src/screens/foodItemDetailsPage/Widgets/MyBullet.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+import 'package:linkupadminolddb/src/screens/foodItemDetailsPage/Widgets/FoodDetailImageSmaller.dart';
+import 'package:linkupadminolddb/src/screens/foodItemDetailsPage/Widgets/MyBullet.dart';
 
 //sizeConstantsList
 
 // SCREEN FILES AND MODLE FILES AND UTILITY FILES.
-//import 'package:foodgallery/src/screens/ingredients_more/more_ingredients.dart';
-//import 'package:foodgallery/src/DataLayer/IngredientItem.dart';
-//import 'package:foodgallery/src/DataLayer/SizeConstants.dart';
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
-import 'package:foodgallery/src/screens/foodItemDetailsPage/Widgets/FoodDetailImage.dart';
-//import 'package:foodgallery/src/DataLayer/models/FoodItemWithDocID.dart';
-import 'package:foodgallery/src/DataLayer/models/Order.dart';
-import 'package:foodgallery/src/DataLayer/models/FoodPropertyMultiSelect.dart';
-import 'package:foodgallery/src/DataLayer/models/SelectedFood.dart';
+//import 'package:linkupadminolddb/src/screens/ingredients_more/more_ingredients.dart';
+//import 'package:linkupadminolddb/src/DataLayer/IngredientItem.dart';
+//import 'package:linkupadminolddb/src/DataLayer/SizeConstants.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/screens/foodItemDetailsPage/Widgets/FoodDetailImage.dart';
+//import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/Order.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/FoodPropertyMultiSelect.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SelectedFood.dart';
 //import './../../DataLayer/itemData.dart';
 
 //import './../../shared/category_Constants.dart' as Constants;
 
 // Blocks
 
-import 'package:foodgallery/src/BLoC/bloc_provider.dart';
-import 'package:foodgallery/src/BLoC/foodItemDetails_bloc.dart';
+import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
+import 'package:linkupadminolddb/src/BLoC/foodItemDetails_bloc.dart';
 
 final Firestore firestore = Firestore();
 

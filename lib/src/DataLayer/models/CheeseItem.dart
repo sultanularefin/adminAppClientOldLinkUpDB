@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //
 
-//import 'package:foodgallery/src/models/IngredientItem.dart';
+//import 'package:linkupadminolddb/src/models/IngredientItem.dart';
 
 //CODE FORMAT ANDROID STUDIO CTRL +
 //ALT + I
@@ -17,7 +17,7 @@ import 'dart:core';
 
 
 //    :imageURL= storageBucketURLPredicate +  Uri.decodeComponent(data['image']),
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 class CheeseItem implements Comparable {
 

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
 //LOCAL RESOURCES
-import 'package:foodgallery/src/utilities/screen_size_reducers.dart';
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 import 'package:logger/logger.dart';
 
 class FoodImageInShoppingCart extends StatelessWidget {

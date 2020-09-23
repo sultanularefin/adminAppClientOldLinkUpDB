@@ -1,7 +1,7 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //
 
-//import 'package:foodgallery/src/models/IngredientItem.dart';
+//import 'package:linkupadminolddb/src/models/IngredientItem.dart';
 
 //CODE FORMAT ANDROID STUDIO CTRL +
 //ALT + I
@@ -13,9 +13,9 @@
 //import 'dart:core';
 import 'dart:math';
 
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
-import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
-import 'package:foodgallery/src/DataLayer/models/SauceItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
 
 class OrderedItem {
   String              name;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foodgallery/src/identity/Widget/bezierContainer.dart';
-import 'package:foodgallery/src/identity/loginPage.dart';
+import 'package:linkupadminolddb/src/identity/Widget/bezierContainer.dart';
+import 'package:linkupadminolddb/src/identity/loginPage.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 

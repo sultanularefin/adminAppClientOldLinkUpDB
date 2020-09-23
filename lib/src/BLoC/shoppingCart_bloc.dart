@@ -5,15 +5,15 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart'; // to be removed later.
 import 'package:flutter/material.dart';
-import 'package:foodgallery/src/DataLayer/models/CheeseItem.dart';
-import 'package:foodgallery/src/DataLayer/models/CustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/NewCategoryItem.dart';
-import 'package:foodgallery/src/DataLayer/models/NewIngredient.dart';
-import 'package:foodgallery/src/DataLayer/models/OneInputCustomerInformation.dart';
-import 'package:foodgallery/src/DataLayer/models/OneOrderFirebase.dart';
-import 'package:foodgallery/src/DataLayer/models/OrderedItem.dart';
-import 'package:foodgallery/src/DataLayer/models/Restaurant.dart';
-import 'package:foodgallery/src/DataLayer/models/SauceItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/CustomerInformation.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OneInputCustomerInformation.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OneOrderFirebase.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OrderedItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/Restaurant.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
 import 'package:intl/intl.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
@@ -28,7 +28,7 @@ import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart' as primary
 import 'package:esc_pos_bluetooth/esc_pos_bluetooth.dart';
 
 
-import 'package:foodgallery/src/DataLayer/models/SelectedFood.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/SelectedFood.dart';
 import 'package:logger/logger.dart';
 //import 'package:wifi/wifi.dart';
 //import 'package:ping_discover_network/ping_discover_network.dart';
@@ -41,11 +41,11 @@ import 'package:logger/logger.dart';
 
 
 //### LOCAL DATA RELATED RESOURCES
-import 'package:foodgallery/src/DataLayer/api/firebase_client.dart';
-import 'package:foodgallery/src/BLoC/bloc.dart';
-import 'package:foodgallery/src/DataLayer/models/Order.dart';
-import 'package:foodgallery/src/DataLayer/models/OrderTypeSingleSelect.dart';
-import 'package:foodgallery/src/DataLayer/models/PaymentTypeSingleSelect.dart';
+import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
+import 'package:linkupadminolddb/src/BLoC/bloc.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/Order.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OrderTypeSingleSelect.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/PaymentTypeSingleSelect.dart';
 
 
 
