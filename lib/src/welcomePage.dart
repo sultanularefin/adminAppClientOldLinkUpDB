@@ -33,12 +33,12 @@ import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 /*  Block related Files BELOW */
 
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
-import 'package:linkupadminolddb/src/BLoC/identity_bloc.dart';
-import 'package:linkupadminolddb/src/screens/foodGallery/foodgallery2.dart';
+import 'file:///C:/Users/Taxi/Programs/linkupadminolddb/lib/src/BLoC/clientPart/identity_bloc.dart';
+import 'package:linkupadminolddb/src/screens/foodGallery/foodgalleryAdminHome2.dart';
 
 //import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
 //import 'package:linkupadminolddb/src/BLoC/bloc_provider2.dart';
-import 'package:linkupadminolddb/src/BLoC/foodGallery_bloc.dart';
+import 'package:linkupadminolddb/src/BLoC/clientPart/FoodGalleryAdminHomeBloc2.dart';
 //import 'package:linkupadminolddb/src/BLoC/foodItemDetails_bloc.dart';
 //import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -441,9 +441,9 @@ class _WelcomePageState extends State<WelcomePage> {
                     */
 
 
-                    BlocProvider<FoodGalleryBloc>(
-                        bloc: FoodGalleryBloc(),
-                        child: FoodGallery2()
+                    BlocProvider<FoodGalleryAdminHomeBloc2>(
+                        bloc: FoodGalleryAdminHomeBloc2(),
+                        child: FoodGalleryAdminHome2()
 
                     ) : LoginPage();
                 }

@@ -80,6 +80,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   wakelock: ^0.1.4+2
   flutter_cache_manager: ^1.4.2
+  image_picker: ^0.6.7+10
 
 
   #  flutter_blue: ^0.7.2

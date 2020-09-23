@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
 
-import 'package:linkupadminolddb/src/BLoC/identity_bloc.dart';
+import 'file:///C:/Users/Taxi/Programs/linkupadminolddb/lib/src/BLoC/clientPart/identity_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -564,7 +564,7 @@ class _LoginPageState extends State<LoginPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'F',
+          text: 'admin app',
           style:
           TextStyle( //Theme.of(context).textTheme.display1,
             fontSize: 30,
@@ -576,11 +576,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           children: [
             TextSpan(
-              text: 'ood',
+              text: ' old ',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'Gallery',
+              text: 'database',
               style: TextStyle(
                   color:
                   //Color(0xffe46b10),

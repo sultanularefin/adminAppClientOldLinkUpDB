@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1077933202945",
+    "firebase_url": "https://kebabbank-37224.firebaseio.com",
+    "project_id": "kebabbank-37224",
+    "storage_bucket": "kebabbank-37224.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077933202945:android:f8dce1518a07f78c1cea00",
+        "android_client_info": {
+          "package_name": "com.arefin.kebabbank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077933202945-pgm8s58ma91ncrueu6ng5i3r172ldhq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB5XgH5dfojhJbUkGyWG7DHMUgf0yox4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077933202945-pgm8s58ma91ncrueu6ng5i3r172ldhq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
