@@ -813,8 +813,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'historia',
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey,
                         ),
                       ),
                     )
@@ -889,8 +889,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'historia',
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey
                         ),
                       ),
                     )
@@ -956,8 +956,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'historia',
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey
                         ),
                       ),
                     )
@@ -1022,8 +1022,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'historia',
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey
                         ),
                       ),
                     )
