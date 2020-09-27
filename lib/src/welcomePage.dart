@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
 //import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
-
+import 'package:linkupadminolddb/src/BLoC/clientPart/identity_bloc.dart';
 
 
 //import 'package:linkupadminolddb/src
@@ -33,8 +33,8 @@ import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 /*  Block related Files BELOW */
 
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
-import 'file:///C:/Users/Taxi/Programs/linkupadminolddb/lib/src/BLoC/clientPart/identity_bloc.dart';
-import 'package:linkupadminolddb/src/screens/foodGallery/foodgalleryAdminHome2.dart';
+import 'package:linkupadminolddb/src/BLoC/clientPart/identity_bloc.dart';
+import 'package:linkupadminolddb/src/screens/HomeScreenNewDB2/foodgalleryAdminHome2.dart';
 
 //import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
 //import 'package:linkupadminolddb/src/BLoC/bloc_provider2.dart';

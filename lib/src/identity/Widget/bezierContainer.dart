@@ -16,10 +16,10 @@ class BezierContainer extends StatelessWidget {
         child: ClipPath(
         clipper: ClipPainter(),
         child: Container(
-          height: MediaQuery.of(context).size.height *.5,
+          height: MediaQuery.of(context).size.height *.3,
 //          width: MediaQuery.of(context).size.width,
 
-          width: MediaQuery.of(context).size.width * 1.3,
+          width: MediaQuery.of(context).size.width * 1.4,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -30,9 +30,10 @@ class BezierContainer extends StatelessWidget {
 //                  Color(0xfffbb448),
 //
 //                  Color(0xffe46b10)
-
-                  Colors.pinkAccent,
-                  Colors.deepOrange,
+                  Colors.lightGreenAccent,
+                  Colors.lightBlueAccent,
+                  // Colors.pinkAccent,
+                  // Colors.deepOrange,
 
 
                 ]

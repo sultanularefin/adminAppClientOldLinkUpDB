@@ -91,6 +91,21 @@ class NewIngredient {
 //        subgroup= data['subgroup'];
 
 
+  // NewIngredient.ingredientImageDataAdd(NewIngredient x,String docID)
+  //     :imageURL= data['image'],
+  //
+  //       ingredientName= data['name'],
+  //       price = data['price'].toDouble(),
+  //       documentId = docID,
+  //       isDefault= false,
+  //       isDeleted =false,
+  //       ingredientAmountByUser = 1,
+  //       extraIngredientOf= data['extraIngredientOf'],
+  //       sequenceNo = data['sequenceNo'] ,
+  //       subgroup= data['subGroup'];
+
+
+
   NewIngredient.ingredientConvertExtra(Map<String, dynamic> data,String docID)
      :imageURL= data['image'],
 //       :imageURL= storageBucketURLPredicate + Uri.encodeComponent(data['image']),

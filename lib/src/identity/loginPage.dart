@@ -1,3 +1,4 @@
+import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
 
-import 'file:///C:/Users/Taxi/Programs/linkupadminolddb/lib/src/BLoC/clientPart/identity_bloc.dart';
+import 'package:linkupadminolddb/src/BLoC/clientPart/identity_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -55,68 +56,106 @@ class _LoginPageState extends State<LoginPage> {
         key: _scaffoldKey,
 //    return Scaffold(
         body: SingleChildScrollView(
-            child: fromWhicPage1==true? Container(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SizedBox(),
+          child:Container(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+
+
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      ),
+
+                      Container(
+                        height: displayHeight(context)/7,
+                        padding: EdgeInsets.fromLTRB(8,8,8,4),
+
+                        decoration: BoxDecoration(
+                          // color: Color(0xffFFE18E),
+                          color:Colors.blueGrey,
+
+                          border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.2,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(14)),
                         ),
 
-                        Container(
-                            child: titleWidget()
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        _emailPasswordWidget(),
 
-                        SizedBox(
-                          height: 20,
+                        child: SingleChildScrollView(
+                          child: RichText(
+                            textAlign: TextAlign.justify,
+                            text: TextSpan(
+                              text: 'this app was designed for 10-inch tablet (e.g. Samsung Galaxy '
+                                  'Tab S6 or emulators where screen size is 10-inch ) ',
+                              style:
+                              TextStyle( //Theme.of(context).textTheme.display1,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                                color:
+                                //Color(0xffe46b10),
+                                Colors.yellowAccent,
+//            Colors.deepOrange,
+                              ),
+                            ),
+                          ),
                         ),
-                        InkWell(
-                          onTap: (){
-                            print("login button pressed");
+                      ),
+
+
+                      Container(
+                          child: titleWidget()
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      _emailPasswordWidget(),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: (){
+                          print("login button pressed");
 //                            showDialog(
 //                                context: context,
 //                                builder: (BuildContext context) {
 //                                  return Center(child: CircularProgressIndicator(),);
 //                                });
 
-                            _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 30), content:
-                                new Row(
-                                  children: <Widget>[
-                                    new CircularProgressIndicator(),
-                                    new Text("  Signing-In...",style:TextStyle(
-                                      color: Colors.white38,
-                                    ))
-                                  ],
-                                ),
-                                )
-                            );
-                            final identityBlocLoginPage =
-                            BlocProvider.of<IdentityBloc>(context);
-
-
-                            Future<UserCredential> userCheck=
-                            identityBlocLoginPage.handleSignInFromLoginPage(emailState.trim(),passwordState.trim());
+                          _scaffoldKey.currentState.showSnackBar(
+                              new SnackBar(duration: new Duration(seconds: 30), content:
+                              new Row(
+                                children: <Widget>[
+                                  new CircularProgressIndicator(),
+                                  new Text("  Signing-In...",style:TextStyle(
+                                    color: Colors.white38,
+                                  ))
+                                ],
+                              ),
+                              )
+                          );
+                          final identityBlocLoginPage =
+                          BlocProvider.of<IdentityBloc>(context);
+                          Future<UserCredential> userCheck=
+                          identityBlocLoginPage.handleSignInFromLoginPage(emailState.trim(),passwordState.trim());
 
 //                            _handleSignIn();
 
-                            userCheck.whenComplete(() {
+                          userCheck.whenComplete(() {
 
-                              print("called when future completes");
+                            print("called when future completes");
 
-                            }
-                            ).then((onValue){
+                          }
+                          ).then((onValue){
 
 //                              FoodItemWithDocID emptyFoodItemWithDocID =new FoodItemWithDocID();
 //                              List<NewIngredient> emptyIngs = [];
@@ -125,18 +164,18 @@ class _LoginPageState extends State<LoginPage> {
 
 
 //                              pushNamedAndRemoveUntil
-                              Navigator.of(context).pushAndRemoveUntil(
-                                //        MaterialPageRoute(builder: (context) => HomeScreen())
-                                //
-                                //        MaterialPageRoute(builder: (context) => MyHomePage())
-                                  MaterialPageRoute(builder: (BuildContext context) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                              //        MaterialPageRoute(builder: (context) => HomeScreen())
+                              //
+                              //        MaterialPageRoute(builder: (context) => MyHomePage())
+                                MaterialPageRoute(builder: (BuildContext context) {
 
-                                    return BlocProvider<IdentityBloc>(
-                                        bloc: IdentityBloc(),
-                                        //AppBloc(emptyFoodItemWithDocID,loginPageIngredients,fromWhichPage:0),
-                                        child: WelcomePage()
-                                    );
-                                    /*
+                                  return BlocProvider<IdentityBloc>(
+                                      bloc: IdentityBloc(),
+                                      //AppBloc(emptyFoodItemWithDocID,loginPageIngredients,fromWhichPage:0),
+                                      child: WelcomePage()
+                                  );
+                                  /*
                                   return BlocProvider<FoodGalleryBloc>(
                                       bloc: FoodGalleryBloc(),
                                       child: FoodGallery2()
@@ -153,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-                                  }),(Route<dynamic> route) => false);
+                                }),(Route<dynamic> route) => false);
 
 
 
@@ -164,222 +203,50 @@ class _LoginPageState extends State<LoginPage> {
 
 
 //                            _handleSignIn();
-                            }).catchError((onError){
+                          }).catchError((onError){
 //                              logger.e('at onError');
-                              _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 6), content:Container(
-                                  child:
-                                  new Row(
-                                    children: <Widget>[
-                                      new CircularProgressIndicator(),
-                                      new Text("Error: ${onError.message.substring(0,40)}",style:
-                                      TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500,
-                                          color:Colors.white)),
-                                    ],
-                                  ),
-                                )),);
-
-                            });
-                          },
-
-                          child:  _submitButton(),
-                        ),
-                        /*
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password ?',
-                              style:
-                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
-
-                         */
-
-                        /*
-                        _divider(),
-                        _facebookButton(),
-                        */
-                        test(),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        ),
-                        /* */
-                      ],
-                    ),
-                  ),
-                  /*
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _createAccountLabel(),
-                  ),
-                  */
-                  Positioned(top: 40, left: 0, child: _backButton()),
-                  Positioned(
-                      top: -MediaQuery.of(context).size.height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer())
-                ],
-              ),
-            ) :
-
-            Container(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SizedBox(),
-                        ),
-                        Container(
-                            child: titleWidget()
-                        ),
-//                        _title(),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        _emailPasswordWidget(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                          onTap: (){
-                            print("login button pressed");
-//                            showDialog(
-//                                context: context,
-//                                builder: (BuildContext context) {
-//                                  return Center(child: CircularProgressIndicator(),);
-//                                });
-
                             _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 30), content:
+                              new SnackBar(duration: new Duration(seconds: 6), content:Container(
+                                child:
                                 new Row(
                                   children: <Widget>[
                                     new CircularProgressIndicator(),
-                                    new Text("  Signing-In...",style:TextStyle(
-                                      color: Colors.white38,
-                                    ))
+                                    new Text("Error: ${onError.message.substring(0,40)}",style:
+                                    TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500,
+                                        color:Colors.white)),
                                   ],
                                 ),
-                                )
-                            );
-                            final identityBlocLoginPage =
-                            BlocProvider.of<IdentityBloc>(context);
+                              )),);
 
-//                            UserCredential > AuthResult  as a result of versoin change..
-                            Future<UserCredential> userCheck=
-                            identityBlocLoginPage.handleSignInFromLoginPage(emailState.trim(),passwordState.trim());
+                          });
+                        },
 
-//                            _handleSignIn();
+                        child:  _submitButton(),
+                      ),
 
-                            print('userCheck: $userCheck');
-
-                            userCheck.whenComplete(() {
-
-                              print("called when future completes");
-
-                            }
-                            ).then((onValue){
-
-//                              FoodItemWithDocID emptyFoodItemWithDocID =new FoodItemWithDocID();
-//                              List<NewIngredient> emptyIngs = [];
-
-//                              Navigator.of(context).pop();
-
-
-                              Navigator.of(context).pushAndRemoveUntil(
-                                //        MaterialPageRoute(builder: (context) => HomeScreen())
-                                //
-                                //        MaterialPageRoute(builder: (context) => MyHomePage())
-                                  MaterialPageRoute(builder: (BuildContext context) {
-
-                                    return BlocProvider<IdentityBloc>(
-                                        bloc: IdentityBloc(),
-                                        //AppBloc(emptyFoodItemWithDocID,loginPageIngredients,fromWhichPage:0),
-                                        child: WelcomePage()
-                                    );
-                                    /*
-                                  return BlocProvider<FoodGalleryBloc>(
-                                      bloc: FoodGalleryBloc(),
-                                      child: FoodGallery2()
-
-                                  );
-
-                                  */
-
-
-
-//                                      drawerScreen()
-
-
-                                  }),(Route<dynamic> route) => false);
-
-
-
-//                            _handleSignIn();
-                            }).catchError((onError){
-                              print('LOGIN ERROR **** at onError $onError ***');
-                              _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(duration: new Duration(seconds: 6), content:Container(
-                                  child:
-                                  new Row(
-                                    children: <Widget>[
-                                      new CircularProgressIndicator(),
-                                      new Text("Error: ${onError.message.substring(0,40)}",style:
-                                      TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500,
-                                          color:Colors.white)),
-                                    ],
-                                  ),
-                                )),);
-
-                            });
-                          },
-
-                          child:  _submitButton(),
-                        ),
-                        /*
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password ?',
-                              style:
-                              TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                        ),
-
-                         */
-
-                        /*
-                        _divider(),
-                        _facebookButton(),
-                        */
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        ),
-                        /* */
-                      ],
-                    ),
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(),
+                      ),
+                      /* */
+                    ],
                   ),
-                  /*
+                ),
+                /*
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: _createAccountLabel(),
                   ),
                   */
-                  Positioned(top: 40, left: 0, child: _backButton()),
-                  Positioned(
-                      top: -MediaQuery.of(context).size.height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer())
-                ],
-              ),
-            )
+                Positioned(top: 40, left: 0, child: _backButton()),
+                Positioned(
+                    top: -MediaQuery.of(context).size.height * .15,
+                    right: -MediaQuery.of(context).size.width * .4,
+                    child: BezierContainer())
+              ],
+            ),
+          ),
+
         )
     );
   }
@@ -525,8 +392,8 @@ class _LoginPageState extends State<LoginPage> {
               end: Alignment.centerRight,
               colors: [
 
-                Colors.pinkAccent,
-                Colors.deepOrange,
+                Colors.lightGreenAccent,
+                Colors.lightBlueAccent,
 
 //                  Color(0xfffbb448),
 //                  Color(0xfff7892b)
@@ -560,6 +427,26 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
+  Widget titleWidget1() {
+    return RichText(
+      textAlign: TextAlign.justify,
+      text: TextSpan(
+        text: 'the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
+            'Tab S6 or emulators where screen size is 10-inch ) ',
+        style:
+        TextStyle( //Theme.of(context).textTheme.display1,
+          fontSize: 30,
+          fontWeight: FontWeight.w700,
+          color:
+          //Color(0xffe46b10),
+          Colors.lightGreenAccent,
+//            Colors.deepOrange,
+        ),
+      ),
+    );
+  }
+
+
   Widget titleWidget() {
     return RichText(
       textAlign: TextAlign.center,
@@ -576,8 +463,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
           children: [
             TextSpan(
-              text: ' old ',
-              style: TextStyle(color: Colors.black, fontSize: 30),
+              text: ' new ',
+              style: TextStyle(color: Colors.indigoAccent, fontSize: 30),
             ),
             TextSpan(
               text: 'database',
@@ -602,10 +489,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget test() {
-    return Text('you are logged out',
-      style: TextStyle(color: Colors.red, fontSize: 40),);
-  }
+
 
 
 

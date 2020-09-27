@@ -7,7 +7,7 @@ import 'dart:async';
 
 
 //### LOCAL DATA RELATED RESOURCES
-import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
+
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -42,8 +42,6 @@ class IdentityBloc implements Bloc {
 
 
 
-
-  final _client = FirebaseClient();
 
 
 //  List<Order> _curretnOrder = [];

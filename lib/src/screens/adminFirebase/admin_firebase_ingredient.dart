@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:linkupadminolddb/src/screens/foodGallery/foodgalleryAdminHome2.dart';
+import 'package:linkupadminolddb/src/screens/HomeScreenNewDB2/foodgalleryAdminHome2.dart';
 import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 

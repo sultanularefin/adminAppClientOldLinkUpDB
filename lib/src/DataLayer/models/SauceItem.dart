@@ -193,8 +193,9 @@ class SauceItem implements Comparable {
 
   SauceItem.fromMap(Map<String, dynamic> data,String docID)
 //      :imageURL= storageBucketURLPredicate +  Uri.decodeComponent(data['image']),
+//       :imageURL= storageBucketURLPredicate + Uri.encodeComponent(data['image']),
 
-      :imageURL= storageBucketURLPredicate + Uri.encodeComponent(data['image']),
+      :imageURL= data['image'],
 
         sauceItemName = data['name'],
         price = data['price'].toDouble(),

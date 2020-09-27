@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'file:///C:/Users/Taxi/Programs/linkupadminolddb/lib/src/BLoC/clientPart/identity_bloc.dart';
+import 'package:linkupadminolddb/src/BLoC/clientPart/identity_bloc.dart';
 
 import 'package:linkupadminolddb/src/welcomePage.dart';
 
@@ -10,12 +10,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
 
 
+// ic launcher image created from this link, copied from pixaby:
+
+// Image by <a href="https://pixabay.com/users/Einladung_zum_Essen-3625323/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1804457">Bernadette Wurzinger</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1804457">Pixabay</a>
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
-
 
 
 class MyApp extends StatelessWidget {

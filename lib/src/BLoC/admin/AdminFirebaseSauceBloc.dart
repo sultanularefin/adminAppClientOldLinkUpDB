@@ -15,13 +15,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 //MODELS
 
-import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
+
 
 class AdminFirebaseSauceBloc implements Bloc {
   var logger = Logger(
     printer: PrettyPrinter(),
   );
-
 
 
   File _image2;

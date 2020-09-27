@@ -15,7 +15,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 //MODELS
 import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
-import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
+
 
 class AdminFirebaseIngredientBloc implements Bloc {
   var logger = Logger(

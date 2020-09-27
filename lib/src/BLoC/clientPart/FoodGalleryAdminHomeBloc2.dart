@@ -20,7 +20,6 @@ import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
 import 'package:logger/logger.dart';
 
 
-import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
 
 
 import 'dart:async';

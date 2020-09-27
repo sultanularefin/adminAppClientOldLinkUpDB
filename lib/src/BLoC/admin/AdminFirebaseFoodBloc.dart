@@ -309,13 +309,20 @@ class AdminFirebaseFoodBloc implements Bloc {
       _thisFoodItem.categoryName = _categoryTypesForDropDown[0].categoryName;
     }
 
-    if ((_thisFoodItem.ingredients == null) ||
-        (_thisFoodItem.ingredients.length == 0)) {
+    if ((_thisFoodItem.shorCategoryName !='juomat') &&(
+
+    (_thisFoodItem.ingredients == null) ||
+        (_thisFoodItem.ingredients.length == 0)
+
+
+    )) {
       return 4;
     }
 
-    else if ((_thisFoodItem.defaultJuusto == null) ||
-        (_thisFoodItem.defaultJuusto.length == 0)) {
+    else if ( (_thisFoodItem.shorCategoryName !='juomat') &&(
+    (_thisFoodItem.defaultJuusto == null) ||
+        (_thisFoodItem.defaultJuusto.length == 0)
+    )) {
       return 5;
     }
 
@@ -434,6 +441,7 @@ class AdminFirebaseFoodBloc implements Bloc {
       fireStoreFieldName: 'lasten_menu',
     );
 
+    // drinks, no cheese and ingredients required...
     NewCategoryItem juomat = new NewCategoryItem(
       categoryName: 'juomat',
       sequenceNo: 6,
@@ -491,21 +499,54 @@ class AdminFirebaseFoodBloc implements Bloc {
       List<String> documents = snapshot.docs.map((documentSnapshot) =>
       documentSnapshot.id).toList();
 
-//      print('documents are [Ingredient Documents] at food Gallery Block : ${documents.length}');
+
+
+      List<NewIngredient> ingredientImageURLUpdated = new List<NewIngredient>();
+
+
+      for(int i= 0 ;i<ingItems.length; i++){
+
+
+      // ingItems.forEach((oneIngItem) async {
+        String fileName2  = ingItems[i].imageURL;
+
+        NewIngredient tempIngredient =ingItems[i];
+        print('fileName2 =============> : $fileName2');
+
+        StorageReference storageReferenceForIngredientImage = storage
+            .ref()
+            .child(fileName2);
+
+        String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
+        // print('newimageURL ingredient =============> : $newimageURL');
+
+
+        tempIngredient.imageURL= newimageURL;
+
+        ingredientImageURLUpdated.add(tempIngredient);
+
+      };
+
+      logger.i('ingredientImageURLUpdated.length ${ingredientImageURLUpdated.length}');
 
 
 
-      ingItems.forEach((doc) {
-//        print('one Extra . . . . . . . name: ${doc.ingredientName} documentID: ${doc.documentId}');
-//
-//        print('one Extra --- * --- * --- * . . . . . . . imageURL: ${doc.imageURL}');
-
-      }
-      );
 
 
+      ingredientImageURLUpdated.forEach((oneIngItem)  {
 
-      _allExtraIngredients = ingItems;
+        print('oneIngItem.imageURL => => => :  ${oneIngItem.imageURL}');
+
+      });
+
+      // ingItems = ingItems.map((oneIngredient,index) =>
+      //     NewIngredient.ingredientImageDataAdd
+      //       (oneIngredient, imageURLs)
+      // ).toList();
+
+
+
+      _allExtraIngredients = ingredientImageURLUpdated;
 
       _allExtraIngredientItemsController.sink.add(_allExtraIngredients);
 
@@ -577,7 +618,71 @@ class AdminFirebaseFoodBloc implements Bloc {
     print('sauce documents are (length): ${documents.length}');
 
 
-    sauceItems.forEach((oneSauceItem) {
+
+    // x----1
+
+
+    List<SauceItem> sauceItemImageURLUpdated = new List<SauceItem>();
+
+
+    for(int i= 0 ;i<sauceItems.length; i++){
+
+      String fileName2  = sauceItems[i].imageURL;
+
+      SauceItem tempSauceItem = new SauceItem();
+
+      tempSauceItem = sauceItems[i];
+      print('fileName2 sauce Item.. =============> : $fileName2');
+
+      StorageReference storageReferenceForIngredientImage = storage
+          .ref()
+          .child(fileName2);
+
+      String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
+      print('newimageURL Sauce =============> : $newimageURL');
+
+
+      tempSauceItem.imageURL= newimageURL;
+
+      sauceItemImageURLUpdated.add(tempSauceItem);
+
+    }
+    // sauceItems.forEach((oneSauceItem) async {
+    //   String fileName2  = oneSauceItem.imageURL;
+    //
+    //   SauceItem tempSauceItem = new SauceItem();
+    //
+    //   tempSauceItem= oneSauceItem;
+    //   print('fileName2 sauce Item.. =============> : $fileName2');
+    //
+    //   StorageReference storageReferenceForIngredientImage = storage
+    //       .ref()
+    //       .child(fileName2);
+    //
+    //   String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
+    //   print('newimageURL Sauce =============> : $newimageURL');
+    //
+    //
+    //   tempSauceItem.imageURL= newimageURL;
+    //
+    //   sauceItemImageURLUpdated.add(tempSauceItem);
+    //
+    // }
+    // );
+
+    logger.i('sauceItemImageURLUpdated.length ${ sauceItemImageURLUpdated.length}');
+
+    sauceItemImageURLUpdated.forEach((oneSauceItem)  {
+      print('oneSauceItem.imageURL => => => :  ${oneSauceItem.imageURL}');
+
+    });
+
+    // x ----2
+
+
+
+
+    sauceItemImageURLUpdated.forEach((oneSauceItem) {
       print('oneSauceItem.sauceItemName: ${oneSauceItem.sauceItemName}');
       print('oneSauceItem.imageURL: ${oneSauceItem.imageURL}');
       print('Uri.encodeComponent(oneSauceItem.imageURL) ===> '
@@ -594,7 +699,7 @@ class AdminFirebaseFoodBloc implements Bloc {
 
     );
 
-    _allSauceItemsFoodUploadAdminBloc = sauceItems;
+    _allSauceItemsFoodUploadAdminBloc = sauceItemImageURLUpdated;
     _sauceItemsControllerFoodUploadAdmin.sink.add(_allSauceItemsFoodUploadAdminBloc);
   }
 
@@ -726,14 +831,61 @@ class AdminFirebaseFoodBloc implements Bloc {
 
     print('documents.length for cheeseItems: ${documents.length}');
 
+//zx--------------1
 
-    cheeseItems.forEach((oneCheeseItem) {
+
+
+
+    List<CheeseItem> cheeseItemIMageUrlUpdated = new List<CheeseItem>();
+
+
+    for(int i= 0 ;i<cheeseItems.length; i++){
+
+
+    // cheeseItems.forEach((oneCheeseItem) async {
+      String fileName2  = cheeseItems[i].imageURL;
+
+      CheeseItem tempCheeseItem =cheeseItems[i];
+      print('fileName2 =============> : $fileName2');
+
+      StorageReference storageReferenceForIngredientImage = storage
+          .ref()
+          .child(fileName2);
+
+      String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
+     // print('newimageURL cheese =============> : $newimageURL');
+
+
+      tempCheeseItem.imageURL= newimageURL;
+
+      cheeseItemIMageUrlUpdated.add(tempCheeseItem);
+
+    };
+
+
+    logger.i('cheeseItemIMageUrlUpdated.length ${cheeseItemIMageUrlUpdated.length}');
+
+
+
+
+    cheeseItemIMageUrlUpdated.forEach((oneCheeseItem)  {
+      print('oneCheeseItem.imageURL => => => :  ${oneCheeseItem.imageURL}');
+
+    });
+
+
+
+
+    //x1------------1
+
+
+    cheeseItemIMageUrlUpdated.forEach((oneCheeseItem) {
 
       print('oneCheeseItem.cheeseItemName: ${oneCheeseItem.cheeseItemName}');
 
     });
 
-    _allCheeseItemsFoodUploadAdminBloc  = cheeseItems;
+    _allCheeseItemsFoodUploadAdminBloc  = cheeseItemIMageUrlUpdated;
     _cheeseItemsControllerFoodUploadAdmin.sink.add(_allCheeseItemsFoodUploadAdminBloc);
 
   }

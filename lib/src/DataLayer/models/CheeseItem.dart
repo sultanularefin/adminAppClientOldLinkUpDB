@@ -167,8 +167,8 @@ class CheeseItem implements Comparable {
 //  NewIngredient.fromMap(Map<String, dynamic> data)
 //  NewIngredient.fromMap(Map<dynamic, dynamic> data)
   CheeseItem.fromMap(Map<String, dynamic> data,String docID)
-//      :imageURL= storageBucketURLPredicate +  Uri.decodeComponent(data['image']),
-      :imageURL= storageBucketURLPredicate + Uri.encodeComponent(data['image']),
+     :imageURL= data['image'],
+//       :imageURL= storageBucketURLPredicate + Uri.encodeComponent(data['image']),
 
 //      :imageURL= storageBucketURLPredicate +  Uri.decodeComponent(data['image']),
         cheeseItemName= data['name'],
