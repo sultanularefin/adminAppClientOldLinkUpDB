@@ -1,45 +1,61 @@
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 
 
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'package:logger/logger.dart';
 
-
+// import 'package:firebase_core/firebase_core.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
 //MODELS
 
+//import 'package:linkupadminolddb/src/DataLayer/api/firebase_client.dart';
 
-
-class AdminFirebaseSauceBloc implements Bloc {
+class AdminFirebaseOLDCategoryBloc implements Bloc {
   var logger = Logger(
     printer: PrettyPrinter(),
   );
+
+  bool _isDisposedIngredients = false;
+  bool _isDisposedFoodItems = false;
+  bool _isDisposedCategories = false;
+
+  final _clientAdmin = FirebaseClientAdmin();
 
 
   File _image2;
   String _firebaseUserEmail;
 
 
-  String imageURL = '';
 
+  String categoryName = 'PIZZA'.toLowerCase();
+  String shortCategoryName;
+
+  bool isHot = true;
+  String priceInEuro = '';
+
+  String imageURL = '';
+  bool isAvailable = true;
 
   int sequenceNo = 0;
 
 
-// main CheeseItem bloc component starts here...
-  SauceItem _thisSauceItem = new SauceItem();
-  SauceItem get getCurrentSauceItem => _thisSauceItem;
-  final _sauceItemController = StreamController<SauceItem>();
-  Stream<SauceItem> get thisSauceItemStream =>
-      _sauceItemController.stream;
-// main CheeseItem bloc component ends here...
+// main OldCategoryItem bloc component starts here...
+  OldCategoryItem _thisOldCategoryItem = new OldCategoryItem();
+  OldCategoryItem get getCurrentOldCategoryItem => _thisOldCategoryItem;
+  final _OldCategoryItemController = StreamController<OldCategoryItem>();
+
+  Stream<OldCategoryItem> get thisOldCategoryItemStream =>
+      _OldCategoryItemController.stream;
+// main OldCategoryItem bloc component ends here...
 
 
 
@@ -61,32 +77,58 @@ class AdminFirebaseSauceBloc implements Bloc {
     _firebaseUserEmail = param;
   }
 
+  /*
   void setPrice(String priceText) {
 //    double minutes2 = double.parse(minutes);
     double price = double.parse(priceText);
-    SauceItem temp = new SauceItem();
-    temp = _thisSauceItem;
+    OldCategoryItem temp = new OldCategoryItem();
+    temp = _thisOldCategoryItem;
     temp.price = price;
 
-    _thisSauceItem = temp;
+    _thisOldCategoryItem = temp;
 
-    _sauceItemController.sink.add(_thisSauceItem);
+    _OldCategoryItemController.sink.add(_thisOldCategoryItem);
   }
 
-  void setItemName(var param) {
+  */
 
-    logger.w('ingredient Name: $param');
 
-    SauceItem temp = new SauceItem();
-    temp = _thisSauceItem;
-    temp.sauceItemName = param;
+  void setCategoryName(int index) {
 
-    _thisSauceItem = temp;
-
-    _sauceItemController.sink.add(_thisSauceItem);
+    // logger.w('ingredient Name: $param');
+    //
+    // OldCategoryItem temp = new OldCategoryItem();
+    // temp = _thisOldCategoryItem;
+    // temp.categoryName = param;
+    //
+    // _thisOldCategoryItem = temp;
+    //
+    // _OldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
   }
+
+  void setCategoryValueFoodItemUPload(int index) {
+    // print('< > < > ZZZ  setting category food upload---------- [index]: $index');
+    //
+    // String categoryName =
+    // _categoryTypesForDropDown[index].categoryName.toLowerCase();
+    //
+    // String shortCategoryName =
+    // _categoryTypesForDropDown[index].fireStoreFieldName.toLowerCase();
+    //
+    // _thisFoodItem.categoryIndex= index;
+    //
+    // _thisFoodItem.categoryName = categoryName;
+    // _thisFoodItem.shorCategoryName = shortCategoryName;
+    //
+    // print('categoryName: $categoryName');
+    // print('shortCategoryName: $shortCategoryName');
+    //
+    // _foodItemController.sink.add(_thisFoodItem);
+  }
+
+
 
   Future<String> generateItemId(int length) async {
     String _result = "";
@@ -130,7 +172,7 @@ class AdminFirebaseSauceBloc implements Bloc {
     print('itemId: $itemId');
     StorageReference storageReference_1 = storage
         .ref()
-        .child('sauces2')
+        .child('cheeses2')
         .child(itemName +'__'+itemId + '.png');
 
     print('_image2: $_image2');
@@ -193,15 +235,14 @@ class AdminFirebaseSauceBloc implements Bloc {
 
   }
 
-  Future<int> saveSauces() async {
+  Future<int> save() async {
   logger.i('at save ...');
     itemId = await generateItemId(6);
-    //imageURL = await _uploadFile(itemId, _thisIngredientItem.ingredientName);
 
     String imageURL;
 
     if (_image2 != null) {
-      imageURL = await _uploadFile(itemId, _thisSauceItem.sauceItemName);
+      imageURL = await _uploadFile(itemId, _thisOldCategoryItem.categoryName);
     } else {
       print('_image2= $_image2');
 
@@ -221,66 +262,55 @@ class AdminFirebaseSauceBloc implements Bloc {
 
     print('saving user using a web service');
 
-    print('_thisIngredientItem.ingredientName 1st : ${_thisSauceItem.sauceItemName}');
-
-//    String newIngredientName = titleCase(_thisIngredientItem.ingredientName);
+    print('_thisIngredientItem.ingredientName 1st : ${_thisOldCategoryItem.categoryName}');
 
 
-//  print('_thisIngredientItem.ingredientName 2nd : ${_thisIngredientItem.ingredientName}');
+    _thisOldCategoryItem.itemId = itemId;
 
-
-    _thisSauceItem.itemId = itemId;
-
-    String documentID = await _clientAdmin.insertSauceItem(
-        _thisSauceItem, _thisSauceItem.sequenceNo, _firebaseUserEmail, imageURL);
+    String documentID = await _clientAdmin.insertOldCategoryItem(
+        _thisOldCategoryItem, _thisOldCategoryItem.sequenceNo, _firebaseUserEmail, imageURL);
 
     print('added document: $documentID');
 
 
+  _thisOldCategoryItem.fireStoreFieldName='';
+  _thisOldCategoryItem.categoryName='';
+  _thisOldCategoryItem.sequenceNo= _thisOldCategoryItem.sequenceNo+1;
+  _thisOldCategoryItem.itemId='';
+  _OldCategoryItemController.sink.add(_thisOldCategoryItem);
 
-    //    }
 
-  _thisSauceItem.price=0;
-  _thisSauceItem.sauceItemName='';
-  _thisSauceItem.itemId='';
-  _thisSauceItem.sequenceNo= _thisSauceItem.sequenceNo+1;
-  _sauceItemController.sink.add(_thisSauceItem);
 
     return (1);
   }
 
 //    List<NewCategoryItem>_allCategoryList=[];
-  final _clientAdmin = FirebaseClientAdmin();
 
 
 
-  void getLastSequenceNumberForAdminSacue() async {
+  void getLastSequenceNumberForAdminCheese() async {
     print('at get Last SequenceNumberFromFireBaseFoodItems()');
 
 //    if (_isDisposed_known_last_sequenceNumber == false) {
-      int lastIndex =
-      await _clientAdmin.getLastSequenceNumberForAdminSacue2();
+    int lastIndex =
+    await _clientAdmin.getLastSequenceNumberForAdminCheese2();
 
-      logger.i('lastIndex: $lastIndex');
+    logger.i('lastIndex: $lastIndex');
 
-      _thisSauceItem.sequenceNo = lastIndex +1;
+    _thisOldCategoryItem.sequenceNo = lastIndex +1;
 
-      _sauceItemController.sink.add(_thisSauceItem);
+    _OldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
 //    }
   }
-//  CONSTRUCTOR BEGINS HERE..
 
-
-  AdminFirebaseSauceBloc() {
-
-
+  AdminFirebaseOLDCategoryBloc() {
     print('at AdminFirebaseIngredientBloc  ......()');
 
     print('at FoodGalleryBloc()');
 
-    getLastSequenceNumberForAdminSacue();
+    getLastSequenceNumberForAdminCheese();
 
   }
 
@@ -289,10 +319,7 @@ class AdminFirebaseSauceBloc implements Bloc {
   // 4
   @override
   void dispose() {
-    _sauceItemController.close();
-//    _foodItemController.close();
-//    _categoryMultiSelectController.close();
-//    _ingredientsGroupsController.close();
+    _OldCategoryItemController.close();
 
   }
 }

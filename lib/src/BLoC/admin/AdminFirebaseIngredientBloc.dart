@@ -1,6 +1,6 @@
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
+// import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,13 +8,13 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:math';
 import 'package:logger/logger.dart';
-import 'dart:ui';
+// import 'dart:ui';
 // import 'package:firebase_core/firebase_core.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 
 //MODELS
-import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 
 class AdminFirebaseIngredientBloc implements Bloc {
@@ -30,26 +30,17 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
   bool _isDisposed_known_last_sequenceNumber = false;
 
-  List<NewCategoryItem> _foodCategoryTypesForMultiSelect;
-  List<NewCategoryItem> get getCategoryTypesForDropDown =>
+  List<OldCategoryItem> _foodCategoryTypesForMultiSelect;
+  List<OldCategoryItem> get getCategoryTypesForDropDown =>
       _foodCategoryTypesForMultiSelect;
   final _categoryMultiSelectController =
-  StreamController<List<NewCategoryItem>>.broadcast();
+  StreamController<List<OldCategoryItem>>.broadcast();
 
-  Stream<List<NewCategoryItem>> get getCategoryMultiSelectControllerStream =>
+  Stream<List<OldCategoryItem>> get getCategoryMultiSelectControllerStream =>
       _categoryMultiSelectController.stream;
 
 
-  // multiselect category controller codes begins here ......
 
-  List<IngredientSubgroup> _ingredientGroupes;
-  List<IngredientSubgroup> get getIngredientTypes => _ingredientGroupes;
-  final _ingredientsGroupsController =
-  StreamController<List<IngredientSubgroup>>.broadcast();
-  Stream<List<IngredientSubgroup>> get getIngredientGroupsControllerStream =>
-      _ingredientsGroupsController.stream;
-
-  // multiselect category controller codes ends here .....
 
 
   File _image2;
@@ -184,43 +175,6 @@ class AdminFirebaseIngredientBloc implements Bloc {
     _thisIngredientItem = temp;
     _ingredientItemController.sink.add(_thisIngredientItem);
 
-
-  }
-
-  void toggoleMultiSelectSubgroupValue(int index) {
-
-
-    _ingredientGroupes.forEach((oneIngredientGroupe) {
-      oneIngredientGroupe.isSelected=false;
-    });
-
-
-
-    _ingredientGroupes[index].isSelected =
-    !_ingredientGroupes[index].isSelected;
-
-    print('_ingredientGroupes.length: ${_ingredientGroupes.length}');
-
-    _ingredientsGroupsController.sink.add(_ingredientGroupes);
-
-
-    print('_thisIngredientItem: $_thisIngredientItem');
-
-    NewIngredient xTemp = _thisIngredientItem;
-
-    print('_ingredientGroupes[index].ingredientSubgroupName: ${_ingredientGroupes[index].ingredientSubgroupName}');
-
-
-    print('xTemp: $xTemp');
-
-
-
-
-    xTemp.subgroup = _ingredientGroupes[index].ingredientSubgroupName;
-    print('xTemp.subgroup: ${xTemp.subgroup}');
-
-    _thisIngredientItem = xTemp;
-    _ingredientItemController.sink.add(_thisIngredientItem);
 
   }
 
@@ -399,86 +353,59 @@ class AdminFirebaseIngredientBloc implements Bloc {
 //    List<NewCategoryItem>_allCategoryList=[];
   final _clientAdmin = FirebaseClientAdmin();
 
-  void initiateIngredientGroups() {
-    List<IngredientSubgroup> ingredientSubgroups =
-    new List<IngredientSubgroup>();
 
-//   liha =meat hedelma= fruit muut=other vihannekset vegetables
-
-
-    IngredientSubgroup meat = new IngredientSubgroup(
-        ingredientSubgroupName: 'meat', isSelected: false);
-
-    IngredientSubgroup fruit = new IngredientSubgroup(
-        ingredientSubgroupName: 'fruit', isSelected: false);
-
-
-    IngredientSubgroup vegetables = new IngredientSubgroup(
-        ingredientSubgroupName: 'vegetables', isSelected: false);
-
-    IngredientSubgroup other = new IngredientSubgroup(
-        ingredientSubgroupName: 'other', isSelected: false);
-
-
-//    ingredientSubgroups.addAll([liha, hedelma,vihannekset, muut]);
-
-    ingredientSubgroups.addAll([meat, fruit, other, vegetables]);
-
-    _ingredientGroupes = ingredientSubgroups;
-    _ingredientsGroupsController.sink.add(_ingredientGroupes);
-  }
 
   void initiateCategoryForMultiSelectFoodCategory() {
-    NewCategoryItem pizza = new NewCategoryItem(
+    OldCategoryItem pizza = new OldCategoryItem(
       categoryName: 'pizza',
       sequenceNo: 0,
       documentID: 'pizza',
       fireStoreFieldName: 'pizza',
     );
 
-    NewCategoryItem kebab = new NewCategoryItem(
+    OldCategoryItem kebab = new OldCategoryItem(
       categoryName: 'kebab',
       sequenceNo: 1,
       documentID: 'kebab',
       fireStoreFieldName: 'pizza',
     );
 
-    NewCategoryItem jauheliha_kebab_vartaat = new NewCategoryItem(
+    OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(
       categoryName: 'jauheliha kebab & vartaat',
       sequenceNo: 2,
       documentID: 'jauheliha_kebab_vartaat',
       fireStoreFieldName: 'jauheliha_kebab_vartaat',
     );
 
-    NewCategoryItem salaatti_kasvis = new NewCategoryItem(
+    OldCategoryItem salaatti_kasvis = new OldCategoryItem(
       categoryName: 'salaatti & kasvis',
       sequenceNo: 3,
       documentID: 'salaatti_kasvis',
       fireStoreFieldName: 'salaatti_kasvis',
     );
 
-    NewCategoryItem hampurilainen = new NewCategoryItem(
+    OldCategoryItem hampurilainen = new OldCategoryItem(
       categoryName: 'hampurilainen',
       sequenceNo: 4,
       documentID: 'hampurilainen',
       fireStoreFieldName: 'hampurilainen',
     );
 
-    NewCategoryItem lasten_menu = new NewCategoryItem(
+    OldCategoryItem lasten_menu = new OldCategoryItem(
       categoryName: 'lasten menu',
       sequenceNo: 5,
       documentID: 'lasten_menu',
       fireStoreFieldName: 'lasten_menu',
     );
 
-    NewCategoryItem juomat = new NewCategoryItem(
+    OldCategoryItem juomat = new OldCategoryItem(
       categoryName: 'juomat',
       sequenceNo: 6,
       documentID: 'juomat',
       fireStoreFieldName: 'juomat',
     );
 
-    List<NewCategoryItem> categoryItems2 = new List<NewCategoryItem>();
+    List<OldCategoryItem> categoryItems2 = new List<OldCategoryItem>();
 
     categoryItems2.addAll([
       pizza,
@@ -499,7 +426,7 @@ class AdminFirebaseIngredientBloc implements Bloc {
     print('at AdminFirebaseIngredientBloc  ......()');
 
     getLastSequenceNumberForAdminIngredient();
-    initiateIngredientGroups();
+
     initiateCategoryForMultiSelectFoodCategory();
 
 //    initiateCategoryDropDownList();
@@ -525,7 +452,7 @@ class AdminFirebaseIngredientBloc implements Bloc {
     _ingredientItemController.close();
 //    _foodItemController.close();
     _categoryMultiSelectController.close();
-    _ingredientsGroupsController.close();
+
 
     // _isDisposedIngredients = true;
     // _isDisposedFoodItems = true;

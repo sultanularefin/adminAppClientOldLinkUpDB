@@ -7,8 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseIngredientBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+// import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
@@ -96,130 +96,7 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
   }
 
 
-  Widget _buildOneCheckBoxIngredientSubGroup(IngredientSubgroup ct, int index) {
-    return Container(
-        child: ct.isSelected ==true
-
-            ? Container(
-          // margin: EdgeInsets.fromLTRB(5, 2, 5, 5),
-          width: displayWidth(context) / 2.8,
-          //color:Colors.red,
-          child: RaisedButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            color: Color(0xffFFE18E),
-            elevation: 2.5,
-            shape: RoundedRectangleBorder(
-//          borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(
-                color: Color(0xffF7F0EC),
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(35.0),
-            ),
-
-            child: Container(
-//              alignment: Alignment.center,
-              child:
-              CheckboxListTile(
-                  title: Text('${ct.ingredientSubgroupName}',
-                    maxLines: 2,
-                    style: TextStyle(
-
-
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                      color: Colors.black,
-                      fontFamily: 'Itim-Regular',
-
-                    ),),
-
-
-//                  value: _itemData.passions[ItemData.PassionCooking],
-                  value: ct.isSelected,
-                  onChanged: (val) {
-
-
-                    final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-                    blocAdminIngredientFBase.toggoleMultiSelectSubgroupValue(index);
-
-                  }
-
-              ),
-
-
-
-            ),
-            onPressed: () {
-
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectSubgroupValue(index);
-
-            },
-          ),
-        )
-            : Container(
-
-          // margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-          width: displayWidth(context) / 2.8,
-          //color:Colors.red,
-          child: OutlineButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            color: Color(0xffFEE295),
-            // clipBehavior:Clip.hardEdge,
-
-            borderSide: BorderSide(
-              color: Color(0xff53453D), // 0xff54463E
-              style: BorderStyle.solid,
-              width: 1,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35.0),
-            ),
-            child: Container(
-
-              child:
-
-              CheckboxListTile(
-//                  title: Text('${ct.ingredientSubgroupName}'),
-
-                  title: Text('${ct.ingredientSubgroupName}',
-                    maxLines: 2,
-                    style: TextStyle(
-
-
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                      color: Colors.black,
-                      fontFamily: 'Itim-Regular',
-
-                    ),),
-
-                  value: ct.isSelected,
-                  onChanged: (val) {
-
-
-                    final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-                    blocAdminIngredientFBase.toggoleMultiSelectSubgroupValue(index);
-
-                  }
-
-              ),
-            ),
-            onPressed: () {
-
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectSubgroupValue(index);
-
-            },
-          ),
-        )
-    );
-  }
-
-
-  Widget _buildOneCheckBoxIngredientOfFoodCategory(NewCategoryItem ct, int index) {
+  Widget _buildOneCheckBoxIngredientOfFoodCategory(OldCategoryItem ct, int index) {
     return Container(
         child: ct.isSelected ==true
 
@@ -484,12 +361,12 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
 
 
 
-                                        StreamBuilder<List<NewCategoryItem>>(
+                                        StreamBuilder<List<OldCategoryItem>>(
                                           stream: blocAdminIngredientFBase.getCategoryMultiSelectControllerStream ,
                                           initialData:blocAdminIngredientFBase.getCategoryTypesForDropDown,
                                           builder: (context, snapshot) {
 
-                                            final List<NewCategoryItem> allCategories = snapshot.data;
+                                            final List<OldCategoryItem> allCategories = snapshot.data;
 
 
                                             return
@@ -621,45 +498,7 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                       ),
 
 
-                                      Container(
-                                        height:200,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 20, 0, 20),
 
-                                        child:
-                                        StreamBuilder<List<IngredientSubgroup>>(
-                                          stream: blocAdminIngredientFBase.getIngredientGroupsControllerStream,
-                                          initialData:blocAdminIngredientFBase.getIngredientTypes,
-                                          builder: (context, snapshot) {
-
-                                            final List<IngredientSubgroup> allIngredientSubGroups =
-                                                snapshot.data;
-                                            return
-                                              GridView.builder(
-                                                itemCount: allIngredientSubGroups.length,
-                                                gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                                  //Above to below for 3 not 2 Food Items:
-                                                  maxCrossAxisExtent: 250,
-                                                  mainAxisSpacing: 20, // H  direction
-                                                  crossAxisSpacing: 10,
-                                                  childAspectRatio: 240 / 60, /* (h/vertical)*/
-                                                ),
-                                                shrinkWrap: true,
-
-//        reverse: true,
-                                                itemBuilder: (_, int index) {
-
-                                                  return _buildOneCheckBoxIngredientSubGroup(
-                                                      allIngredientSubGroups[index], index);
-                                                },
-                                              );
-
-
-                                          }
-
-                                          ,
-                                        ),
-                                      ),
 
 
 

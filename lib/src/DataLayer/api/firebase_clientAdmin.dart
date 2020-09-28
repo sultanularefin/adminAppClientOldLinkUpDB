@@ -3,11 +3,11 @@ import 'dart:async';
 //import 'dart:convert' show json;
 
 //import 'package:flutter/foundation.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
-import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+
 //import 'package:http/http.dart' as http;
 
 //import 'package:meta/meta.dart';
@@ -17,78 +17,8 @@ import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
 
 
 
-//final String storageBucketURLPredicate =
-//    'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/';
-
-
 
 class FirebaseClientAdmin {
-
-
-// _thisFoodItem, sequenceNo, _firebaseUserEmail, imageURL
-  Future<String> insertSauceItem(SauceItem x, int sequenceNo, String email,
-      String imageURL) async {
-    print('at insertIngredientItems....');
-
-
-    Timestamp date;
-    String orderDocId = '';
-
-    String imageURLFinal1 = '';
-    var uri = Uri.parse(imageURL);
-
-    print('imageURL at insertIngredientItems ...: $imageURL');
-    // print(uri.isScheme("HTTP"));  // Prints true.
-
-    if (uri.isScheme("HTTP") || (uri.isScheme("HTTPS"))) {
-      print('on of them is true');
-
-
-      String imageURLFinal2 = imageURL;
-      String iteration2 = Uri.decodeComponent(imageURLFinal2).replaceAll(
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
-          '');
-
-      // https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg?alt=media&token=0bea2b84-04ca-4ec8-8ed9-b355b8fb0bb7
-
-
-      String stringTokenizing2 = iteration2.substring(
-          0, iteration2.indexOf('?'));
-
-      imageURLFinal1 = stringTokenizing2;
-    }
-    else {
-      imageURLFinal1 = imageURL;
-    }
-
-    DocumentReference document = await FirebaseFirestore.instance.collection(
-        "restaurants").
-    doc('kebab_bank').
-    collection('sauces2').add(<String, dynamic>{
-
-      // 'ingredients': foodItemIngredientsInsertDummy1(null),
-      'name': x.sauceItemName,
-      'uploadedBy': email,
-      'uploadDate': FieldValue.serverTimestamp(),
-      'image': imageURLFinal1,
-      'itemID': x.itemId,
-      'price': x.price,
-      'sequenceNo': sequenceNo,
-    }).whenComplete(() =>
-        print("called when future completes for food Item insert...."))
-        .then((document) {
-      //  print('Added document with ID: ${document.documentID}');
-      orderDocId = document.documentID;
-//      return document;
-//                            _handleSignIn();
-    }).catchError((onError) {
-      //   print('K   K    K   at onError for Order data push : $onError');
-      orderDocId = '';
-//      return '';
-    });
-
-    return orderDocId;
-  }
 
 
   Future<QuerySnapshot> fetchAllCheesesORjuustoAdmin()async{
@@ -287,7 +217,7 @@ class FirebaseClientAdmin {
 
 
 // _thisFoodItem, sequenceNo, _firebaseUserEmail, imageURL
-  Future<String> insertCheeseItem(CheeseItem x, int sequenceNo, String email,
+  Future<String> insertOldCategoryItem(OldCategoryItem x, int sequenceNo, String email,
       String imageURL) async {
     print('at insertIngredientItems....');
 
@@ -307,9 +237,10 @@ class FirebaseClientAdmin {
 
       String imageURLFinal2 = imageURL;
       String iteration2 = Uri.decodeComponent(imageURLFinal2).replaceAll(
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
           '');
 
+      // gs://linkupadminolddbandclientapp.appspot.com
       // https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg?alt=media&token=0bea2b84-04ca-4ec8-8ed9-b355b8fb0bb7
 
 
@@ -324,22 +255,24 @@ class FirebaseClientAdmin {
 
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
-    document('kebab_bank').
+    doc('kebab_bank').
     collection('cheeses2').add(<String, dynamic>{
 
       // 'ingredients': foodItemIngredientsInsertDummy1(null),
-      'name': x.cheeseItemName,
+      'name': x.categoryName,
       'uploadedBy': email,
       'uploadDate': FieldValue.serverTimestamp(),
       'image': imageURLFinal1,
       'itemID': x.itemId,
-      'price': x.price,
+      // 'price': x.price,
+      'fireStoreFieldName':'',
+      'displayNameinApp':'',
       'sequenceNo': sequenceNo,
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      //  print('Added document with ID: ${document.documentID}');
-      orderDocId = document.documentID;
+      //  print('Added document with ID: ${document.id}');
+      orderDocId = document.id;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {
@@ -373,7 +306,7 @@ class FirebaseClientAdmin {
 
       String imageURLFinal2 = imageURL;
       String iteration2 = Uri.decodeComponent(imageURLFinal2).replaceAll(
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
           '');
 
       // https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg?alt=media&token=0bea2b84-04ca-4ec8-8ed9-b355b8fb0bb7
@@ -390,7 +323,7 @@ class FirebaseClientAdmin {
 
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
-    document('kebab_bank').
+    doc('kebab_bank').
     collection('extraIngredients').add(<String, dynamic>{
 //      'category':'someC',
 //      'categoryShort':'someC',
@@ -409,8 +342,8 @@ class FirebaseClientAdmin {
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      //  print('Added document with ID: ${document.documentID}');
-      orderDocId = document.documentID;
+      //  print('Added document with ID: ${document.id}');
+      orderDocId = document.id;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {
@@ -450,7 +383,7 @@ class FirebaseClientAdmin {
 
       String imageURLFinal2 = imageURL;
       String iteration2 = Uri.decodeComponent(imageURLFinal2).replaceAll(
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
           '');
 
 
@@ -559,8 +492,8 @@ class FirebaseClientAdmin {
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      //  print('Added document with ID: ${document.documentID}');
-      orderDocId = document.documentID;
+      //  print('Added document with ID: ${document.id}');
+      orderDocId = document.id;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {

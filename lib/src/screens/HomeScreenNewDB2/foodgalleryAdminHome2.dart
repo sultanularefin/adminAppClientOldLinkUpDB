@@ -7,29 +7,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseCheeseBloc.dart';
+
+import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseOLDCategoryBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseFoodBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseIngredientBloc.dart';
-import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseSauceBloc.dart';
-
 
 // BLOC'S IMPORT BEGIN HERE:
 // import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
 //import 'package:linkupadminolddb/src/BLoC/bloc_provider2.dart';
 
-import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/CustomerInformation.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+
+
 
 // MODEL'S IMPORT BEGINS HERE.
 
-import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
-
-import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_cheese.dart';
+import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_newCategory.dart';
 import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_food.dart';
 import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_ingredient.dart';
-import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_sauces.dart';
 
 
 import 'package:permission_handler/permission_handler.dart';
@@ -58,7 +52,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:linkupadminolddb/src/welcomePage.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 // Blocks
 
@@ -1129,7 +1123,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
 
                       child: Text(
-                        'add new cheese '.toUpperCase(),
+                        'add new Category'.toUpperCase(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 18,
@@ -1185,8 +1179,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                   opaque: false,
                   transitionDuration: Duration(milliseconds: 900),
                   pageBuilder: (_, __, ___) =>
-                      BlocProvider<AdminFirebaseCheeseBloc>(
-                        bloc: AdminFirebaseCheeseBloc(),
+                      BlocProvider<AdminFirebaseOLDCategoryBloc>(
+                        bloc: AdminFirebaseOLDCategoryBloc(),
                         child: AdminFirebaseCheese(),
                       ),
                 ),
@@ -1200,101 +1194,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
           SizedBox(
             height: 50,
           ),
-          ListTile(
-            title: Container(
-              // color: Color(0xffFFE18E),
-                color: Color(0xffFFE18E), height: 90,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
-                      child:Row(
-                        children: [
-                          Icon(
-                            Icons.fire_extinguisher_rounded,
-                            size: displayWidth(context) / 19,
-                            color: Color(0xff707070),
-                          ),
-                          Icon(
-                            Icons.fire_extinguisher_rounded,
-                            size: displayWidth(context) / 19,
-                            color: Color(0xff707070),
-                          ),
-                        ],
-                      ),
 
-                    ),
-
-                    Container(
-//                          width: displayWidth(context)/3.9,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-
-                      child: Text(
-                        'add new sauce'.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'historia',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey
-                        ),
-                      ),
-                    )
-//                      Text('history'),
-                  ],
-                )),
-            onTap: () async {
-
-
-
-//          final Permission permission= Permission.contacts;
-              final Permission permission= Permission.camera;
-              print('at Future<void> requestPermission $permission');
-
-              final status = await permission.request();
-
-              print('status: $status');
-
-              switch (status) {
-                case PermissionStatus.granted:
-                  print('PermissionStatus.granted');
-                  // do something
-                  break;
-                case PermissionStatus.denied:
-                  print('PermissionStatus.denied');
-                  // do something
-                  break;
-                case PermissionStatus.restricted:
-                  print('PermissionStatus.restricted');
-                  // do something
-                  break;
-                case PermissionStatus.permanentlyDenied:
-                  print('PermissionStatus.permanentlyDenied');
-                  // do something
-                  break;
-                case PermissionStatus.undetermined:
-                  print('PermissionStatus.undetermined');
-                  // do something
-                  break;
-                default:
-              }
-
-
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  opaque: false,
-                  transitionDuration: Duration(milliseconds: 900),
-                  pageBuilder: (_, __, ___) =>
-                      BlocProvider<AdminFirebaseSauceBloc>(
-                        bloc: AdminFirebaseSauceBloc(),
-                        child: AdminFirebaseSauces(),
-                      ),
-                ),
-              );
-            },
-          )
 
 
         ],

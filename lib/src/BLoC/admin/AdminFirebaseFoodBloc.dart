@@ -1,8 +1,8 @@
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -20,7 +20,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
 
-import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 
 
@@ -48,14 +48,14 @@ class AdminFirebaseFoodBloc implements Bloc {
   bool _isDisposedExtraIngredients = false;
 
 
-  List<NewCategoryItem> _categoryTypesForDropDown;
-  List<NewCategoryItem> get getCategoryTypesForDropDown =>
+  List<OldCategoryItem> _categoryTypesForDropDown;
+  List<OldCategoryItem> get getCategoryTypesForDropDown =>
       _categoryTypesForDropDown;
 
   final _categoryDropDownController =
-  StreamController<List<NewCategoryItem>>.broadcast();
+  StreamController<List<OldCategoryItem>>.broadcast();
 
-  Stream<List<NewCategoryItem>> get getCategoryDropDownControllerStream =>
+  Stream<List<OldCategoryItem>> get getCategoryDropDownControllerStream =>
       _categoryDropDownController.stream;
 
   File _image2;
@@ -97,21 +97,16 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
   // cheese items
-  List<CheeseItem> _allCheeseItemsFoodUploadAdminBloc =[];
-  List<CheeseItem> get getAllCheeseItemsAdminFoodUpload => _allCheeseItemsFoodUploadAdminBloc;
-  final _cheeseItemsControllerFoodUploadAdmin      =  StreamController <List<CheeseItem>>.broadcast();
-  Stream<List<CheeseItem>> get getCheeseItemsStream => _cheeseItemsControllerFoodUploadAdmin.stream;
-
-  // sauce items
-  List<SauceItem> _allSauceItemsFoodUploadAdminBloc =[];
-  List<SauceItem> get getAllSauceItemsFoodUploadAdmin => _allSauceItemsFoodUploadAdminBloc;
-  final _sauceItemsControllerFoodUploadAdmin      =  StreamController <List<SauceItem>>.broadcast();
-  Stream<List<SauceItem>> get getSauceItemsStream => _sauceItemsControllerFoodUploadAdmin.stream;
-
+  List<OldCategoryItem> _allOLDCategories =[];
+  List<OldCategoryItem> get getAllOLDCategorisAdminFoodUpload => _allOLDCategories;
+  final _oldCategoriesControllerFoodUploadAdmin      =  StreamController <List<OldCategoryItem>>.broadcast();
+  Stream<List<OldCategoryItem>> get getOldCategoriesStream => _oldCategoriesControllerFoodUploadAdmin.stream;
 
 
   final FirebaseStorage storage =
-  FirebaseStorage(storageBucket: 'gs://kebabbank-37224.appspot.com');
+  FirebaseStorage(storageBucket: 'gs://linkupadminolddbandclientapp.appspot.com');
+  // gs://linkupadminolddbandclientapp.appspot.com
+  // gs://kebabbank-37224.appspot.com
 
   String itemId;
 
@@ -340,11 +335,11 @@ class AdminFirebaseFoodBloc implements Bloc {
         print('_image2= $_image2');
 
         String dummyImage =
-            'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2FfoodItem404.jpg?alt=media';
+            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2FfoodItem404.jpg?alt=media';
 
         imageURL = Uri.decodeComponent(dummyImage
             .replaceAll(
-            'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
             '')
             .replaceAll('?alt=media', ''));
       }
@@ -399,42 +394,42 @@ class AdminFirebaseFoodBloc implements Bloc {
   void initiateCategoryDropDownList() {
     logger.i('at initiateCategoryDropDownList()');
 
-    NewCategoryItem pizza = new NewCategoryItem(
+    OldCategoryItem pizza = new OldCategoryItem(
       categoryName: 'pizza',
       sequenceNo: 0,
       documentID: 'pizza',
       fireStoreFieldName: 'pizza',
     );
 
-    NewCategoryItem kebab = new NewCategoryItem(
+    OldCategoryItem kebab = new OldCategoryItem(
       categoryName: 'kebab',
       sequenceNo: 1,
       documentID: 'kebab',
       fireStoreFieldName: 'pizza',
     );
 
-    NewCategoryItem jauheliha_kebab_vartaat = new NewCategoryItem(
+    OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(
       categoryName: 'jauheliha kebab & vartaat',
       sequenceNo: 2,
       documentID: 'jauheliha_kebab_vartaat',
       fireStoreFieldName: 'jauheliha_kebab_vartaat',
     );
 
-    NewCategoryItem salaatti_kasvis = new NewCategoryItem(
+    OldCategoryItem salaatti_kasvis = new OldCategoryItem(
       categoryName: 'salaatti & kasvis',
       sequenceNo: 3,
       documentID: 'salaatti_kasvis',
       fireStoreFieldName: 'salaatti_kasvis',
     );
 
-    NewCategoryItem hampurilainen = new NewCategoryItem(
+    OldCategoryItem hampurilainen = new OldCategoryItem(
       categoryName: 'hampurilainen',
       sequenceNo: 4,
       documentID: 'hampurilainen',
       fireStoreFieldName: 'hampurilainen',
     );
 
-    NewCategoryItem lasten_menu = new NewCategoryItem(
+    OldCategoryItem lasten_menu = new OldCategoryItem(
       categoryName: 'lasten menu',
       sequenceNo: 5,
       documentID: 'lasten_menu',
@@ -442,14 +437,14 @@ class AdminFirebaseFoodBloc implements Bloc {
     );
 
     // drinks, no cheese and ingredients required...
-    NewCategoryItem juomat = new NewCategoryItem(
+    OldCategoryItem juomat = new OldCategoryItem(
       categoryName: 'juomat',
       sequenceNo: 6,
       documentID: 'juomat',
       fireStoreFieldName: 'juomat',
     );
 
-    NewCategoryItem grill = new NewCategoryItem(
+    OldCategoryItem grill = new OldCategoryItem(
       categoryName: 'grill',
       sequenceNo: 7,
       documentID: 'grill',
@@ -458,7 +453,7 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
 
-    List<NewCategoryItem> categoryItems2 = new List<NewCategoryItem>();
+    List<OldCategoryItem> categoryItems2 = new List<OldCategoryItem>();
 
     categoryItems2.addAll([
       pizza,
@@ -596,115 +591,6 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
 
-  void getAllKastikeSaucesAdminConstructor() async {
-
-    var snapshot = await _clientAdmin.fetchAllKastikeORSaucesAdmin();
-    List docList = snapshot.docs;
-
-//    List docList = snapshot.docs;
-
-    List <SauceItem> sauceItems = new List<SauceItem>();
-    sauceItems = snapshot.docs.map((documentSnapshot) =>
-        SauceItem.fromMap
-          (documentSnapshot.data(), documentSnapshot.id)
-
-    ).toList();
-
-
-    List<String> documents = snapshot.docs.map((documentSnapshot) =>
-    documentSnapshot.id
-    ).toList();
-
-    print('sauce documents are (length): ${documents.length}');
-
-
-
-    // x----1
-
-
-    List<SauceItem> sauceItemImageURLUpdated = new List<SauceItem>();
-
-
-    for(int i= 0 ;i<sauceItems.length; i++){
-
-      String fileName2  = sauceItems[i].imageURL;
-
-      SauceItem tempSauceItem = new SauceItem();
-
-      tempSauceItem = sauceItems[i];
-      print('fileName2 sauce Item.. =============> : $fileName2');
-
-      StorageReference storageReferenceForIngredientImage = storage
-          .ref()
-          .child(fileName2);
-
-      String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
-      print('newimageURL Sauce =============> : $newimageURL');
-
-
-      tempSauceItem.imageURL= newimageURL;
-
-      sauceItemImageURLUpdated.add(tempSauceItem);
-
-    }
-    // sauceItems.forEach((oneSauceItem) async {
-    //   String fileName2  = oneSauceItem.imageURL;
-    //
-    //   SauceItem tempSauceItem = new SauceItem();
-    //
-    //   tempSauceItem= oneSauceItem;
-    //   print('fileName2 sauce Item.. =============> : $fileName2');
-    //
-    //   StorageReference storageReferenceForIngredientImage = storage
-    //       .ref()
-    //       .child(fileName2);
-    //
-    //   String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
-    //   print('newimageURL Sauce =============> : $newimageURL');
-    //
-    //
-    //   tempSauceItem.imageURL= newimageURL;
-    //
-    //   sauceItemImageURLUpdated.add(tempSauceItem);
-    //
-    // }
-    // );
-
-    logger.i('sauceItemImageURLUpdated.length ${ sauceItemImageURLUpdated.length}');
-
-    sauceItemImageURLUpdated.forEach((oneSauceItem)  {
-      print('oneSauceItem.imageURL => => => :  ${oneSauceItem.imageURL}');
-
-    });
-
-    // x ----2
-
-
-
-
-    sauceItemImageURLUpdated.forEach((oneSauceItem) {
-      print('oneSauceItem.sauceItemName: ${oneSauceItem.sauceItemName}');
-      print('oneSauceItem.imageURL: ${oneSauceItem.imageURL}');
-      print('Uri.encodeComponent(oneSauceItem.imageURL) ===> '
-          ' ${Uri.encodeComponent(oneSauceItem.imageURL)}');
-
-
-      print('Uri.encodeComponent(oneSauceItem.imageURL) ===> '
-          ' ${oneSauceItem.imageURL}');
-
-      print('Uri.decodeComponent(oneSauceItem.imageURL) ===> '
-          ' ${Uri.decodeComponent(oneSauceItem.imageURL)}');
-
-    }
-
-    );
-
-    _allSauceItemsFoodUploadAdminBloc = sauceItemImageURLUpdated;
-    _sauceItemsControllerFoodUploadAdmin.sink.add(_allSauceItemsFoodUploadAdminBloc);
-  }
-
-
-
   void toggoleMultiSelectIngredientValue(int index) {
 
 
@@ -739,13 +625,14 @@ class AdminFirebaseFoodBloc implements Bloc {
   }
 
 
+  /*
   void toggoleMultiSelectCheeseValue(int index) {
 
 
     _allCheeseItemsFoodUploadAdminBloc[index].isSelected =
     !_allCheeseItemsFoodUploadAdminBloc[index].isSelected;
 
-    _cheeseItemsControllerFoodUploadAdmin.sink.add(_allCheeseItemsFoodUploadAdminBloc);
+    _oldCategoriesControllerFoodUploadAdmin.sink.add(_allCheeseItemsFoodUploadAdminBloc);
 
     List<String> selectedCheeses = new List<String>();
 
@@ -772,52 +659,53 @@ class AdminFirebaseFoodBloc implements Bloc {
 
   }
 
+  */
+  void setCategoryValue(int index) {
 
 
-
-
-  void toggoleMultiSelectSauceItemValue(int index) {
-
-
-    _allSauceItemsFoodUploadAdminBloc[index].isSelected =
-    !_allSauceItemsFoodUploadAdminBloc[index].isSelected;
-
-    _sauceItemsControllerFoodUploadAdmin.sink.add(_allSauceItemsFoodUploadAdminBloc);
-
-    List<String> selectedSauces = new List<String>();
-
-
-    _allSauceItemsFoodUploadAdminBloc.forEach((newSauce) {
-
-
-
-      if(newSauce.isSelected){
-        selectedSauces.add(newSauce.sauceItemName);
-      }
+    _allOLDCategories.forEach((oneOldCategory) {
+      oneOldCategory.isSelected=false;
     });
 
-    print('selectedSauces.length: ${selectedSauces.length}');
 
 
-    FoodItemWithDocID temp = _thisFoodItem;
+    _allOLDCategories[index].isSelected =
+    !_allOLDCategories[index].isSelected;
 
-    temp.defaultKastike = selectedSauces;
+    print('_ingredientGroupes.length: ${_allOLDCategories.length}');
 
-    _thisFoodItem = temp;
-    _foodItemController.sink.add(_thisFoodItem);
+    _oldCategoriesControllerFoodUploadAdmin.sink.add(_allOLDCategories);
 
+
+    // print('_thisIngredientItem: $_thisIngredientItem');
+
+    // NewIngredient xTemp = _thisIngredientItem;
+
+    // print('_ingredientGroupes[index].ingredientSubgroupName: ${_ingredientGroupes[index].ingredientSubgroupName}');
+
+    // print('xTemp: $xTemp');
+
+    // xTemp.subgroup = _ingredientGroupes[index].ingredientSubgroupName;
+    // print('xTemp.subgroup: ${xTemp.subgroup}');
+
+    // _thisIngredientItem = xTemp;
+    // _oldCategoriesControllerFoodUploadAdmin.sink.add(_thisIngredientItem);
 
   }
 
-  void getAllCheeseItemsJuustoAdminConstructor() async {
+
+
+
+
+  void getAllOldCategoriesAdminConstructor() async {
 
 
     var snapshot = await _clientAdmin.fetchAllCheesesORjuustoAdmin();
     List docList = snapshot.docs;
 
-    List <CheeseItem> cheeseItems = new List<CheeseItem>();
+    List <OldCategoryItem> cheeseItems = new List<OldCategoryItem>();
     cheeseItems = snapshot.docs.map((documentSnapshot) =>
-        CheeseItem.fromMap
+        OldCategoryItem.fromMap
           (documentSnapshot.data(), documentSnapshot.id)
 
     ).toList();
@@ -836,7 +724,7 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
 
-    List<CheeseItem> cheeseItemIMageUrlUpdated = new List<CheeseItem>();
+    List<OldCategoryItem> cheeseItemIMageUrlUpdated = new List<OldCategoryItem>();
 
 
     for(int i= 0 ;i<cheeseItems.length; i++){
@@ -845,7 +733,7 @@ class AdminFirebaseFoodBloc implements Bloc {
     // cheeseItems.forEach((oneCheeseItem) async {
       String fileName2  = cheeseItems[i].imageURL;
 
-      CheeseItem tempCheeseItem =cheeseItems[i];
+      OldCategoryItem tempCheeseItem =cheeseItems[i];
       print('fileName2 =============> : $fileName2');
 
       StorageReference storageReferenceForIngredientImage = storage
@@ -879,14 +767,14 @@ class AdminFirebaseFoodBloc implements Bloc {
     //x1------------1
 
 
-    cheeseItemIMageUrlUpdated.forEach((oneCheeseItem) {
+    cheeseItemIMageUrlUpdated.forEach((oneOldCategoryItem) {
 
-      print('oneCheeseItem.cheeseItemName: ${oneCheeseItem.cheeseItemName}');
+      print('oneCheeseItem.cheeseItemName: ${oneOldCategoryItem.categoryName}');
 
     });
 
-    _allCheeseItemsFoodUploadAdminBloc  = cheeseItemIMageUrlUpdated;
-    _cheeseItemsControllerFoodUploadAdmin.sink.add(_allCheeseItemsFoodUploadAdminBloc);
+    _allOLDCategories  = cheeseItemIMageUrlUpdated;
+    _oldCategoriesControllerFoodUploadAdmin.sink.add(_allOLDCategories);
 
   }
 
@@ -936,9 +824,9 @@ class AdminFirebaseFoodBloc implements Bloc {
 
     getAllExtraIngredientsAdminConstructor();
 
-    getAllKastikeSaucesAdminConstructor();
+    // getAllKastikeSaucesAdminConstructor();
 
-    getAllCheeseItemsJuustoAdminConstructor();
+    getAllOldCategoriesAdminConstructor();
 
 
 
@@ -956,8 +844,8 @@ class AdminFirebaseFoodBloc implements Bloc {
     _categoryDropDownController.close();
 
     _allExtraIngredientItemsController.close();
-    _sauceItemsControllerFoodUploadAdmin.close();
-    _cheeseItemsControllerFoodUploadAdmin.close();
+    // _sauceItemsControllerFoodUploadAdmin.close();
+    _oldCategoriesControllerFoodUploadAdmin.close();
 
 
 

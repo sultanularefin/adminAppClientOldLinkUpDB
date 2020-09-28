@@ -5,20 +5,21 @@ import 'dart:async';
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
-import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseCheeseBloc.dart';
+import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseOLDCategoryBloc.dart';
 //import 'package:linkupadminolddb/src/BLoC/AdminFirebaseIngredientBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+
 //import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
-//import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+//import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 //import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
-import 'package:linkupadminolddb/src/screens/HomeScreenNewDB2/foodgalleryAdminHome2.dart';
+
 import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 
@@ -71,7 +72,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
     print('_image initially: $_image');
     print('image at getImage: $image');
 
-    final blocAdminCheeseFBase = BlocProvider.of<AdminFirebaseCheeseBloc>(context);
+    final blocAdminCheeseFBase = BlocProvider.of<AdminFirebaseOLDCategoryBloc>(context);
 
 
 
@@ -104,8 +105,8 @@ class _AddDataState extends State<AdminFirebaseCheese> {
   @override
   Widget build(BuildContext context) {
 
-    final blocAdminCheeseFBase =
-    /*final blocAdminFoodFBase = */ BlocProvider.of<AdminFirebaseCheeseBloc>(context);
+    final blocAdminCategoryFBase =
+    /*final blocAdminFoodFBase = */ BlocProvider.of<AdminFirebaseOLDCategoryBloc>(context);
 
 
       print('at _loadingState == false in AdminFirebase Ingredient...');
@@ -139,11 +140,11 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                 padding:
                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
 //              ....
-                child: StreamBuilder<CheeseItem>(
-                    stream: blocAdminCheeseFBase.thisCheeseItemStream, //null,
-                    initialData: blocAdminCheeseFBase.getCurrentCheeseItem,
+                child: StreamBuilder<OldCategoryItem>(
+                    stream: blocAdminCategoryFBase.thisOldCategoryItemStream, //null,
+                    initialData: blocAdminCategoryFBase.getCurrentOldCategoryItem,
                     builder: (context, snapshot) {
-                      final CheeseItem currentIngredient = snapshot.data;
+                      final OldCategoryItem currentIngredient = snapshot.data;
 
                       return Builder(
                           builder: (context) =>
@@ -232,7 +233,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
                                           // onSaved: (val) =>
                                           onChanged: (val) =>
-                                              blocAdminCheeseFBase.setItemName(val),
+                                              blocAdminCategoryFBase.setCategoryName(1),
                                         ),
 
 
@@ -296,8 +297,9 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                     print("price ....: $text");
 
 
-                                                    final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseCheeseBloc>(context);
-                                                    blocAdminIngredientFBase.setPrice(text);
+                                                    final blocAdminIngredientFBase =
+                                                    BlocProvider.of<AdminFirebaseOLDCategoryBloc>(context);
+                                                    // blocAdminIngredientFBase.setPrice(text);
 
                                                   },
                                                   onTap: () {
@@ -343,7 +345,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
 
 
-                                                  blocAdminCheeseFBase.setUser(user.email);
+                                                  blocAdminCategoryFBase.setUser(user.email);
 
 
                                                   if (form.validate()) {
@@ -361,7 +363,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                         ),
                                                       )),);
 
-                                                    int loginRequiredStatus =  await blocAdminCheeseFBase.save();
+                                                    int loginRequiredStatus =  await blocAdminCategoryFBase.save();
 
 
                                                     if (loginRequiredStatus == 0) {

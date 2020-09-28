@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 
-import 'package:linkupadminolddb/src/DataLayer/models/CheeseItem.dart';
+
 import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/NewCategoryItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/SauceItem.dart';
+import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
 
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -91,11 +91,11 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
 
-  Widget _buildOneCheckBoxCheeseItem(CheeseItem ct, int index,String token) {
+  Widget _buildOneCheckBoxCheeseItem(OldCategoryItem ct, int index,String token) {
 
-    print('at _buildOneCheckBoxCheeseItem .... ${ct.cheeseItemName}  ct.isSelected ${ct.isSelected}');
+    print('at _buildOneCheckBoxCheeseItem .... ${ct.categoryName}  ct.isSelected ${ct.isSelected}');
 
-//    return Text('${ct.cheeseItemName}');
+//    return Text('${ct.categoryName}');
 
     return Container(
         child:  ct.isSelected ==true
@@ -144,17 +144,17 @@ class _AddDataState extends State<AdminFirebaseFood> {
 //                    color:Colors.red,
                     child: CheckboxListTile(
                         title:
-                        // Text('${ct.cheeseItemName}'),
+                        // Text('${ct.categoryName}'),
 
                         Text(
-                          ((ct.cheeseItemName == null) ||
-                              (ct.cheeseItemName.length == 0))
+                          ((ct.categoryName == null) ||
+                              (ct.categoryName.length == 0))
                               ? ''
-                              : ct.cheeseItemName.length > 19
-                              ? ct.cheeseItemName
+                              : ct.categoryName.length > 19
+                              ? ct.categoryName
                               .substring(0, 15) +
                               '...'
-                              : ct.cheeseItemName,
+                              : ct.categoryName,
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           style: TextStyle(
@@ -167,7 +167,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
                           final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-                          blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
+                          // blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
 
                         }
 
@@ -184,7 +184,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
               print('....at onTap () 1 ');
 
               final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
+              // blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
 
             },
           ),
@@ -233,17 +233,17 @@ class _AddDataState extends State<AdminFirebaseFood> {
 //                    color:Colors.red,
                     child: CheckboxListTile(
                         title:
-                        //Text('${ct.cheeseItemName}'),
+                        //Text('${ct.categoryName}'),
 
                         Text(
-                          ((ct.cheeseItemName == null) ||
-                              (ct.cheeseItemName.length == 0))
+                          ((ct.categoryName == null) ||
+                              (ct.categoryName.length == 0))
                               ? ''
-                              : ct.cheeseItemName.length > 19
-                              ? ct.cheeseItemName
+                              : ct.categoryName.length > 19
+                              ? ct.categoryName
                               .substring(0, 15) +
                               '...'
-                              : ct.cheeseItemName,
+                              : ct.categoryName,
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           style: TextStyle(
@@ -256,7 +256,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
                           final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-                          blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
+                          // blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
 
                         }
 
@@ -271,7 +271,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
             onTap: () {
               print('....at onTap () 2 ');
               final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
+              // blocAdminIngredientFBase.toggoleMultiSelectCheeseValue(index);
 
             },
           ),
@@ -468,192 +468,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
 
-  Widget _buildOneCheckBoxSauceItem(SauceItem ct, int index, String token) {
-
-    print('.....token : $token');
-    return Container(
-        child: ct.isSelected ==true
-
-
-            ? Container(
-//          color: Colors.lightGreenAccent,
-          margin: EdgeInsets.fromLTRB(2, 0, 2, 3),
-          width: displayWidth(context) / 2.8,
-          child: InkWell(
-
-
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  style: BorderStyle.solid,
-                  width: 0.2,
-                ),
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-              ),
-              child:
-              Column(
-                children: [
-
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0,12,0,0),
-                    width: displayWidth(context) /  9,
-                    height: displayWidth(context) / 8,
-                    child:
-                    ClipOval(
-                      child: CachedNetworkImage(
-//                  imageUrl: dummy.url,
-                        imageUrl: ct.imageURL + token,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                        new CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
-
-//                  Text('${ct.ingredientName}'),
-
-                  Container(
-//                    color:Colors.red,
-                    child: CheckboxListTile(
-                        title:
-//                        Text('${ct.sauceItemName}'),
-
-                        Text(
-                          ((ct.sauceItemName == null) ||
-                              (ct.sauceItemName.length == 0))
-                              ? ''
-                              : ct.sauceItemName.length > 19
-                              ? ct.sauceItemName
-                              .substring(0, 15) +
-                              '...'
-                              : ct.sauceItemName,
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        value: ct.isSelected,
-                        onChanged: (val) {
-
-
-                          final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-                          blocAdminIngredientFBase.toggoleMultiSelectSauceItemValue(index);
-
-                        }
-
-                    ),
-                  ),
-
-                ],
-              ),
-
-
-
-            ),
-            onTap: () {
-              print('....at onTap () 1 ');
-
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectSauceItemValue(index);
-
-            },
-          ),
-        )
-            : Container(
-//          color: Colors.blue,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              style: BorderStyle.solid,
-              width: 0.2,
-            ),
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          ),
-          margin: EdgeInsets.fromLTRB(2, 0, 2, 3),
-          // margin: EdgeInsets.fromLTRB(5, 2, 5, 5),
-          width: displayWidth(context) / 2.8,
-          //color:Colors.red,
-          child: InkWell(
-
-            child: Container(
-
-              child:
-
-              Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0,12,0,0),
-                    width: displayWidth(context) / 9,
-                    height: displayWidth(context) /8,
-                    child:
-                    ClipOval(
-                      child: CachedNetworkImage(
-//                  imageUrl: dummy.url,
-                        imageUrl: ct.imageURL + token,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                        new CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
-
-
-                  Container(
-//                    color:Colors.red,
-                    child: CheckboxListTile(
-                        title:
-//                        Text('${ct.sauceItemName}'),
-
-                        Text(
-                          ((ct.sauceItemName == null) ||
-                              (ct.sauceItemName.length == 0))
-                              ? ''
-                              : ct.sauceItemName.length > 19
-                              ? ct.sauceItemName
-                              .substring(0, 15) +
-                              '...'
-                              : ct.sauceItemName,
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-
-                        value: ct.isSelected,
-                        onChanged: (val) {
-
-
-                          final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-                          blocAdminIngredientFBase.toggoleMultiSelectSauceItemValue(index);
-
-                        }
-
-                    ),
-                  ),
-
-//                  Text('${ct.ingredientName}')
-
-                ],
-              ),
-            ),
-            onTap: () {
-              print('....at onTap () 2 ');
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectSauceItemValue(index);
-
-            },
-          ),
-        ));
-
-
-  }
-
+  
 
 
   Future getImage() async {
@@ -885,12 +700,12 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                                 child:
 
 
-                                                StreamBuilder<List<NewCategoryItem>>(
+                                                StreamBuilder<List<OldCategoryItem>>(
                                                   stream: blocAdminFoodFBase.getCategoryDropDownControllerStream,
                                                   initialData: blocAdminFoodFBase.getCategoryTypesForDropDown,
                                                   builder: (context, snapshot) {
 
-                                                    final List<NewCategoryItem> allCategories = snapshot.data;
+                                                    final List<OldCategoryItem> allCategories = snapshot.data;
 
 
 //                                                    allCategories
@@ -1084,18 +899,18 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                         child:
 
 
-                                        StreamBuilder<List<CheeseItem>>(
-                                          stream: blocAdminFoodFBase.getCheeseItemsStream ,
-                                          initialData:blocAdminFoodFBase.getAllCheeseItemsAdminFoodUpload,
+                                        StreamBuilder<List<OldCategoryItem>>(
+                                          stream: blocAdminFoodFBase.getOldCategoriesStream ,
+                                          initialData:blocAdminFoodFBase.getAllOLDCategorisAdminFoodUpload,
                                           builder: (context, snapshot) {
-                                            final List<CheeseItem> allCheeseItems = snapshot.data;
+                                            final List<OldCategoryItem> allOldCategories = snapshot.data;
 
-                                            logger.w('allCheeseItems.length: ${allCheeseItems.length}');
+                                            logger.w('allCheeseItems.length: ${allOldCategories.length}');
 
                                             return
 
                                               GridView.builder(
-                                                itemCount: allCheeseItems.length,
+                                                itemCount: allOldCategories.length,
                                                 gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
                                                   //Above to below for 3 not 2 Food Items:
                                                   maxCrossAxisExtent: 160,
@@ -1109,7 +924,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                                 itemBuilder: (_, int index) {
 
                                                   return _buildOneCheckBoxCheeseItem(
-                                                      allCheeseItems[index], index,token);
+                                                      allOldCategories[index], index,token);
                                                 },
                                               );
 
@@ -1125,65 +940,10 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
                                       // select sauce begins here....
-                                      Container(
-
-                                        height:60,
-                                        color: Color(0xffFFE18E),
-                                        child: Text('select Sauces for food: ',
-
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 34,
-                                              fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                                              color: Colors.redAccent,
-                                              fontFamily: 'Itim-Regular',
-
-                                            )
-                                        ),
-                                      ),
 
 
-                                      Container(
-                                        height: displayHeight(context) / 5,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 20, 0, 20),
-
-                                        child:
-                                        StreamBuilder<List<SauceItem>>(
-                                          stream: blocAdminFoodFBase.getSauceItemsStream ,
-                                          initialData:blocAdminFoodFBase.getAllSauceItemsFoodUploadAdmin,
-                                          builder: (context, snapshot) {
-                                            final List<SauceItem> allSauces = snapshot.data;
-
-                                            logger.w('allSauces.length: ${allSauces.length}');
-                                            return
-                                              GridView.builder(
-                                                itemCount: allSauces.length,
-                                                gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                                  //Above to below for 3 not 2 Food Items:
-                                                  maxCrossAxisExtent: 160,
-                                                  crossAxisSpacing: 23,
-                                                  childAspectRatio: 150 / 195, /* (h/vertical)*/
-                                                  mainAxisSpacing: 23,
-                                                ),
-
-                                                shrinkWrap: false,
-//        reverse: true,
-                                                itemBuilder: (_, int index) {
-
-                                                  return _buildOneCheckBoxSauceItem(
-                                                      allSauces[index], index,token);
-                                                },
-                                              );
 
 
-                                          }
-
-                                          ,
-                                        ),
-                                      ),
 
                                       // select sauce ends here....
 
