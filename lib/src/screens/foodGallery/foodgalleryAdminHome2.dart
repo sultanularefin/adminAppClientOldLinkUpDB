@@ -13,7 +13,7 @@ import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseCheeseBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseFoodBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseIngredientBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseSauceBloc.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 // BLOC'S IMPORT BEGIN HERE:
 // import 'package:linkupadminolddb/src/BLoC/app_bloc.dart';
@@ -619,14 +619,23 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
           .join(', ');
     }
   }
+  _launchURL() async {
+    const url = 'https://flutter.dev';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
+  // 911
 
   Widget titleWidget() {
     return RichText(
       textAlign: TextAlign.justify,
       text: TextSpan(
           text: ' you will need an '
-              'emulator or big tablet for using this application,',
+              '10-inch emulator or tablet for using this application,',
           style:
           TextStyle( //Theme.of(context).textTheme.display1,
             fontSize: 30,

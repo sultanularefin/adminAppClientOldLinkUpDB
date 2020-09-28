@@ -72,6 +72,7 @@ dependencies:
   intl: ^0.16.1
   oktoast: ^2.3.2
   platform_action_sheet: ^0.0.3
+  url_launcher: ^5.7.2
 #  esc_pos_bluetooth: ^0.2.8
 #  esc_pos_utils: ^0.3.6
 #  dotted_border: ^1.0.5
