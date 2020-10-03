@@ -194,6 +194,16 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
 
 
+  Widget about(BuildContext context){
+
+    return SingleChildScrollView(
+        child:
+          titleWidget(),
+
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -216,14 +226,9 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
           child: Scaffold(
             key: _scaffoldKeyFoodGallery,
-//          backgroundColor: Colors.purpleAccent,
-
-//      resizeToAvoidBottomPadding: false ,
-// appBar: AppBar(title: Text('Food Gallery')),
-
             appBar: AppBar(
-              // backgroundColor: Colors.deepOrange,
 
+              automaticallyImplyLeading:false,
               toolbarHeight: 85,
               elevation: 0,
               titleSpacing: 0,
@@ -236,9 +241,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                     MediaQuery.of(context).size.width / 3.8,
 
                 color: Color(0xffFFFFFF),
-//                              color:Colors.purpleAccent,
 
-//                      color: Color.fromARGB(255, 255,255,255),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -266,7 +269,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                           Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
-                            height: displayHeight(context) / 15,
+                            height: displayHeight(context) / 10,   // for smaller device from /15 to /10 ....
+                            // height: displayHeight(context) / 15,
                             child: Container(
                               padding: EdgeInsets.fromLTRB(0, 1, 0, 0),
                               child: Column(
@@ -310,34 +314,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                           alignment: Alignment.center,
                           width: displayWidth(context) / 4.7,
                           child:Container(),
-                          /*
-                          Row(
-                            children: [
-                              Text(
-                                'about: '.toUpperCase(),
-                                style: TextStyle(
-                                  // color: Colors.blueGrey,
-                                  color: Color(0xff07D607),
-                                  fontFamily: 'poppins',
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 28,
-                                ),
-                              ),
 
-                              Text(
-                                'check below'.toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.pinkAccent,
-                                  fontFamily: 'poppins',
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 19,
-                                ),
-                              ),
-                            ],
-                          ),
-                          */
-                          //
-                          // Text:description:,
                         )
 
                     ),
@@ -349,78 +326,90 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
               ),
             ),
 
-            body: SingleChildScrollView(
-              child: Container(
+            body:  Container(
 //              color:Colors.lightGreenAccent,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        color: Colors.white,
-                        width: displayWidth(context) -
-                            MediaQuery.of(context).size.width / 3.8,
-                        height: displayHeight(context) + kToolbarHeight + 10,
-                        child: navigationButtonsAndDescription(context),
-                      ),
-                      Container(
-                        height: displayHeight(context) + kToolbarHeight + 10,
-                        width: MediaQuery.of(context).size.width / 3.8,
-                        color: Color(0xffFFE18E),
-                        child:
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("2020",
-                              // .toUpperCase(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    // color: Colors.white,
 
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontFamily: 'poppins',
-                                fontWeight: FontWeight.normal,
-                                fontSize: 30,
-                              ),
-                            ),
+                    width: displayWidth(context) -
+                        MediaQuery.of(context).size.width / 3.8,
+                    height: displayHeight(context) + kToolbarHeight + 10 ,
+                    child: Column(
+                      children: [
 
-                            Text(
-                              '\u00a9',
+                        Container(child:displayHeight(context)>770?about(context):
+                        Container(
+                          child: Text('the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
+                              'Tab S6 or emulators where screen size is 10-inch ) , or check the '
+                              'login page for details.'),
+                        )
+                        ),
+                        navigationButtonsAndDescription(context),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: displayHeight(context) + kToolbarHeight + 10,
+                    width: MediaQuery.of(context).size.width / 3.8,
+                    color: Color(0xffFFE18E),
+                    child:
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text("2020",
+                          // .toUpperCase(),
 
-                              // .toUpperCase(),
-
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontFamily: 'poppins',
-                                fontWeight: FontWeight.normal,
-                                fontSize: 25,
-                              ),
-                            ),
-
-                            // SizedBox(height: 100),
-
-                            Text(
-                              'Arefin',
-                              // .toUpperCase(),
-
-                              maxLines: 3,
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontFamily: 'poppins',
-                                fontWeight: FontWeight.normal,
-                                fontSize: 25,
-                              ),
-                            ),
-                          ],
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontFamily: 'poppins',
+                            fontWeight: FontWeight.normal,
+                            fontSize: 30,
+                          ),
                         ),
 
+                        Text(
+                          '\u00a9',
+
+                          // .toUpperCase(),
+
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontFamily: 'poppins',
+                            fontWeight: FontWeight.normal,
+                            fontSize: 25,
+                          ),
+                        ),
+
+                        // SizedBox(height: 100),
+
+                        Text(
+                          'Arefin',
+                          // .toUpperCase(),
+
+                          maxLines: 3,
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontFamily: 'poppins',
+                            fontWeight: FontWeight.normal,
+                            fontSize: 25,
+                          ),
+                        ),
+                      ],
+                    ),
 
 
-                      ),
-                    ],
-                  )),
+
+                  ),
+                ],
+              ),
             ),
 
             endDrawer: Drawer(
@@ -471,7 +460,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                           child: Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child:
                                 Icon(
                                   Icons.portrait,
@@ -489,7 +478,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                               Container(
 //                          width: displayWidth(context)/3.9,
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
 
                                 child: Text(
 //                                  'maksamatta'.toUpperCase(),
@@ -508,24 +497,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                           )),
                       onTap: () {
 
-
                         return logout(context);
-
-/*
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            opaque: false,
-                            transitionDuration: Duration(milliseconds: 900),
-                            pageBuilder: (_, __, ___) =>
-                                BlocProvider<IdentityBloc>(
-                                  bloc: IdentityBloc(),
-                                  child: WelcomePage(),
-                                ),
-                          ),
-                        );
-
-                        */
-
 
                       },
                     ),
@@ -544,7 +516,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                               Container(
 //                          width: displayWidth(context)/3.9,
-                                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
 
                                 child: Text(
 //                                  'maksamatta'.toUpperCase(),
@@ -660,7 +632,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
   Widget titleWidget() {
     return
-       RichText(
+      RichText(
         textAlign: TextAlign.justify,
         text: TextSpan(
             text: 'the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
@@ -699,121 +671,40 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
   Widget navigationButtonsAndDescription(BuildContext context) {
     // final foodGalleryBloc = BlocProvider.of<FoodGalleryBloc>(context);
 
-    return SingleChildScrollView(
-      child: Container(
+    return Container(
+      color: Colors.purpleAccent,
+      height: displayHeight(context) + kToolbarHeight + 10 -360 ,
 
-        child:
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-
-            Container(
-              // color:Colors.pink,
-                height:
-                displayHeight(context)/3,
-                // 6 for spacing padding at top for .
-                width: displayWidth(context)-
-
-                    (MediaQuery.of(context).size.width / 3.8)
-                ,
-                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-
-                padding:
-                EdgeInsets.only(left: 4, top: 3, bottom: 3, right: 3),
-                child:
-                Container(
-
-                  alignment: Alignment.center,
-                  width: displayWidth(context) / 1.7,
-                  decoration: BoxDecoration(
-                    // color: Color(0xffFFE18E),
-                    color:Colors.blueGrey,
-
-                      border: Border.all(
-                        color: Colors.black,
-                        style: BorderStyle.solid,
-                        width: 0.2,
-                      ),
-
-                      borderRadius: BorderRadius.all(Radius.circular(14)),
-                    ),
+      child:
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
 
 
 
-                    // color:Colors.blueGrey,
+          Container(
 
-                    child:  Column(
+            height: displayHeight(context) + kToolbarHeight + 10 -360 ,
+            // height: (displayHeight (context))-
+            //     (kToolbarHeight +
+            //         6 + displayHeight(context)/6),
+            // 6 for spacing padding at top for .
+            width: displayWidth(context)
+                -(200
+                    -(MediaQuery.of(context).size.width / 3.8)
+                ),
 
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          // 'about this app: '.toUpperCase(),
-                          'about this app: ',
-                          style: TextStyle(
-                            // color: Colors.blueGrey,
-                            color: Color(0xff07D607),
-                            fontFamily: 'poppins',
-                            fontWeight: FontWeight.normal,
-                            fontSize: 39,
-                          ),
-                        ),
-
-                        Container(
-                          padding:
-                          EdgeInsets.only(left: 4, top: 5, bottom: 0, right: 4),
-
-                          child: Text(
-                            // 'order app for old db clent app also uses the same db'.toUpperCase(),
-                            'this application is an admin app for uploading food items for a restaurant system,'
-                                ' it is based on, the new database. '
-                                'The same database is used by the client application which '
-                                'is partially developped and also the new order app.',
-
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-
-                              color: Colors.black87,
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.normal,
-                              fontSize: 25,
-                            ),
-                          ),
-                        ),
-
-                       titleWidget()
-                      ],
-                    ),
-
-                  //
-                  // Text:description:,
-                )
-
-            ),
-
-
-            Container(
-
-              height: (displayHeight (context))-
-                  (kToolbarHeight +
-                      6 + displayHeight(context)/4),
-              // 6 for spacing padding at top for .
-              width: displayWidth(context)
-                  -(200
-                      -(MediaQuery.of(context).size.width / 3.8)
-                  ),
-
-              child: navigationButtonsWidget(),
+            child: navigationButtonsWidget(),
 
 
 
-            ),
-          ],
-        ),
-
-
+          ),
+        ],
       ),
+
+
+
     );
 
   }
@@ -844,7 +735,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child:Row(
                         children: [
                           Icon(
@@ -864,7 +755,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                     Container(
 //                          width: displayWidth(context)/3.9,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
 
                       child: Text(
                         'add new food'.toUpperCase(),
@@ -988,7 +879,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child:Row(
                         children: [
                           Icon(
@@ -1016,10 +907,10 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                     Container(
 //                          width: displayWidth(context)/3.9,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
 
                       child: Text(
-                        'add new ngredient '.toUpperCase(),
+                        'add new ingredient ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 18,
@@ -1100,7 +991,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child:Row(
                         children: [
                           Icon(
@@ -1120,7 +1011,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                     Container(
 //                          width: displayWidth(context)/3.9,
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
 
                       child: Text(
                         'add new Category'.toUpperCase(),

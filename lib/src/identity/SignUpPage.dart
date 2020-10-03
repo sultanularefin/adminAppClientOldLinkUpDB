@@ -111,15 +111,6 @@ class _SignUpPageState extends State<SignUpPage> {
       });
       final FirebaseAuth _auth = FirebaseAuth.instance;
 
-      // await authService.signUpWithEmailAndPassword(emailEditingController.text,
-      //     passwordEditingController.text).then((result){
-      //
-      //
-      // }
-      // UserCredential result = await _auth.
-
-
-
 
       final identityBlocLoginPage =
       BlocProvider.of<IdentityBloc>(context);
@@ -128,41 +119,13 @@ class _SignUpPageState extends State<SignUpPage> {
           passwordEditingController.text).then((result){
         if(result != null){
 
-
-
-          // Map<String,/*String*/ dynamic> userDataMap = {
-          //   "userName" : usernameEditingController.text,
-          //   "userEmail" : emailEditingController.text,
-          //   // "sequence_no":3,
-          // };
-
-          //---1
-
           User _currentFBUser;
           User fireBaseUserRemote = result.user;
 
-
           _currentFBUser = fireBaseUserRemote;
-
-
-
 
           _saveUser(fireBaseUserRemote.uid,fireBaseUserRemote,
               emailEditingController.text.trim(), passwordEditingController.text.trim());
-
-          //---1
-
-
-
-         // databaseMethods.addUserInfo(userDataMap);
-
-
-
-          //
-          // HelperFunctions.saveUserLoggedInSharedPreference(true);
-          // HelperFunctions.saveUserNameSharedPreference(usernameEditingController.text);
-          // HelperFunctions.saveUserEmailSharedPreference(emailEditingController.text);
-
 
 
           Navigator.of(context).pushAndRemoveUntil(
@@ -177,10 +140,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 );
 
               }),(Route<dynamic> route) => false);
-
-
-
-
 
         }
       });

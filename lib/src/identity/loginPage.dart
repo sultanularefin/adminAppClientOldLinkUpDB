@@ -471,24 +471,7 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-  Widget titleWidget1() {
-    return RichText(
-      textAlign: TextAlign.justify,
-      text: TextSpan(
-        text: 'the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
-            'Tab S6 or emulators where screen size is 10-inch ) ',
-        style:
-        TextStyle( //Theme.of(context).textTheme.display1,
-          fontSize: 30,
-          fontWeight: FontWeight.w700,
-          color:
-          //Color(0xffe46b10),
-          Colors.lightGreenAccent,
-//            Colors.deepOrange,
-        ),
-      ),
-    );
-  }
+
 
 
   Widget titleWidget() {
