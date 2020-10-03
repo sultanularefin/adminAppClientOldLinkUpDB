@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
 // import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
@@ -15,6 +16,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 //MODELS
 import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
+import 'package:mime_type/mime_type.dart';
 
 
 class AdminFirebaseIngredientBloc implements Bloc {
@@ -22,28 +24,13 @@ class AdminFirebaseIngredientBloc implements Bloc {
     printer: PrettyPrinter(),
   );
 
-  bool _isDisposedIngredients = false;
-
-  bool _isDisposedFoodItems = false;
-
-  bool _isDisposedCategories = false;
-
-  bool _isDisposed_known_last_sequenceNumber = false;
-
-  List<OldCategoryItem> _foodCategoryTypesForMultiSelect;
-  List<OldCategoryItem> get getCategoryTypesForDropDown =>
-      _foodCategoryTypesForMultiSelect;
-  final _categoryMultiSelectController =
-  StreamController<List<OldCategoryItem>>.broadcast();
-
-  Stream<List<OldCategoryItem>> get getCategoryMultiSelectControllerStream =>
-      _categoryMultiSelectController.stream;
+   bool _isDisposedIngredients = false;
 
 
 
 
-
-  File _image2;
+  // File _image2;
+  PickedFile _image2;
   String _firebaseUserEmail;
 
 
@@ -68,7 +55,7 @@ class AdminFirebaseIngredientBloc implements Bloc {
       _ingredientItemController.stream;
 // main foodItem bloc component ends here...
   final FirebaseStorage storage =
-  FirebaseStorage(storageBucket: 'gs://kebabbank-37224.appspot.com');
+  FirebaseStorage(storageBucket: 'gs://linkupadminolddbandclientapp.appspot.com');
 
   String itemId;
 
@@ -76,10 +63,17 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
   bool newsletter = false;
 
-  void setImage(File localURL) {
-    print('localURL : $localURL');
 
+  void setImage(PickedFile localURL) {
+  // void setImage(PickedFile localURL) {
+
+    print('localURL : $localURL');
     _image2 = localURL;
+
+
+    // print('localURL : $localURL');
+    //
+    // _image2 = localURL;
   }
 
   void setUser(var param) {
@@ -98,13 +92,36 @@ class AdminFirebaseIngredientBloc implements Bloc {
     _ingredientItemController.sink.add(_thisIngredientItem);
   }
 
-  void setItemName(var param) {
+  String shortendCase(var text) {
 
-    logger.w('ingredient Name: $param');
+
+    print("text: $text");
+    if (text is num) {
+      return text.toString();
+    } else if (text == null) {
+      return '';
+    } else if (text.length <= 1) {
+      return text.toUpperCase();
+    } else {
+      return text
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join('_');
+    }
+  }
+
+
+  void setIngredientName(var ingredientName) {
+
+    logger.w('ingredient Name: $ingredientName');
 
     NewIngredient temp = new NewIngredient();
     temp = _thisIngredientItem;
-    temp.ingredientName = param;
+    temp.ingredientName = ingredientName;
+    temp.ingredientNameShort =  shortendCase(ingredientName);
+
+    // temp.fireStoreFieldName = shortendCase(shortCategoryName);
+
 
     _thisIngredientItem = temp;
 
@@ -148,36 +165,6 @@ class AdminFirebaseIngredientBloc implements Bloc {
     }
   }
 
-  void toggoleMultiSelectCategoryValue(int index) {
-    _foodCategoryTypesForMultiSelect[index].isSelected =
-    !_foodCategoryTypesForMultiSelect[index].isSelected;
-
-    _categoryMultiSelectController.sink.add(_foodCategoryTypesForMultiSelect);
-
-    List<String> extraIngredientOf2 = new List<String>();
-    _foodCategoryTypesForMultiSelect.forEach((newCategoryItem) {
-
-
-
-
-      if(newCategoryItem.isSelected){
-        extraIngredientOf2.add(newCategoryItem.categoryName);
-      }
-    });
-
-    print('extraIngredientOf2.length: ${extraIngredientOf2.length}');
-
-
-   NewIngredient temp = _thisIngredientItem;
-
-   temp.extraIngredientOf = extraIngredientOf2;
-
-    _thisIngredientItem = temp;
-    _ingredientItemController.sink.add(_thisIngredientItem);
-
-
-  }
-
   Future<String> _uploadFile(String itemId, itemName) async {
     print('at _uploadFile: ');
 
@@ -189,10 +176,19 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
     print('_image2: $_image2');
 
+    File x = File(_image2.path);
+
+    String mimeType = mime(_image2.path);
+    logger.i('mimeType................... $mimeType');
+
+    if (mimeType == null) mimeType = 'text/plain; charset=UTF-8';
+
+
     StorageUploadTask uploadTask = storageReference_1.putFile(
-      _image2,
+      // _image2,
+      File(_image2.path),
       StorageMetadata(
-          contentType: 'image/jpg',
+          contentType: mimeType,
           cacheControl: 'no-store', // disable caching
           customMetadata: {
             'itemName': itemName,
@@ -247,12 +243,12 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
   }
 
-  void getLastSequenceNumberForAdminIngredient() async {
+  void getLastSequenceNumberForAdminIngredientOld() async {
     print('at get Last SequenceNumberFromFireBaseFoodItems()');
 
 //    if (_isDisposed_known_last_sequenceNumber == false) {
     int lastIndex =
-    await _clientAdmin.getLastSequenceNumberForAdminIngredient2();
+    await _clientAdmin.getLastSequenceNumberForAdminIngredientOld();
 
     logger.i('lastIndex: $lastIndex');
 
@@ -265,28 +261,8 @@ class AdminFirebaseIngredientBloc implements Bloc {
   }
 
   Future<int> saveIngredientItem() async {
-    //  save() {
 
-//    pizza
 
-//    kebab
-//
-//    jauheliha_kebab_vartaat
-//
-//    salaatti_kasvis
-//
-//    lasten_menu
-//
-//    juomat
-
-    if((_thisIngredientItem.extraIngredientOf==null) ||(_thisIngredientItem.extraIngredientOf.length==0)){
-      return 4;
-    }
-
-    else if((_thisIngredientItem.subgroup==null) || (_thisIngredientItem.subgroup.length==0)){
-      return 5;
-    }
-    else {
       logger.i('at save ...');
 
 
@@ -297,16 +273,16 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
       if (_image2 != null) {
         imageURL =
-        await _uploadFile(itemId, _thisIngredientItem.ingredientName);
+        await _uploadFile(itemId, _thisIngredientItem.ingredientNameShort);
       } else {
         print('_image2= $_image2');
 
         String dummyIngredientImage =
-            'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg';
+            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2Fingredient404.jpg';
 
         imageURL = Uri.decodeComponent(dummyIngredientImage
             .replaceAll(
-            'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
             '')
             .replaceAll('?alt=media', ''));
       }
@@ -321,18 +297,10 @@ class AdminFirebaseIngredientBloc implements Bloc {
       print('_thisIngredientItem.ingredientName 1st : ${_thisIngredientItem
           .ingredientName}');
 
-//    String newIngredientName = titleCase(_thisIngredientItem.ingredientName);
-
-
-//  print('_thisIngredientItem.ingredientName 2nd : ${_thisIngredientItem.ingredientName}');
-
-
       _thisIngredientItem.itemId = itemId;
 
       String documentID = await _clientAdmin.insertIngredientItems(
           _thisIngredientItem, _thisIngredientItem.sequenceNo, _firebaseUserEmail, imageURL);
-
-      // _thisIngredientItem, _firebaseUserEmail);
 
       print('added document: $documentID');
 
@@ -341,107 +309,30 @@ class AdminFirebaseIngredientBloc implements Bloc {
 
       _thisIngredientItem.price = 0;
       _thisIngredientItem.ingredientName = '';
-      _thisIngredientItem.extraIngredientOf = null;
+      // _thisIngredientItem.extraIngredientOf = null;
       _thisIngredientItem.sequenceNo= _thisIngredientItem.sequenceNo+1;
       _ingredientItemController.sink.add(_thisIngredientItem);
 
 
       return (1);
     }
-  }
+
 
 //    List<NewCategoryItem>_allCategoryList=[];
   final _clientAdmin = FirebaseClientAdmin();
 
 
 
-  void initiateCategoryForMultiSelectFoodCategory() {
-    OldCategoryItem pizza = new OldCategoryItem(
-      categoryName: 'pizza',
-      sequenceNo: 0,
-      documentID: 'pizza',
-      fireStoreFieldName: 'pizza',
-    );
 
-    OldCategoryItem kebab = new OldCategoryItem(
-      categoryName: 'kebab',
-      sequenceNo: 1,
-      documentID: 'kebab',
-      fireStoreFieldName: 'pizza',
-    );
-
-    OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(
-      categoryName: 'jauheliha kebab & vartaat',
-      sequenceNo: 2,
-      documentID: 'jauheliha_kebab_vartaat',
-      fireStoreFieldName: 'jauheliha_kebab_vartaat',
-    );
-
-    OldCategoryItem salaatti_kasvis = new OldCategoryItem(
-      categoryName: 'salaatti & kasvis',
-      sequenceNo: 3,
-      documentID: 'salaatti_kasvis',
-      fireStoreFieldName: 'salaatti_kasvis',
-    );
-
-    OldCategoryItem hampurilainen = new OldCategoryItem(
-      categoryName: 'hampurilainen',
-      sequenceNo: 4,
-      documentID: 'hampurilainen',
-      fireStoreFieldName: 'hampurilainen',
-    );
-
-    OldCategoryItem lasten_menu = new OldCategoryItem(
-      categoryName: 'lasten menu',
-      sequenceNo: 5,
-      documentID: 'lasten_menu',
-      fireStoreFieldName: 'lasten_menu',
-    );
-
-    OldCategoryItem juomat = new OldCategoryItem(
-      categoryName: 'juomat',
-      sequenceNo: 6,
-      documentID: 'juomat',
-      fireStoreFieldName: 'juomat',
-    );
-
-    List<OldCategoryItem> categoryItems2 = new List<OldCategoryItem>();
-
-    categoryItems2.addAll([
-      pizza,
-      kebab,
-      jauheliha_kebab_vartaat,
-      salaatti_kasvis,
-      hampurilainen,
-      lasten_menu,
-      juomat
-    ]);
-
-    _foodCategoryTypesForMultiSelect = categoryItems2;
-    _categoryMultiSelectController.sink.add(_foodCategoryTypesForMultiSelect);
-  }
   // CONSTRUCTOR BIGINS HERE..
 
   AdminFirebaseIngredientBloc() {
     print('at AdminFirebaseIngredientBloc  ......()');
 
-    getLastSequenceNumberForAdminIngredient();
-
-    initiateCategoryForMultiSelectFoodCategory();
-
-//    initiateCategoryDropDownList();
-
-//    getLastSequenceNumberFromFireBaseFoodItems();
-
-    // need to use this when moving to food Item Details page.
+    getLastSequenceNumberForAdminIngredientOld();
 
     print('at FoodGalleryBloc()');
 
-//    getAllIngredients();
-    // invoking this here to make the transition in details page faster.
-
-//    this.getAllFoodItems();
-//    this.getAllCategories();
   }
 
   // CONSTRUCTOR ENDS HERE..
@@ -450,13 +341,6 @@ class AdminFirebaseIngredientBloc implements Bloc {
   @override
   void dispose() {
     _ingredientItemController.close();
-//    _foodItemController.close();
-    _categoryMultiSelectController.close();
 
-
-    // _isDisposedIngredients = true;
-    // _isDisposedFoodItems = true;
-    // _isDisposedCategories = true;
-    // _isDisposed_known_last_sequenceNumber = true;
   }
 }

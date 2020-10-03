@@ -69,7 +69,10 @@ class _AddDataState extends State<AdminFirebaseFood> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _AddDataState({firestore});
-  File _image;
+  // File _image;
+  PickedFile _image;
+
+
 
 
   final _formKey = GlobalKey<FormState>();
@@ -79,15 +82,9 @@ class _AddDataState extends State<AdminFirebaseFood> {
   String token= '';
 
 
+  TextEditingController foodItemEditingController = new TextEditingController();
+  // TextEditingController shortCategoryEditingController = new TextEditingController();
 
-
-//  void setCategoryValue(int categoryValue){
-//
-//    setState(() {
-//      _currentCategory =categoryValue;
-//    });
-//
-//  }
 
 
 
@@ -476,7 +473,9 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
     final blocAdminFoodFBase = BlocProvider.of<AdminFirebaseFoodBloc>(context);
 
-    var image = await ImagePicker.pickImage(
+    final picker = ImagePicker();
+
+    var image = await picker.getImage(
 //        source: ImageSource.camera
         source:ImageSource.gallery
     );
@@ -556,6 +555,12 @@ class _AddDataState extends State<AdminFirebaseFood> {
                     token = currentFood.urlAndTokenForStorageImage;
                     _currentCategory = currentFood.categoryIndex == null?0:currentFood.categoryIndex;
 
+
+
+                    if(currentFood.itemName==''){
+                      foodItemEditingController.clear();
+                    }
+
                     return Builder(
                         builder: (context) =>
                             Form(
@@ -619,7 +624,8 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
                                             child: new Container(
                                               padding: const EdgeInsets.all(0.0),
-                                              child: Image.file(_image),
+                                              // child: Image.file(_image),
+                                              child: Image.file(File(_image.path)),
 
                                             )
 
@@ -643,6 +649,8 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
                                           ),
                                         ),
+
+                                        controller: foodItemEditingController,
                                         validator: (value) {
                                           return value.isEmpty? 'please enter the fooditem name.' : null;
 //                                          if (value.isEmpty) {
@@ -653,24 +661,6 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                             blocAdminFoodFBase.setItemName(val),
 
                                       ),
-
-                                      /*
-                                        Container(child:Text('${currentFood.sequenceNo}',
-
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 34,
-                                              fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                                              color: Colors.redAccent,
-                                              fontFamily: 'Itim-Regular',
-
-                                            )
-                                        ),
-                                        ),
-
-                                        */
 
                                       Container(
                                         padding: const EdgeInsets.fromLTRB(
@@ -715,7 +705,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
                                                     return DropdownButtonFormField(
 
-                                                      value: allCategories[_currentCategory]
+                                                        value: allCategories[_currentCategory]
                                                             .sequenceNo,
 //                                                        value: _currentCategory ,
 //                                                        _currentCategory
@@ -763,44 +753,6 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                         ),
 //                            Text('Subscribe'),
                                       ),
-
-//
-/*
-
-                                      SwitchListTile(
-                                          title: const Text('Is Hot'),
-                                          value: currentFood.isHot, //_itemData.isHot,
-                                          onChanged: (bool val) =>
-                                              blocAdminFoodFBase.setIsHot(val)
-
-                                      ),
-
-
-                                      SwitchListTile(
-                                        title: const Text('Is Available'),
-                                        value:currentFood.isAvailable,
-                                        onChanged: (bool val) =>
-                                            setState(() =>
-                                                blocAdminFoodFBase.setIsAvailable(val)),
-//    _itemData.isAvailable = val)
-                                      ),
-
-                                      */
-
-                                      // Cooking checkBox
-                                      /*
-
-                                  CheckboxListTile(
-                                      title: const Text('Cooking'),
-                                      value: _itemData.passions[ItemData.PassionCooking],
-                                      onChanged: (val) {
-                                        setState(() =>
-                                        _itemData.passions[ItemData.PassionCooking] = val);
-                                      }),
-
-                                  */
-
-
 
 
                                       Container(
@@ -870,82 +822,6 @@ class _AddDataState extends State<AdminFirebaseFood> {
 
 
                                       // select cheese begins here....
-
-                                      Container(
-
-                                        height:60,
-                                        color: Color(0xffFFE18E),
-                                        child: Text('select cheese for food: ',
-
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 34,
-                                              fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                                              color: Colors.redAccent,
-                                              fontFamily: 'Itim-Regular',
-
-                                            )
-                                        ),
-                                      ),
-
-
-                                      Container(
-                                        height: displayHeight(context)/3.5,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 20, 0, 20),
-
-                                        child:
-
-
-                                        StreamBuilder<List<OldCategoryItem>>(
-                                          stream: blocAdminFoodFBase.getOldCategoriesStream ,
-                                          initialData:blocAdminFoodFBase.getAllOLDCategorisAdminFoodUpload,
-                                          builder: (context, snapshot) {
-                                            final List<OldCategoryItem> allOldCategories = snapshot.data;
-
-                                            logger.w('allCheeseItems.length: ${allOldCategories.length}');
-
-                                            return
-
-                                              GridView.builder(
-                                                itemCount: allOldCategories.length,
-                                                gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                                  //Above to below for 3 not 2 Food Items:
-                                                  maxCrossAxisExtent: 160,
-                                                  crossAxisSpacing: 23,
-                                                  childAspectRatio: 150 / 195, /* (h/vertical)*/
-                                                  mainAxisSpacing: 23,
-                                                ),
-                                                shrinkWrap: false,
-
-//        reverse: true,
-                                                itemBuilder: (_, int index) {
-
-                                                  return _buildOneCheckBoxCheeseItem(
-                                                      allOldCategories[index], index,token);
-                                                },
-                                              );
-
-
-                                          }
-
-                                          ,
-                                        ),
-                                      ),
-
-
-                                      // select cheese ends here....
-
-
-                                      // select sauce begins here....
-
-
-
-
-
-                                      // select sauce ends here....
 
 
                                       Container(
@@ -1062,21 +938,7 @@ class _AddDataState extends State<AdminFirebaseFood> {
                                                       )),);
                                                   }
 
-                                                  else if(successValue==5){
 
-
-                                                    _scaffoldKey.currentState.showSnackBar(
-                                                      new SnackBar(duration: new Duration(seconds: 2), content:Container(
-                                                        child:
-                                                        new Row(
-                                                          children: <Widget>[
-                                                            new CircularProgressIndicator(),
-                                                            new Text("please select cheeses for food",style:
-                                                            TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500)),
-                                                          ],
-                                                        ),
-                                                      )),);
-                                                  }
                                                   // }
                                                   else {
 

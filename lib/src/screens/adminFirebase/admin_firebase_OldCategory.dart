@@ -295,20 +295,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
 
 
-
-
                                       SizedBox(height: 50),
-
-/*
-  OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(
-      categoryName: 'jauheliha kebab & vartaat',
-      sequenceNo: 2,
-      documentID: 'jauheliha_kebab_vartaat',
-      fireStoreFieldName: 'jauheliha_kebab_vartaat',
-    );
-*
-
-*/
 
                                       Container(
 
@@ -379,23 +366,10 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                               width: displayWidth(context) / 3,
                                               child:
                                               TextFormField(
-                                                keyboardType: TextInputType.number,
-                                                inputFormatters: <TextInputFormatter>[
 
+                                                //---
 
-//                                                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-//                                                     FilteringTextInputFormatter.digitsOnly
-                                                ],
-                                                textInputAction: TextInputAction.done,
-                                                validator: (value) {
-                                                  if (value.isEmpty) {
-                                                    return 'please enter short category name to be used in firestore.';
-                                                  }
-                                                },
-
-
-//                                                  onSubmitted: (_) => FocusScope.of(context).unfocus(),
-                                                textAlign: TextAlign.center,
+                    /*
                                                 decoration: InputDecoration(
 
                                                   border: OutlineInputBorder(borderRadius: BorderRadius.
@@ -407,6 +381,39 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                   hintStyle:
                                                   TextStyle(color: Color(0xffFC0000), fontSize: 17),
                                                 ),
+
+                                                */
+
+                                                decoration:
+                                                InputDecoration(labelText:'short category name.',
+                                                  labelStyle:TextStyle(
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.normal,
+//                                                      color: Colors.white
+                                                    color: Colors.redAccent,
+                                                    fontFamily: 'Itim-Regular',
+
+                                                  ),
+                                                ),
+
+                                                controller: shortCategoryEditingController,
+                                                //---
+
+                                                keyboardType: TextInputType.number,
+                                                inputFormatters: <TextInputFormatter>[
+
+                                                ],
+                                                textInputAction: TextInputAction.done,
+                                                validator: (value) {
+                                                  if (value.isEmpty) {
+                                                    return 'please enter short category name to be used in firestore.';
+                                                  }
+                                                },
+
+
+//                                                  onSubmitted: (_) => FocusScope.of(context).unfocus(),
+                                                textAlign: TextAlign.center,
+
                                                 style: TextStyle(color: Color(0xffFC0000), fontSize: 16),
                                                 onChanged: (text) {
                                                   print("price ....: $text");

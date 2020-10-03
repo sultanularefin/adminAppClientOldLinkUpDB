@@ -12,10 +12,6 @@
 
 import 'dart:core';
 
-//final String storageBucketURLPredicate_Same =
-//    'https://firebasestorage.googleapis.com/v0/b/link-up-b0a24.appspot.com/o/';
-
-
 import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 //import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +22,7 @@ import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 class NewIngredient {
 
   String ingredientName;
+  String ingredientNameShort;
   String imageURL;
   double price;
   String documentId;
@@ -43,6 +40,7 @@ class NewIngredient {
   NewIngredient(
       {
         this.ingredientName,
+        this.ingredientNameShort,
         this.imageURL,
         this.price,
         this.documentId,

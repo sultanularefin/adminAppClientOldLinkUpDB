@@ -50,13 +50,13 @@ class FirebaseClientAdmin {
   }
 
 
-  Future<QuerySnapshot> fetchAllExtraIngredientsAdmin()async{
+  Future<QuerySnapshot> fetchAllOldIngredientsAdmin()async{
 
     // print ('at here fetchAllIngredients ==================================== *************** ');
 
     var snapshot = await FirebaseFirestore.instance.collection("restaurants")
         .doc('kebab_bank')
-        .collection('extraIngredients')
+        .collection('ingredientsOld')
         .get();
 
     return snapshot;
@@ -150,11 +150,11 @@ class FirebaseClientAdmin {
 
 
 //  Future<QuerySnapshot /*DocumentSnapshot */> getLastSequenceNumberFromFireBaseFoodItems() async{
-  Future<int> getLastSequenceNumberForAdminIngredient2() async{
+  Future<int> getLastSequenceNumberForAdminIngredientOld() async{
 
     var snapshot = await FirebaseFirestore.instance.collection("restaurants")
         .doc('kebab_bank')
-        .collection('extraIngredients').orderBy('sequenceNo',descending: true).limit(1).get();
+        .collection('ingredientsOld').orderBy('sequenceNo',descending: true).limit(1).get();
     print('snapshot: $snapshot');
     if (snapshot==null)
 
@@ -341,15 +341,13 @@ await postsRef.document(postID).setData(postData);
       imageURLFinal1 = imageURL;
     }
 
+
+
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
     doc('kebab_bank').
-    collection('extraIngredients').add(<String, dynamic>{
-//      'category':'someC',
-//      'categoryShort':'someC',
+    collection('ingredientsOld').doc(x.ingredientNameShort.trim()).set(<String, dynamic>{
 
-      'extraIngredientOf': x.extraIngredientOf,
-      // 'ingredients': foodItemIngredientsInsertDummy1(null),
       'name': x.ingredientName,
       'uploadedBy': email,
       'uploadDate': FieldValue.serverTimestamp(),
@@ -357,19 +355,18 @@ await postsRef.document(postID).setData(postData);
       'itemID': x.itemId,
       'price': x.price,
       'sequenceNo': sequenceNo,
-      'subGroup': x.subgroup,
+      // 'subGroup': x.subgroup,
 
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      //  print('Added document with ID: ${document.id}');
-      orderDocId = document.id;
-//      return document;
-//                            _handleSignIn();
+
+      orderDocId = x.ingredientNameShort;
+
     }).catchError((onError) {
-      //   print('K   K    K   at onError for Order data push : $onError');
+
       orderDocId = '';
-//      return '';
+
     });
 
     return orderDocId;

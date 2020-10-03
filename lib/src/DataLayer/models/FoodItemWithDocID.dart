@@ -9,6 +9,7 @@ class FoodItemWithDocID {
   String itemName;
   String categoryName;
   String shorCategoryName;
+  String shorItemName;
   int categoryIndex;// requred for dropdownlist select...
 
   Map<String,dynamic> sizedFoodPrices;
@@ -38,6 +39,7 @@ class FoodItemWithDocID {
         this.itemName,
         this.categoryName,
         this.shorCategoryName,
+        this.shorItemName,
         this.sizedFoodPrices,
         this.uploadDate,
         this.imageURL,

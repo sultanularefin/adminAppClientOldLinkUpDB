@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
 
@@ -21,6 +22,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:linkupadminolddb/src/DataLayer/models/FoodItemWithDocID.dart';
 
 import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
+import 'package:mime_type/mime_type.dart';
 
 
 
@@ -58,7 +60,11 @@ class AdminFirebaseFoodBloc implements Bloc {
   Stream<List<OldCategoryItem>> get getCategoryDropDownControllerStream =>
       _categoryDropDownController.stream;
 
-  File _image2;
+  // File _image2;
+
+  PickedFile _image2;
+
+
   String _firebaseUserEmail;
 
 //  String categoryName = 'PIZZA'.toLowerCase();
@@ -114,7 +120,7 @@ class AdminFirebaseFoodBloc implements Bloc {
 
   bool newsletter = false;
 
-  void setImage(File localURL) {
+  void setImage(PickedFile localURL) {
     print('localURL : $localURL');
     _image2 = localURL;
   }
@@ -161,12 +167,14 @@ class AdminFirebaseFoodBloc implements Bloc {
     _foodItemController.sink.add(_thisFoodItem);
   }
 
-  void setItemName(var param) {
+  void setItemName(var foodItemName) {
 //    _thisFoodItem
 //    FoodItemWithDocID
     FoodItemWithDocID temp = new FoodItemWithDocID();
     temp = _thisFoodItem;
-    temp.itemName = param;
+    temp.itemName = foodItemName;
+    temp.shorItemName= shortendCase(foodItemName);
+    // shortendCase(ingredientName);
 
     _thisFoodItem = temp;
 
@@ -208,6 +216,26 @@ class AdminFirebaseFoodBloc implements Bloc {
     }
   }
 
+  String shortendCase(var text) {
+
+
+    print("text: $text");
+    if (text is num) {
+      return text.toString();
+    } else if (text == null) {
+      return '';
+    } else if (text.length <= 1) {
+      return text.toUpperCase();
+    } else {
+      return text
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join('_');
+    }
+  }
+
+
+
   Future<String> _uploadFile(String itemId, itemName,String categoryName2) async {
     print('at _uploadFile: ');
 
@@ -222,10 +250,20 @@ class AdminFirebaseFoodBloc implements Bloc {
 
     print('_image2: $_image2');
 
+
+    File x = File(_image2.path);
+
+    String mimeType = mime(_image2.path);
+    logger.i('mimeType................... $mimeType');
+
+    if (mimeType == null) mimeType = 'text/plain; charset=UTF-8';
+
+
     StorageUploadTask uploadTask = storageReference_1.putFile(
-      _image2,
+      // _image2,
+      File(_image2.path),
       StorageMetadata(
-          contentType: 'image/jpg',
+          contentType: mimeType,
           cacheControl: 'no-store', // disable caching
           customMetadata: {
             'itemName': itemName,
@@ -273,7 +311,7 @@ class AdminFirebaseFoodBloc implements Bloc {
     return urlString;
   }
 
-  void getLastSequenceNumberFromFireBaseFoodItems() async {
+  void getLastSequenceNumberFromFireBaseFoodItemsOld() async {
     print('at get Last SequenceNumberFromFireBaseFoodItems()');
 
 //    if (_isDisposed_known_last_sequenceNumber == false) {
@@ -291,97 +329,78 @@ class AdminFirebaseFoodBloc implements Bloc {
   }
 
   Future<int> saveFoodItem() async {
-    //  save() {
-
-//    print('..save button pressed for fI:  ${_thisFoodItem.categoryIndex}');
-//    print('..save button pressed for fI:  ${_thisFoodItem.categoryName}');
 
 
 
+
+
+
+
+    itemId = await generateItemId(6);
+
+    print('itemId: $itemId');
+
+    String imageURL;
     if(_thisFoodItem.categoryIndex==null){
       _thisFoodItem.categoryIndex=0;
       _thisFoodItem.shorCategoryName = _categoryTypesForDropDown[0].fireStoreFieldName;
       _thisFoodItem.categoryName = _categoryTypesForDropDown[0].categoryName;
     }
 
-    if ((_thisFoodItem.shorCategoryName !='juomat') &&(
+    if (_image2 != null) {
+      imageURL = await _uploadFile(itemId, _thisFoodItem.shorItemName,_thisFoodItem.shorCategoryName);
+    } else {
+      print('_image2= $_image2');
 
-    (_thisFoodItem.ingredients == null) ||
-        (_thisFoodItem.ingredients.length == 0)
+      String dummyImage =
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2FfoodItem404.jpg?alt=media';
 
-
-    )) {
-      return 4;
+      imageURL = Uri.decodeComponent(dummyImage
+          .replaceAll(
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
+          '')
+          .replaceAll('?alt=media', ''));
     }
 
-    else if ( (_thisFoodItem.shorCategoryName !='juomat') &&(
-    (_thisFoodItem.defaultJuusto == null) ||
-        (_thisFoodItem.defaultJuusto.length == 0)
-    )) {
-      return 5;
-    }
+    print(
+        'imageURL after stripping url for empty image or full image: $imageURL');
 
-    else {
-
-      itemId = await generateItemId(6);
-
-      print('itemId: $itemId');
-
-      String imageURL;
-
-      if (_image2 != null) {
-        imageURL = await _uploadFile(itemId, _thisFoodItem.itemName,_thisFoodItem.categoryName);
-      } else {
-        print('_image2= $_image2');
-
-        String dummyImage =
-            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2FfoodItem404.jpg?alt=media';
-
-        imageURL = Uri.decodeComponent(dummyImage
-            .replaceAll(
-            'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
-            '')
-            .replaceAll('?alt=media', ''));
-      }
-
-      print(
-          'imageURL after stripping url for empty image or full image: $imageURL');
-
-      print('itemId: $itemId');
-      print('itemName: ${_thisFoodItem.itemName}');
+    print('itemId: $itemId');
+    print('itemName: ${_thisFoodItem.itemName}');
 
 
-      print('isHot: $isHot');
-      print('isAvailable: $isAvailable');
+    print('isHot: $isHot');
+    print('isAvailable: $isAvailable');
 
-      print('_image2: $_image2');
+    print('_image2: $_image2');
 
-      print('saving user using a web service');
+    print('saving user using a web service');
 
-      _thisFoodItem.itemName = titleCase(_thisFoodItem.itemName);
-
-
-      _thisFoodItem.itemId = itemId;
-
-      String documentID = await _clientAdmin.insertFoodItems(
-          _thisFoodItem, _thisFoodItem.sequenceNo, _firebaseUserEmail, imageURL);
-
-      print('added document: $documentID');
+    _thisFoodItem.itemName = titleCase(_thisFoodItem.itemName);
 
 
-      clearSubscription(_thisFoodItem);
+    _thisFoodItem.itemId = itemId;
 
-//      _thisSauceItem.price=0;
-//      _thisSauceItem.sauceItemName='';
-//      _thisSauceItem.itemId='';
-//      _thisSauceItem.sequenceNo= _thisSauceItem.sequenceNo+1;
-//      _sauceItemController.sink.add(_thisSauceItem);
+    String documentID = await _clientAdmin.insertFoodItems(
+        _thisFoodItem, _thisFoodItem.sequenceNo, _firebaseUserEmail, imageURL);
 
-      return (1);
-    }
+    print('added document: $documentID');
+
+
+    clearSubscription(_thisFoodItem);
+
+
+
+    return (1);
   }
 
+
   void clearSubscription(FoodItemWithDocID w) {
+
+   w.shorCategoryName='';
+   w.itemName='';
+   w.shorItemName='';
+
     FoodItemWithDocID x = w;
     x.sequenceNo = x.sequenceNo+1;
     _thisFoodItem = x;
@@ -390,6 +409,8 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
   final _clientAdmin = FirebaseClientAdmin();
+
+
 
   void initiateCategoryDropDownList() {
     logger.i('at initiateCategoryDropDownList()');
@@ -474,13 +495,13 @@ class AdminFirebaseFoodBloc implements Bloc {
 
 
   // this code bloc cut paste from foodGallery Bloc:
-  Future<void> getAllExtraIngredientsAdminConstructor() async {
+  Future<void> getOldIngredientsAdminConstructor() async {
 
     print('at getAllExtraIngredientsConstructor()');
 
     if (_isDisposedExtraIngredients == false) {
 
-      var snapshot = await _clientAdmin.fetchAllExtraIngredientsAdmin();
+      var snapshot = await _clientAdmin.fetchAllOldIngredientsAdmin();
       List docList = snapshot.docs;
 
       List <NewIngredient> ingItems = new List<NewIngredient>();
@@ -501,8 +522,6 @@ class AdminFirebaseFoodBloc implements Bloc {
 
       for(int i= 0 ;i<ingItems.length; i++){
 
-
-      // ingItems.forEach((oneIngItem) async {
         String fileName2  = ingItems[i].imageURL;
 
         NewIngredient tempIngredient =ingItems[i];
@@ -513,8 +532,6 @@ class AdminFirebaseFoodBloc implements Bloc {
             .child(fileName2);
 
         String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
-        // print('newimageURL ingredient =============> : $newimageURL');
-
 
         tempIngredient.imageURL= newimageURL;
 
@@ -525,19 +542,11 @@ class AdminFirebaseFoodBloc implements Bloc {
       logger.i('ingredientImageURLUpdated.length ${ingredientImageURLUpdated.length}');
 
 
-
-
-
       ingredientImageURLUpdated.forEach((oneIngItem)  {
 
         print('oneIngItem.imageURL => => => :  ${oneIngItem.imageURL}');
 
       });
-
-      // ingItems = ingItems.map((oneIngredient,index) =>
-      //     NewIngredient.ingredientImageDataAdd
-      //       (oneIngredient, imageURLs)
-      // ).toList();
 
 
 
@@ -553,36 +562,6 @@ class AdminFirebaseFoodBloc implements Bloc {
     }
   }
 
-
-  /*
-  const deleteImageFrom_images_Stoage_For_update = async ()=>{
-
-
-  const user = auth().currentUser
-  if (user !== null){
-  const userEmail = user.email;
-
-  const GSURLRefForDelete = 'gs://monoz-dc781.appspot.com/images/'
-  +userEmail+'New/'+allInfoAboutDocumentState.itemId+'itemName.png';
-  console.log('gsUrlL: ',GSURLRefForDelete);
-  // return ;
-
-  const gsReference = storage().refFromURL(GSURLRefForDelete);
-
-
-  // console.log('gsReference: ',gsReference);
-
-
-  await gsReference.delete().then(function(result) {
-  // console.log('Uploaded a blob or file!');
-  console.log('file deleted: ', result);
-
-  }).catch(error => {
-  console.log("storage image delete error: gsReference: ", error);
-  });
-  }
-  }
-  */
 
   Future<void> _downloadFile(StorageReference ref) async {
     final String url = await ref.getDownloadURL();
@@ -624,42 +603,6 @@ class AdminFirebaseFoodBloc implements Bloc {
 
   }
 
-
-  /*
-  void toggoleMultiSelectCheeseValue(int index) {
-
-
-    _allCheeseItemsFoodUploadAdminBloc[index].isSelected =
-    !_allCheeseItemsFoodUploadAdminBloc[index].isSelected;
-
-    _oldCategoriesControllerFoodUploadAdmin.sink.add(_allCheeseItemsFoodUploadAdminBloc);
-
-    List<String> selectedCheeses = new List<String>();
-
-
-    _allCheeseItemsFoodUploadAdminBloc.forEach((newCheese) {
-
-
-
-      if(newCheese.isSelected){
-        selectedCheeses.add(newCheese.cheeseItemName);
-      }
-    });
-
-    print('selectedCheeses.length: ${selectedCheeses.length}');
-
-
-    FoodItemWithDocID temp = _thisFoodItem;
-
-    temp.defaultJuusto = selectedCheeses;
-
-    _thisFoodItem = temp;
-    _foodItemController.sink.add(_thisFoodItem);
-
-
-  }
-
-  */
   void setCategoryValue(int index) {
 
 
@@ -677,106 +620,12 @@ class AdminFirebaseFoodBloc implements Bloc {
     _oldCategoriesControllerFoodUploadAdmin.sink.add(_allOLDCategories);
 
 
-    // print('_thisIngredientItem: $_thisIngredientItem');
 
-    // NewIngredient xTemp = _thisIngredientItem;
-
-    // print('_ingredientGroupes[index].ingredientSubgroupName: ${_ingredientGroupes[index].ingredientSubgroupName}');
-
-    // print('xTemp: $xTemp');
-
-    // xTemp.subgroup = _ingredientGroupes[index].ingredientSubgroupName;
-    // print('xTemp.subgroup: ${xTemp.subgroup}');
-
-    // _thisIngredientItem = xTemp;
-    // _oldCategoriesControllerFoodUploadAdmin.sink.add(_thisIngredientItem);
 
   }
 
 
 
-
-
-  void getAllOldCategoriesAdminConstructor() async {
-
-
-    var snapshot = await _clientAdmin.fetchAllCheesesORjuustoAdmin();
-    List docList = snapshot.docs;
-
-    List <OldCategoryItem> cheeseItems = new List<OldCategoryItem>();
-    cheeseItems = snapshot.docs.map((documentSnapshot) =>
-        OldCategoryItem.fromMap
-          (documentSnapshot.data(), documentSnapshot.id)
-
-    ).toList();
-
-//    (documentSnapshot.data, documentSnapshot.documentId)
-//    data()
-
-    List<String> documents = snapshot.docs.map((documentSnapshot) =>
-    documentSnapshot.id
-    ).toList();
-
-    print('documents.length for cheeseItems: ${documents.length}');
-
-//zx--------------1
-
-
-
-
-    List<OldCategoryItem> cheeseItemIMageUrlUpdated = new List<OldCategoryItem>();
-
-
-    for(int i= 0 ;i<cheeseItems.length; i++){
-
-
-    // cheeseItems.forEach((oneCheeseItem) async {
-      String fileName2  = cheeseItems[i].imageURL;
-
-      OldCategoryItem tempCheeseItem =cheeseItems[i];
-      print('fileName2 =============> : $fileName2');
-
-      StorageReference storageReferenceForIngredientImage = storage
-          .ref()
-          .child(fileName2);
-
-      String newimageURL = await storageReferenceForIngredientImage.getDownloadURL();
-     // print('newimageURL cheese =============> : $newimageURL');
-
-
-      tempCheeseItem.imageURL= newimageURL;
-
-      cheeseItemIMageUrlUpdated.add(tempCheeseItem);
-
-    };
-
-
-    logger.i('cheeseItemIMageUrlUpdated.length ${cheeseItemIMageUrlUpdated.length}');
-
-
-
-
-    cheeseItemIMageUrlUpdated.forEach((oneCheeseItem)  {
-      print('oneCheeseItem.imageURL => => => :  ${oneCheeseItem.imageURL}');
-
-    });
-
-
-
-
-    //x1------------1
-
-
-    cheeseItemIMageUrlUpdated.forEach((oneOldCategoryItem) {
-
-      print('oneCheeseItem.cheeseItemName: ${oneOldCategoryItem.categoryName}');
-
-    });
-
-    _allOLDCategories  = cheeseItemIMageUrlUpdated;
-    _oldCategoriesControllerFoodUploadAdmin.sink.add(_allOLDCategories);
-
-  }
 
 
 
@@ -817,16 +666,16 @@ class AdminFirebaseFoodBloc implements Bloc {
 //    setCategoryValueFoodItemUPload(0);
     print('at AdminFirebaseFoodBloc ......()');
 
-    getLastSequenceNumberFromFireBaseFoodItems();
+    getLastSequenceNumberFromFireBaseFoodItemsOld();
 
 
 
 
-    getAllExtraIngredientsAdminConstructor();
+    getOldIngredientsAdminConstructor();
 
     // getAllKastikeSaucesAdminConstructor();
 
-    getAllOldCategoriesAdminConstructor();
+    // getAllOldCategoriesAdminConstructor();
 
 
 

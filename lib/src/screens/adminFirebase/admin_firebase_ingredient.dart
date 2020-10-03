@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseIngredientBloc.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc_provider.dart';
 // import 'package:linkupadminolddb/src/DataLayer/models/IngredientSubgroup.dart';
-import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
+
 
 import 'package:linkupadminolddb/src/DataLayer/models/NewIngredient.dart';
 
@@ -16,7 +16,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:linkupadminolddb/src/screens/HomeScreenNewDB2/foodgalleryAdminHome2.dart';
 import 'package:linkupadminolddb/src/utilities/screen_size_reducers.dart';
 
 
@@ -48,7 +47,8 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _AddDataState({firestore});
-  File _image;
+  // File _image;
+  PickedFile _image;
 
   final _formKey = GlobalKey<FormState>();
   var onlyDigitsAndPoints = FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'));
@@ -59,9 +59,19 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
   bool _loadingState = false;
 
 
+  final picker = ImagePicker();
+
+
+  TextEditingController ingredientEditingController = new TextEditingController();
+  TextEditingController priceEditingController = new TextEditingController();
+  // TextEditingController usernameEditingController =  new TextEditingController();
+
+
+
   Future getImage() async {
 
-    var image = await ImagePicker.pickImage(
+    var image = await picker.getImage(
+      // await ImagePicker.pickImage(
 //        source: ImageSource.camera
         source:ImageSource.gallery
     );
@@ -73,6 +83,9 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
 
 
 
+
+
+    // blocAdminCategoryFBase.setImage(image);
 
     blocAdminIngredientFBase.setImage(image);
 
@@ -95,102 +108,6 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
     });
   }
 
-
-  Widget _buildOneCheckBoxIngredientOfFoodCategory(OldCategoryItem ct, int index) {
-    return Container(
-        child: ct.isSelected ==true
-
-            ? Container(
-          margin: EdgeInsets.fromLTRB(2, 0, 2, 3),
-          width: displayWidth(context) / 2.8,
-          //color:Colors.red,
-          child: RaisedButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            color: Color(0xffFFE18E),
-            elevation: 2.5,
-            shape: RoundedRectangleBorder(
-//          borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(
-                color: Color(0xffF7F0EC),
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(35.0),
-            ),
-
-            child: Container(
-//              alignment: Alignment.center,
-              child:
-              CheckboxListTile(
-                  title: Text('${ct.categoryName}'),
-//                  value: _itemData.passions[ItemData.PassionCooking],
-                  value: ct.isSelected,
-                  onChanged: (val) {
-
-
-                    final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-                    blocAdminIngredientFBase.toggoleMultiSelectCategoryValue(index);
-
-                  }
-
-              ),
-
-
-
-            ),
-            onPressed: () {
-
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectCategoryValue(index);
-
-            },
-          ),
-        )
-            : Container(
-
-          margin: EdgeInsets.fromLTRB(2, 0, 2, 3),
-          // margin: EdgeInsets.fromLTRB(5, 2, 5, 5),
-          width: displayWidth(context) / 2.8,
-          //color:Colors.red,
-          child: OutlineButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            color: Color(0xffFEE295),
-            // clipBehavior:Clip.hardEdge,
-
-            borderSide: BorderSide(
-              color: Color(0xff53453D), // 0xff54463E
-              style: BorderStyle.solid,
-              width: 1,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35.0),
-            ),
-            child: Container(
-
-              child:
-
-              CheckboxListTile(
-                  title: Text('${ct.categoryName}'),
-
-                  value: ct.isSelected,
-                  onChanged: (val) {
-
-
-                    final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-                    blocAdminIngredientFBase.toggoleMultiSelectCategoryValue(index);
-
-                  }
-
-              ),
-            ),
-            onPressed: () {
-
-              final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
-              blocAdminIngredientFBase.toggoleMultiSelectCategoryValue(index);
-
-            },
-          ),
-        ));
-  }
 
 
   @override
@@ -237,6 +154,19 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                   initialData: blocAdminIngredientFBase.getCurrentIngredientItem,
                   builder: (context, snapshot) {
                     final NewIngredient currentIngredient = snapshot.data;
+
+                    //final OldCategoryItem currentOldCategory = snapshot.data;
+
+
+                    if(currentIngredient.ingredientName==''){
+                      ingredientEditingController.clear();
+                    }
+
+                    // if(currentIngredient.price==''){
+                    //   priceEditingController.clear();
+                    // }
+
+
 
                     return Builder(
                         builder: (context) =>
@@ -294,7 +224,8 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
 
                                             child: new Container(
                                               padding: const EdgeInsets.all(0.0),
-                                              child: Image.file(_image),
+                                              // child: Image.file(_image),
+                                              child: Image.file(File(_image.path)),
 
                                             )
 
@@ -306,16 +237,14 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                       TextFormField(
                                         decoration:
                                         InputDecoration(labelText: 'Ingredient Name',
-
                                           labelStyle:TextStyle(
                                             fontSize: 26,
                                             fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-//                    color: Colors.redAccent,
                                             fontFamily: 'Itim-Regular',
-
                                           ),
                                         ),
+
+                                        controller: ingredientEditingController,
                                         validator: (value) {
 
                                           return value.isEmpty? 'please enter the ingredient Name.' : null;
@@ -325,77 +254,15 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
 
                                         // onSaved: (val) =>
                                         onChanged: (val) =>
-                                            blocAdminIngredientFBase.setItemName(val),
+                                            blocAdminIngredientFBase.setIngredientName(val),
                                       ),
 
 
 
 
-                                      Container(
-                                        height:80,
-                                        margin: EdgeInsets.fromLTRB(0,10,0,10),
-                                        color: Color(0xffFFE18E),
-                                        child:
-
-                                        Text('ingredient of food item category: ',
-
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 34,
-                                              fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                                              color: Colors.redAccent,
-                                              fontFamily: 'Itim-Regular',
-
-                                            )
-                                        ),
-                                      ),
-
-
-                                      Container(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 20, 0, 20),
-
-                                        child:
 
 
 
-                                        StreamBuilder<List<OldCategoryItem>>(
-                                          stream: blocAdminIngredientFBase.getCategoryMultiSelectControllerStream ,
-                                          initialData:blocAdminIngredientFBase.getCategoryTypesForDropDown,
-                                          builder: (context, snapshot) {
-
-                                            final List<OldCategoryItem> allCategories = snapshot.data;
-
-
-                                            return
-
-                                              GridView.builder(
-                                                itemCount: allCategories.length,
-                                                gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                                  //Above to below for 3 not 2 Food Items:
-                                                  maxCrossAxisExtent: 220,
-                                                  mainAxisSpacing: 10, // H  direction
-                                                  crossAxisSpacing: 20,
-                                                  childAspectRatio: 200 / 110, /* (h/vertical)*/
-                                                ),
-                                                shrinkWrap: true,
-
-//        reverse: true,
-                                                itemBuilder: (_, int index) {
-
-                                                  return _buildOneCheckBoxIngredientOfFoodCategory(
-                                                      allCategories[index], index);
-                                                },
-                                              );
-
-
-                                          }
-
-                                          ,
-                                        ),
-                                      ),
 
 
 
@@ -440,6 +307,7 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                                     return 'Please enter price';
                                                   }
                                                 },
+                                                controller: priceEditingController,
                                                 textInputAction: TextInputAction.done,
 //                                                    onSubmitted: (_) => FocusScope.of(context).unfocus(),
                                                 textAlign: TextAlign.center,
@@ -460,7 +328,8 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                                   print("price ....: $text");
 
 
-                                                  final blocAdminIngredientFBase = BlocProvider.of<AdminFirebaseIngredientBloc>(context);
+                                                  final blocAdminIngredientFBase =
+                                                  BlocProvider.of<AdminFirebaseIngredientBloc>(context);
                                                   blocAdminIngredientFBase.setPrice(text);
 
                                                 },
@@ -478,24 +347,7 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                         ),
                                       ),
 
-                                      Container(
-                                        height:80,
-                                        margin: EdgeInsets.fromLTRB(0,10,0,10),
-                                        color: Color(0xffFFE18E),
-                                        child: Text('subGroup....: ',
 
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 34,
-                                              fontWeight: FontWeight.normal,
-//                                                      color: Colors.white
-                                              color: Colors.redAccent,
-                                              fontFamily: 'Itim-Regular',
-
-                                            )
-                                        ),
-                                      ),
 
 
 
@@ -503,10 +355,12 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
 
 
                                       Container(
+
                                           padding: const EdgeInsets.symmetric(
-                                              vertical: 10.0, horizontal: 10.0),
+                                              vertical: 5.0, horizontal: 10.0),
                                           child: RaisedButton(
-                                              color: Colors.yellowAccent,
+                                            // color: Colors.yellowAccent,
+                                              color: Color(0xffB8D03F),
                                               onPressed: () async {
                                                 final form = _formKey.currentState;
 
@@ -564,33 +418,8 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                                       )),);
                                                   }
 
-                                                  else if (statusOfUpload == 4) {
-                                                    _scaffoldKey.currentState.showSnackBar(
-                                                      new SnackBar(duration: new Duration(seconds: 2), content:Container(
-                                                        child:
-                                                        new Row(
-                                                          children: <Widget>[
-                                                            new CircularProgressIndicator(),
-                                                            new Text("please select extra ingredient of food item category.",style:
-                                                            TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500)),
-                                                          ],
-                                                        ),
-                                                      )),);
-                                                  }
 
-                                                  else if (statusOfUpload == 5) {
-                                                    _scaffoldKey.currentState.showSnackBar(
-                                                      new SnackBar(duration: new Duration(seconds: 2), content:Container(
-                                                        child:
-                                                        new Row(
-                                                          children: <Widget>[
-                                                            new CircularProgressIndicator(),
-                                                            new Text("please select ingredient subgroup",style:
-                                                            TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500)),
-                                                          ],
-                                                        ),
-                                                      )),);
-                                                  }
+
                                                   else{
                                                     _scaffoldKey.currentState.showSnackBar(
                                                       new SnackBar(duration: new Duration(seconds: 2), content:Container(
@@ -630,8 +459,8 @@ class _AddDataState extends State<AdminFirebaseIngredient> {
                                               },
                                               child: Text('Save',
                                                 style: TextStyle(
-                                                    fontSize: 20, color: Colors
-                                                    .lightBlueAccent),)
+                                                    fontSize: 20,
+                                                    color: Color(0xffFF4686)),)
                                           )
                                       ),
                                     ]
