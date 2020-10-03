@@ -266,7 +266,7 @@ class FirebaseClientAdmin {
       'itemID': x.itemId,
       // 'price': x.price,
       'fireStoreFieldName':'',
-      'displayNameinApp':'',
+      // 'displayNameinApp':'',
       'sequenceNo': sequenceNo,
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))

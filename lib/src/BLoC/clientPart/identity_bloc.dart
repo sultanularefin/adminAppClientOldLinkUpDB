@@ -111,12 +111,30 @@ class IdentityBloc implements Bloc {
 //  Future<AuthResult> handleSignInFromLoginPage(String email,
 //      String password) async {
 
+  Future<UserCredential> signUpWithEmailAndPassword(String email,
+      String password) async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email.trim(),
+          password: password.trim());
+
+      print('result: $result');
+      User user = result.user;
+      // return _userFromFirebaseUser(user);
+
+      return result;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<UserCredential> handleSignInFromLoginPage(String email,
       String password) async {
     UserCredential result = await _auth.signInWithEmailAndPassword(email:
     email, password: password);
 
-  print('result:  IIIII   >>>>>  $result'  );
+    print('result:  IIIII   >>>>>  $result'  );
 
 
     if (result.user.email != null) {
@@ -153,7 +171,7 @@ class IdentityBloc implements Bloc {
 //
 //                                  RRRRRGHGHGHGH
 
-      
+
       // x.whenComplete(() => null)
       // print(' ||| ||| ||| ||| ||| ||| |||   ||| ||| ||| ||| ||| ||| |||  ==> x: $x');
 
@@ -189,18 +207,18 @@ class IdentityBloc implements Bloc {
         };
 
 
-  //  print('setString method going to be called where key is userInfo');
+    //  print('setString method going to be called where key is userInfo');
     prefs.setString('userInfo', jsonEncode({
       'email': loggerEmail,
       'password': loggerPassword,
       'uid': uid,
     })).then((onValue) =>
     {
-    //  print('at then of prefs.setString(userInfo.....')
+      //  print('at then of prefs.setString(userInfo.....')
     });
 
 
-   // print('user set in mobile storage');
+    // print('user set in mobile storage');
 
 
     final resultString = prefs.getString("userInfo");
@@ -230,38 +248,38 @@ class IdentityBloc implements Bloc {
   Future <bool> checkUserinLocalStorage() async {
 
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
 //    ??=
 //    Assign the value only if the variable is null
 
 
-  final resultString = prefs.getString("userInfo");
+    final resultString = prefs.getString("userInfo");
 
-  if (resultString == null){
-    // first time this will be the condition.
-    // no need to further check go to login page.
+    if (resultString == null){
+      // first time this will be the condition.
+      // no need to further check go to login page.
 
-    return false;
-  }
-  else{
-    Map<String, dynamic> user = jsonDecode(
-        resultString
-    );
-
-    // NEEED TO CHECK ABOVE '$user' again in future.
-    if(user['email']== null){
       return false;
     }
-    else return true;
+    else{
+      Map<String, dynamic> user = jsonDecode(
+          resultString
+      );
+
+      // NEEED TO CHECK ABOVE '$user' again in future.
+      if(user['email']== null){
+        return false;
+      }
+      else return true;
+    }
+
+
   }
-
-
-}
 
   void loadUserFromConstructor(/*String uid*/) async {
 
-   // print('at loadUser of Welcome Page');
+    // print('at loadUser of Welcome Page');
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
 //    ??=
@@ -272,18 +290,18 @@ class IdentityBloc implements Bloc {
     final resultString =  prefs.getString("userInfo");
 
     if(resultString != null) {
-   //   print('resultString in Welcome Page $resultString');
+      //   print('resultString in Welcome Page $resultString');
 
       Map<String, dynamic> user = jsonDecode(
           resultString
       );
 
-     // print('Howdy, ${user['email']}!');
+      // print('Howdy, ${user['email']}!');
 
 
-    //  print('password ${user['password']}.');
+      //  print('password ${user['password']}.');
 
-    //  print('result_in_prefs: WelCome Page ' + resultString);
+      //  print('result_in_prefs: WelCome Page ' + resultString);
 
       String storedEmail = user['email'];
 
@@ -306,7 +324,7 @@ class IdentityBloc implements Bloc {
       }
     }
     else {
-     // print("at not found of loadUser From Constructor");
+      // print("at not found of loadUser From Constructor");
     }
     //1 means SharedPreference not empty.
 
@@ -319,7 +337,7 @@ class IdentityBloc implements Bloc {
 
     final resultString =  prefs.getString("userInfo");
 
-  //  print('resultString in Welcome Page $resultString');
+    //  print('resultString in Welcome Page $resultString');
 
     Map<String,  dynamic> user = jsonDecode(
         resultString

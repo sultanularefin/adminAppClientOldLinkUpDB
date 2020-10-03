@@ -14,13 +14,13 @@ class OldCategoryItem {
   OldCategoryItem(
       {
 
-        this.categoryName,
+        this.categoryName, // this.displayNameinApp,
         this.sequenceNo,
         this.imageURL,
         this.documentID,
-        this.fireStoreFieldName,
+        this.fireStoreFieldName, // short category name.
         this.isSelected:false, // for AdminIngredientUpload to firestore only....
-        this.displayNameinApp,
+        // this.displayNameinApp,
         this.itemId,
       }
       );
@@ -37,7 +37,7 @@ class OldCategoryItem {
         sequenceNo = data['sequenceNo'],
         documentID = docID,
         fireStoreFieldName = data['fireStoreFieldName'],
-        displayNameinApp = data['displayNameinApp'],
+        // displayNameinApp = data['displayNameinApp'],
         itemId=data['itemId'];
 
 

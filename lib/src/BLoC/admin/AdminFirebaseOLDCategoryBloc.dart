@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
 import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
@@ -31,7 +32,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   final _clientAdmin = FirebaseClientAdmin();
 
 
-  File _image2;
+  PickedFile _image2;
   String _firebaseUserEmail;
 
 
@@ -68,7 +69,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
   bool newsletter = false;
 
-  void setImage(File localURL) {
+  void setImage(PickedFile localURL) {
     print('localURL : $localURL');
     _image2 = localURL;
   }
@@ -172,13 +173,14 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
     print('itemId: $itemId');
     StorageReference storageReference_1 = storage
         .ref()
-        .child('cheeses2')
+        .child('categories')
         .child(itemName +'__'+itemId + '.png');
 
     print('_image2: $_image2');
 
     StorageUploadTask uploadTask = storageReference_1.putFile(
-      _image2,
+      File(_image2.path),
+      // _image2.path,
       StorageMetadata(
           contentType: 'image/jpg',
           cacheControl: 'no-store', // disable caching
@@ -236,7 +238,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   }
 
   Future<int> save() async {
-  logger.i('at save ...');
+  logger.i('at save ... old category item.....');
     itemId = await generateItemId(6);
 
     String imageURL;
@@ -247,11 +249,12 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
       print('_image2= $_image2');
 
       String dummyIngredientImage =
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg';
-
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2Fingredient404.jpg';
+      // 'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg';
+      // linkupadminolddbandclientapp
       imageURL = Uri.decodeComponent(dummyIngredientImage
           .replaceAll(
-          'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/',
+          'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
           '')
           .replaceAll('?alt=media', ''));
     }
@@ -306,11 +309,11 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   }
 
   AdminFirebaseOLDCategoryBloc() {
-    print('at AdminFirebaseIngredientBloc  ......()');
+    print('at AdminFirebaseOLDCategoryBloc  ......()');
 
-    print('at FoodGalleryBloc()');
 
-    getLastSequenceNumberForAdminCheese();
+
+    //getLastSequenceNumberForAdminCheese();
 
   }
 

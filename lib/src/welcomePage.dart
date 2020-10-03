@@ -15,7 +15,7 @@ import 'package:linkupadminolddb/src/BLoC/clientPart/identity_bloc.dart';
 //import 'package:linkupadminolddb/src
 // above are local files i.e. pages .
 import 'package:linkupadminolddb/src/identity/loginPage.dart';
-//import 'package:linkupadminolddb/src/identity/signup.dart';
+//import 'package:linkupadminolddb/src/identity/SignUpPage.dart';
 //import 'package:linkupadminolddb/src/screens/drawerScreen/DrawerScreenFoodGallery.dart';
 //import 'package:linkupadminolddb/src/screens/homeScreen/food_gallery.dart';
 // above are local file.
@@ -121,6 +121,7 @@ class _WelcomePageState extends State<WelcomePage> {
     final identityBlocInvokerAppBlockWelcomPageInitState
     = BlocProvider2.of(context).getIdentityBlocsObject;
     */
+
     final identityBlockinInitState = BlocProvider.of<IdentityBloc>(context);
 
     bool x= await identityBlockinInitState.checkUserinLocalStorage();
