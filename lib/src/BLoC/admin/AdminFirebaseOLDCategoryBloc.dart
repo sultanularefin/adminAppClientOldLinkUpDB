@@ -2,6 +2,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:linkupadminolddb/src/BLoC/bloc.dart';
 import 'package:linkupadminolddb/src/DataLayer/api/firebase_clientAdmin.dart';
 import 'package:linkupadminolddb/src/DataLayer/models/OldCategoryItem.dart';
+import 'package:mime_type/mime_type.dart';
 
 
 
@@ -52,16 +53,18 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 // main OldCategoryItem bloc component starts here...
   OldCategoryItem _thisOldCategoryItem = new OldCategoryItem();
   OldCategoryItem get getCurrentOldCategoryItem => _thisOldCategoryItem;
-  final _OldCategoryItemController = StreamController<OldCategoryItem>();
+  final _oldCategoryItemController = StreamController<OldCategoryItem>();
 
   Stream<OldCategoryItem> get thisOldCategoryItemStream =>
-      _OldCategoryItemController.stream;
+      _oldCategoryItemController.stream;
 // main OldCategoryItem bloc component ends here...
 
 
 
+  // final FirebaseStorage storage =
+  // FirebaseStorage(storageBucket: 'gs://kebabbank-37224.appspot.com');
   final FirebaseStorage storage =
-  FirebaseStorage(storageBucket: 'gs://kebabbank-37224.appspot.com');
+  FirebaseStorage(storageBucket: 'gs://linkupadminolddbandclientapp.appspot.com');
 
   String itemId;
 
@@ -94,17 +97,32 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   */
 
 
-  void setCategoryName(int index) {
+  void setCategoryName(String categoryName) {
 
-    // logger.w('ingredient Name: $param');
-    //
-    // OldCategoryItem temp = new OldCategoryItem();
-    // temp = _thisOldCategoryItem;
-    // temp.categoryName = param;
-    //
-    // _thisOldCategoryItem = temp;
-    //
-    // _OldCategoryItemController.sink.add(_thisOldCategoryItem);
+    logger.w('category Name Name: $categoryName');
+
+    OldCategoryItem temp = new OldCategoryItem();
+    temp = _thisOldCategoryItem;
+    temp.categoryName = categoryName;
+
+    _thisOldCategoryItem = temp;
+
+    _oldCategoryItemController.sink.add(_thisOldCategoryItem);
+
+
+  }
+
+  void setShortCategoryName(String shortCategoryName) {
+
+    logger.w('at setShortCategoryName: $shortCategoryName');
+
+    OldCategoryItem temp = new OldCategoryItem();
+    temp = _thisOldCategoryItem;
+    temp.fireStoreFieldName = shortendCase(shortCategoryName);
+
+    _thisOldCategoryItem = temp;
+
+    _oldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
   }
@@ -166,11 +184,37 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
     }
   }
 
+  String shortendCase(var text) {
+
+
+    print("text: $text");
+    if (text is num) {
+      return text.toString();
+    } else if (text == null) {
+      return '';
+    } else if (text.length <= 1) {
+      return text.toUpperCase();
+    } else {
+      return text
+          .split(' ')
+          .map((word) => word[0].toUpperCase() + word.substring(1))
+          .join('_');
+    }
+  }
+
 
   Future<String> _uploadFile(String itemId, itemName) async {
     print('at _uploadFile: ');
 
     print('itemId: $itemId');
+
+    print('itemName: $itemName');
+
+
+
+
+    // print('itemId: $itemId');
+
     StorageReference storageReference_1 = storage
         .ref()
         .child('categories')
@@ -178,11 +222,21 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
     print('_image2: $_image2');
 
+    File x = File(_image2.path);
+
+    String mimeType = mime(_image2.path);
+    logger.i('mimeType................... $mimeType');
+
+    if (mimeType == null) mimeType = 'text/plain; charset=UTF-8';
+    // you can change the default content type
+    // or, you can choose to send error message
+    // response.headers.set('Content-Type', mimeType);
+
     StorageUploadTask uploadTask = storageReference_1.putFile(
       File(_image2.path),
       // _image2.path,
       StorageMetadata(
-          contentType: 'image/jpg',
+          contentType: mimeType,//_image2. //'image/jpg',
           cacheControl: 'no-store', // disable caching
           customMetadata: {
             'itemName': itemName,
@@ -244,7 +298,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
     String imageURL;
 
     if (_image2 != null) {
-      imageURL = await _uploadFile(itemId, _thisOldCategoryItem.categoryName);
+      imageURL = await _uploadFile(itemId, _thisOldCategoryItem.fireStoreFieldName);
     } else {
       print('_image2= $_image2');
 
@@ -280,7 +334,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   _thisOldCategoryItem.categoryName='';
   _thisOldCategoryItem.sequenceNo= _thisOldCategoryItem.sequenceNo+1;
   _thisOldCategoryItem.itemId='';
-  _OldCategoryItemController.sink.add(_thisOldCategoryItem);
+  _oldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
 
@@ -290,19 +344,18 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 //    List<NewCategoryItem>_allCategoryList=[];
 
 
-
-  void getLastSequenceNumberForAdminCheese() async {
+  void getLastSequenceNumberForAdminOldCategory() async {
     print('at get Last SequenceNumberFromFireBaseFoodItems()');
 
 //    if (_isDisposed_known_last_sequenceNumber == false) {
     int lastIndex =
-    await _clientAdmin.getLastSequenceNumberForAdminCheese2();
+    await _clientAdmin.getLastSequenceNumberForAdminOldCategory();
 
     logger.i('lastIndex: $lastIndex');
 
     _thisOldCategoryItem.sequenceNo = lastIndex +1;
 
-    _OldCategoryItemController.sink.add(_thisOldCategoryItem);
+    _oldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
 //    }
@@ -313,7 +366,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
 
 
-    //getLastSequenceNumberForAdminCheese();
+    getLastSequenceNumberForAdminOldCategory();
 
   }
 
@@ -322,7 +375,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   // 4
   @override
   void dispose() {
-    _OldCategoryItemController.close();
+    _oldCategoryItemController.close();
 
   }
 }

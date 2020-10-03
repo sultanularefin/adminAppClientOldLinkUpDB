@@ -21,7 +21,7 @@ import 'package:linkupadminolddb/src/BLoC/admin/AdminFirebaseIngredientBloc.dart
 
 // MODEL'S IMPORT BEGINS HERE.
 
-import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_newCategory.dart';
+import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_OldCategory.dart';
 import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_food.dart';
 import 'package:linkupadminolddb/src/screens/adminFirebase/admin_firebase_ingredient.dart';
 
@@ -326,7 +326,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
               ),
             ),
 
-            body:  Container(
+            body:  SingleChildScrollView(
 //              color:Colors.lightGreenAccent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -340,7 +340,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
                     child: Column(
                       children: [
 
-                        Container(child:displayHeight(context)>770?about(context):
+                        Container(child:displayHeight(context)>800?about(context):
                         Container(
                           child: Text('the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
                               'Tab S6 or emulators where screen size is 10-inch ) , or check the '
@@ -672,8 +672,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
     // final foodGalleryBloc = BlocProvider.of<FoodGalleryBloc>(context);
 
     return Container(
-      color: Colors.purpleAccent,
-      height: displayHeight(context) + kToolbarHeight + 10 -360 ,
+      // color: Colors.purpleAccent,
+      height: displayHeight(context) + kToolbarHeight + 10 -400 ,
 
       child:
       Column(
@@ -685,7 +685,7 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
           Container(
 
-            height: displayHeight(context) + kToolbarHeight + 10 -360 ,
+            height: displayHeight(context) + kToolbarHeight + 10-400 ,
             // height: (displayHeight (context))-
             //     (kToolbarHeight +
             //         6 + displayHeight(context)/6),

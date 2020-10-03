@@ -62,6 +62,14 @@ class _AddDataState extends State<AdminFirebaseCheese> {
   int _currentCategory= 0;
   bool _loadingState = false;
 
+  TextEditingController categoryEditingController = new TextEditingController();
+  TextEditingController shortCategoryEditingController = new TextEditingController();
+  // TextEditingController usernameEditingController =  new TextEditingController();
+
+
+
+  // return (currentOldCategory.categoryName=='')'category item name':,
+
 
   Future getImage() async {
 
@@ -164,7 +172,17 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                   stream: blocAdminCategoryFBase.thisOldCategoryItemStream, //null,
                   initialData: blocAdminCategoryFBase.getCurrentOldCategoryItem,
                   builder: (context, snapshot) {
-                    final OldCategoryItem currentIngredient = snapshot.data;
+                    final OldCategoryItem currentOldCategory = snapshot.data;
+
+
+                    if(currentOldCategory.categoryName==''){
+                      categoryEditingController.clear();
+                    }
+
+                    if(currentOldCategory.fireStoreFieldName==''){
+                      shortCategoryEditingController.clear();
+                    }
+
 
                     return Builder(
                         builder: (context) =>
@@ -238,7 +256,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
                                       TextFormField(
                                         decoration:
-                                        InputDecoration(labelText: 'category item name',
+                                        InputDecoration(labelText:'category item name',
                                           labelStyle:TextStyle(
                                             fontSize: 24,
                                             fontWeight: FontWeight.normal,
@@ -246,17 +264,33 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                             color: Colors.redAccent,
                                             fontFamily: 'Itim-Regular',
 
-                                          ),),
+                                          ),
+                                        ),
+
+                                        controller: categoryEditingController,
                                         validator: (value) {
                                           if (value.isEmpty) {
                                             return 'Please enter the cheese Name';
                                           }
                                         },
 
+                                        onChanged: (text) {
+                                          print("price ....: $text");
+
+
+                                          final blocAdminIngredientFBase =
+                                          BlocProvider.of<AdminFirebaseOLDCategoryBloc>(context);
+                                          // blocAdminIngredientFBase.setPrice(text);
+
+                                          // blocAdminCategoryFBase.setShortCategoryName(text);
+                                          blocAdminCategoryFBase.setCategoryName(text);
+
+                                        },
+
 
                                         // onSaved: (val) =>
-                                        onChanged: (val) =>
-                                            blocAdminCategoryFBase.setCategoryName(1),
+                                        // onChanged: (val) =>
+                                        //     blocAdminCategoryFBase.setCategoryName(value),
                                       ),
 
 
@@ -358,6 +392,8 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                     return 'please enter short category name to be used in firestore.';
                                                   }
                                                 },
+
+
 //                                                  onSubmitted: (_) => FocusScope.of(context).unfocus(),
                                                 textAlign: TextAlign.center,
                                                 decoration: InputDecoration(
@@ -379,6 +415,8 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                   final blocAdminIngredientFBase =
                                                   BlocProvider.of<AdminFirebaseOLDCategoryBloc>(context);
                                                   // blocAdminIngredientFBase.setPrice(text);
+
+                                                  blocAdminCategoryFBase.setShortCategoryName(text);
 
                                                 },
                                                 onTap: () {
@@ -436,7 +474,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                       new Row(
                                                         children: <Widget>[
                                                           new CircularProgressIndicator(),
-                                                          new Text("uploading cheese Item data....",style:
+                                                          new Text("uploading category Item data....",style:
                                                           TextStyle( /*fontSize: 10,*/ fontWeight: FontWeight.w500)),
                                                         ],
                                                       ),

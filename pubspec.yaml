@@ -83,6 +83,7 @@ dependencies:
   wakelock: ^0.1.4+2
   flutter_cache_manager: ^1.4.2
   image_picker: ^0.6.7+11
+  mime_type: ^0.3.2
 #  image_picker: ^0.6.7+10
 
 

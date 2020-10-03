@@ -114,11 +114,11 @@ class FirebaseClientAdmin {
 
   }
 
-  Future<int> getLastSequenceNumberForAdminCheese2() async{
+  Future<int> getLastSequenceNumberForAdminOldCategory() async{
 
     var snapshot = await FirebaseFirestore.instance.collection("restaurants")
         .doc('kebab_bank')
-        .collection('cheeses2').orderBy('sequenceNo',descending: true).limit(1).get();
+        .collection('categoriesOld').orderBy('sequenceNo',descending: true).limit(1).get();
     print('snapshot: $snapshot');
     if (snapshot==null)
 
@@ -253,10 +253,30 @@ class FirebaseClientAdmin {
       imageURLFinal1 = imageURL;
     }
 
+
+    /*
+
+     Future<bool> addChatRoom(chatRoom, chatRoomId) {
+    FirebaseFirestore.instance
+        .collection("chatRoom")
+        // .document(chatRoomId)
+        .doc(chatRoomId)
+        // .setData(chatRoom)
+        .set(chatRoom)
+        .catchError((e) {
+          print('at catchError((e))');
+      print(e);
+    });
+  }
+
+await postsRef.document(postID).setData(postData);
+
+
+    * */
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
     doc('kebab_bank').
-    collection('cheeses2').add(<String, dynamic>{
+    collection('categoriesOld').doc(x.fireStoreFieldName.trim()).set(<String, dynamic>{
 
       // 'ingredients': foodItemIngredientsInsertDummy1(null),
       'name': x.categoryName,
@@ -265,14 +285,14 @@ class FirebaseClientAdmin {
       'image': imageURLFinal1,
       'itemID': x.itemId,
       // 'price': x.price,
-      'fireStoreFieldName':'',
+      'fireStoreFieldName':x.fireStoreFieldName,
       // 'displayNameinApp':'',
       'sequenceNo': sequenceNo,
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      //  print('Added document with ID: ${document.id}');
-      orderDocId = document.id;
+      print('Added document with ID:');
+      orderDocId = x.fireStoreFieldName;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {

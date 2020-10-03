@@ -63,7 +63,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
 
-
   _saveUser(String uid, User x, String loggerEmail,
       String loggerPassword) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
