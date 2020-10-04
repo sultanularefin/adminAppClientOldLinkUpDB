@@ -128,23 +128,23 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   }
 
   void setCategoryValueFoodItemUPload(int index) {
-    // print('< > < > ZZZ  setting category food upload---------- [index]: $index');
-    //
-    // String categoryName =
-    // _categoryTypesForDropDown[index].categoryName.toLowerCase();
-    //
-    // String shortCategoryName =
-    // _categoryTypesForDropDown[index].fireStoreFieldName.toLowerCase();
-    //
-    // _thisFoodItem.categoryIndex= index;
-    //
-    // _thisFoodItem.categoryName = categoryName;
-    // _thisFoodItem.shorCategoryName = shortCategoryName;
-    //
-    // print('categoryName: $categoryName');
-    // print('shortCategoryName: $shortCategoryName');
-    //
-    // _foodItemController.sink.add(_thisFoodItem);
+    print('< > < > ZZZ  setting category food upload---------- [index]: $index');
+
+    String categoryName =
+    _categoryTypesForDropDown[index].categoryName.toLowerCase();
+
+    String shortCategoryName =
+    _categoryTypesForDropDown[index].fireStoreFieldName.toLowerCase();
+
+    _thisOldCategoryItem.index= index;
+
+    _thisOldCategoryItem.categoryName = categoryName;
+    _thisOldCategoryItem.fireStoreFieldName = shortCategoryName;
+
+    print('categoryName: $categoryName');
+    print('shortCategoryName: $shortCategoryName');
+
+    _oldCategoryItemController.sink.add(_thisOldCategoryItem);
   }
 
 
@@ -169,7 +169,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   String titleCase(var text) {
 
 
-     print("text: $text");
+    print("text: $text");
     if (text is num) {
       return text.toString();
     } else if (text == null) {
@@ -203,15 +203,90 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   }
 
 
+  void initiateCategoryDropDownList() {
+    logger.i('at initiateCategoryDropDownList()');
+
+    OldCategoryItem pizza = new OldCategoryItem(
+      categoryName: 'pizza',
+      sequenceNo: 0,
+      documentID: 'pizza',
+      fireStoreFieldName: 'pizza',
+    );
+
+    OldCategoryItem kebab = new OldCategoryItem(
+      categoryName: 'kebab',
+      sequenceNo: 1,
+      documentID: 'kebab',
+      fireStoreFieldName: 'kebab',
+    );
+
+    OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(
+      categoryName: 'jauheliha kebab & vartaat',
+      sequenceNo: 2,
+      documentID: 'jauheliha_kebab_vartaat',
+      fireStoreFieldName: 'jauheliha_kebab_vartaat',
+    );
+
+    OldCategoryItem salaatti_kasvis = new OldCategoryItem(
+      categoryName: 'salaatti & kasvis',
+      sequenceNo: 3,
+      documentID: 'salaatti_kasvis',
+      fireStoreFieldName: 'salaatti_kasvis',
+    );
+
+    OldCategoryItem hampurilainen = new OldCategoryItem(
+      categoryName: 'hampurilainen',
+      sequenceNo: 4,
+      documentID: 'hampurilainen',
+      fireStoreFieldName: 'hampurilainen',
+    );
+
+    OldCategoryItem lasten_menu = new OldCategoryItem(
+      categoryName: 'lasten menu',
+      sequenceNo: 5,
+      documentID: 'lasten_menu',
+      fireStoreFieldName: 'lasten_menu',
+    );
+
+    // drinks, no cheese and ingredients required...
+    OldCategoryItem juomat = new OldCategoryItem(
+      categoryName: 'juomat',
+      sequenceNo: 6,
+      documentID: 'juomat',
+      fireStoreFieldName: 'juomat',
+    );
+
+    OldCategoryItem grill = new OldCategoryItem(
+      categoryName: 'grill',
+      sequenceNo: 7,
+      documentID: 'grill',
+      fireStoreFieldName: 'grill',
+    );
+
+
+
+    List<OldCategoryItem> categoryItems2 = new List<OldCategoryItem>();
+
+    categoryItems2.addAll([
+      pizza,
+      kebab,
+      jauheliha_kebab_vartaat,
+      salaatti_kasvis,
+      hampurilainen,
+      lasten_menu,
+      juomat,
+      grill
+    ]);
+
+    _categoryTypesForDropDown = categoryItems2;
+    _categoryDropDownController.sink.add(_categoryTypesForDropDown);
+  }
+
   Future<String> _uploadFile(String itemId, itemName) async {
     print('at _uploadFile: ');
 
     print('itemId: $itemId');
-
     print('itemName: $itemName');
-
-
-
 
     // print('itemId: $itemId');
 
@@ -292,7 +367,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
   }
 
   Future<int> save() async {
-  logger.i('at save ... old category item.....');
+    logger.i('at save ... old category item.....');
     itemId = await generateItemId(6);
 
     String imageURL;
@@ -304,8 +379,6 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
       String dummyIngredientImage =
           'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/404%2Fingredient404.jpg';
-      // 'https://firebasestorage.googleapis.com/v0/b/kebabbank-37224.appspot.com/o/404%2Fingredient404.jpg';
-      // linkupadminolddbandclientapp
       imageURL = Uri.decodeComponent(dummyIngredientImage
           .replaceAll(
           'https://firebasestorage.googleapis.com/v0/b/linkupadminolddbandclientapp.appspot.com/o/',
@@ -319,7 +392,7 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
     print('saving user using a web service');
 
-    print('_thisIngredientItem.ingredientName 1st : ${_thisOldCategoryItem.categoryName}');
+    print('_thisOldCategoryItem.categoryName : ${_thisOldCategoryItem.categoryName}');
 
 
     _thisOldCategoryItem.itemId = itemId;
@@ -330,18 +403,26 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
     print('added document: $documentID');
 
 
-  _thisOldCategoryItem.fireStoreFieldName='';
-  _thisOldCategoryItem.categoryName='';
-  _thisOldCategoryItem.sequenceNo= _thisOldCategoryItem.sequenceNo+1;
-  _thisOldCategoryItem.itemId='';
-  _oldCategoryItemController.sink.add(_thisOldCategoryItem);
+    _thisOldCategoryItem.fireStoreFieldName='';
+    _thisOldCategoryItem.categoryName='';
+    _thisOldCategoryItem.sequenceNo= _thisOldCategoryItem.sequenceNo+1;
+    _thisOldCategoryItem.itemId='';
+    _oldCategoryItemController.sink.add(_thisOldCategoryItem);
 
 
 
     return (1);
   }
 
-//    List<NewCategoryItem>_allCategoryList=[];
+
+  List<OldCategoryItem> _categoryTypesForDropDown=[];
+  List<OldCategoryItem> get getCategoryTypesForDropDown =>
+      _categoryTypesForDropDown;
+
+  final _categoryDropDownController = StreamController<List<OldCategoryItem>>.broadcast();
+  Stream<List<OldCategoryItem>> get getCategoryDropDownControllerStream =>
+      _categoryDropDownController.stream;
+
 
 
   void getLastSequenceNumberForAdminOldCategory() async {
@@ -363,18 +444,17 @@ class AdminFirebaseOLDCategoryBloc implements Bloc {
 
   AdminFirebaseOLDCategoryBloc() {
     print('at AdminFirebaseOLDCategoryBloc  ......()');
-
+    initiateCategoryDropDownList();
 
 
     getLastSequenceNumberForAdminOldCategory();
 
   }
 
-  // CONSTRUCTOR ENDS HERE..
 
-  // 4
   @override
   void dispose() {
+    _categoryDropDownController.close();
     _oldCategoryItemController.close();
 
   }

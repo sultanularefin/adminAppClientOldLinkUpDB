@@ -426,7 +426,7 @@ class AdminFirebaseFoodBloc implements Bloc {
       categoryName: 'kebab',
       sequenceNo: 1,
       documentID: 'kebab',
-      fireStoreFieldName: 'pizza',
+      fireStoreFieldName: 'kebab',
     );
 
     OldCategoryItem jauheliha_kebab_vartaat = new OldCategoryItem(

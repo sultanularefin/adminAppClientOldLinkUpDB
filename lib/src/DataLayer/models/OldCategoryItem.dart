@@ -10,10 +10,10 @@ class OldCategoryItem {
   bool isSelected; // for AdminIngredientUpload to firestore only....
   String displayNameinApp;
   String itemId;
+  int index;
 
   OldCategoryItem(
       {
-
         this.categoryName, // this.displayNameinApp,
         this.sequenceNo,
         this.imageURL,
@@ -22,6 +22,7 @@ class OldCategoryItem {
         this.isSelected:false, // for AdminIngredientUpload to firestore only....
         // this.displayNameinApp,
         this.itemId,
+        this.index,
       }
       );
 

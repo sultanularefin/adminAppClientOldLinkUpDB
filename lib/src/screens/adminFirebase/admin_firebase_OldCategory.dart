@@ -48,7 +48,7 @@ class AdminFirebaseCheese extends StatefulWidget {
 
 class _AddDataState extends State<AdminFirebaseCheese> {
 
-  final GlobalKey<ScaffoldState> _scaffoldKeyCheeseItemAdmin = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKeyCategoryItemAdmin = new GlobalKey<ScaffoldState>();
 
 //  _AddDataState({firestore});
   PickedFile _image;
@@ -151,9 +151,9 @@ class _AddDataState extends State<AdminFirebaseCheese> {
         ),
         ),// use this
         child: new Scaffold(
-            key:_scaffoldKeyCheeseItemAdmin,
+            key:_scaffoldKeyCategoryItemAdmin,
             appBar: AppBar(
-              title: Text('Admin Cheese Upload',
+              title: Text('Admin Category Select and image Upload',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.normal,
@@ -254,6 +254,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                       ),
 
 
+                                      /*
                                       TextFormField(
                                         decoration:
                                         InputDecoration(labelText:'category item name',
@@ -295,6 +296,9 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
 
 
+                                      */
+
+                                      /*
                                       SizedBox(height: 50),
 
                                       Container(
@@ -343,6 +347,10 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                         ),
                                       ),
 
+
+                                      */
+
+                                      /*
                                       Container(
 
                                         height:60,
@@ -441,6 +449,100 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                       ),
 
 
+                                      */
+
+                                      Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 20),
+
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceBetween,
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.fromLTRB(
+                                                    0, 20, 0, 20),
+                                                child: Text('food Category: ',
+                                                  style: TextStyle(fontSize: 20,
+                                                      color: Colors
+                                                          .lightBlueAccent),),
+                                              ),
+
+
+                                              SizedBox(width: 10),
+
+                                              Container(
+
+                                                width: displayWidth(context)/2,
+
+
+                                                child:
+
+
+                                                StreamBuilder<List<OldCategoryItem>>(
+                                                  stream: blocAdminCategoryFBase.getCategoryDropDownControllerStream,
+                                                  initialData: blocAdminCategoryFBase.getCategoryTypesForDropDown,
+                                                  builder: (context, snapshot) {
+
+                                                    final List<OldCategoryItem> allCategories = snapshot.data;
+
+
+//                                                    allCategories
+
+
+//                                                              _currentCategory=cu
+
+                                                    return DropdownButtonFormField(
+
+                                                        value: allCategories[_currentCategory]
+                                                            .sequenceNo,
+//                                                        value: _currentCategory ,
+//                                                        _currentCategory
+//                                                        value: _currentCategory !=0 ?
+//                                                        allCategories[_currentCategory]
+//                                                            .sequenceNo
+//                                                            : allCategories[0].sequenceNo,
+
+                                                        items: allCategories.map((oneItem) {
+                                                          return DropdownMenuItem(
+
+
+                                                            value: oneItem.sequenceNo,
+                                                            child: Row(
+                                                              children: <Widget>[
+//                                                        oneItem.icon,
+                                                                SizedBox(width: 10,),
+                                                                Text(
+                                                                  oneItem.categoryName,
+                                                                  style: TextStyle(
+                                                                    color: Colors.black,
+                                                                  ),
+                                                                ),
+
+                                                              ],
+                                                            ),
+//                                          child: Text(oneItem.name),
+                                                          );
+                                                        }).toList(),
+                                                        onChanged: (val)  {
+
+                                                          blocAdminCategoryFBase.setCategoryValueFoodItemUPload(val);
+
+
+                                                        }
+
+                                                    );
+                                                  }
+
+                                                  ,
+                                                ),
+                                              ),
+                                            ]
+                                        ),
+//                            Text('Subscribe'),
+                                      ),
+
+
                                       SizedBox(height: 100),
 
                                       Container(
@@ -475,7 +577,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                 if (form.validate()) {
                                                   form.save();
 
-                                                  _scaffoldKeyCheeseItemAdmin.currentState.showSnackBar(
+                                                  _scaffoldKeyCategoryItemAdmin.currentState.showSnackBar(
                                                     new SnackBar(duration: new Duration(seconds: 5), content:Container(
                                                       child:
                                                       new Row(
@@ -491,7 +593,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
 
 
                                                   if (loginRequiredStatus == 0) {
-                                                    _scaffoldKeyCheeseItemAdmin.currentState.showSnackBar(
+                                                    _scaffoldKeyCategoryItemAdmin.currentState.showSnackBar(
                                                       new SnackBar(duration: new Duration(seconds: 2), content:Container(
                                                         child:
                                                         new Row(
@@ -504,7 +606,7 @@ class _AddDataState extends State<AdminFirebaseCheese> {
                                                       )),);
                                                   }
                                                   else{
-                                                    _scaffoldKeyCheeseItemAdmin.currentState.showSnackBar(
+                                                    _scaffoldKeyCategoryItemAdmin.currentState.showSnackBar(
                                                       new SnackBar(duration: new Duration(seconds: 2), content:Container(
                                                         child:
                                                         new Row(

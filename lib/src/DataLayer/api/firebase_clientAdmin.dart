@@ -254,25 +254,7 @@ class FirebaseClientAdmin {
     }
 
 
-    /*
 
-     Future<bool> addChatRoom(chatRoom, chatRoomId) {
-    FirebaseFirestore.instance
-        .collection("chatRoom")
-        // .document(chatRoomId)
-        .doc(chatRoomId)
-        // .setData(chatRoom)
-        .set(chatRoom)
-        .catchError((e) {
-          print('at catchError((e))');
-      print(e);
-    });
-  }
-
-await postsRef.document(postID).setData(postData);
-
-
-    * */
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
     doc('kebab_bank').
@@ -291,7 +273,7 @@ await postsRef.document(postID).setData(postData);
     }).whenComplete(() =>
         print("called when future completes for food Item insert...."))
         .then((document) {
-      print('Added document with ID:');
+      print('Added document with ID: ${x.fireStoreFieldName.trim()}');
       orderDocId = x.fireStoreFieldName;
 //      return document;
 //                            _handleSignIn();
