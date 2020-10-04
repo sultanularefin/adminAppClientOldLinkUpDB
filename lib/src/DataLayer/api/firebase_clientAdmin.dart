@@ -473,10 +473,11 @@ await postsRef.document(postID).setData(postData);
 //  List <String> /*<OrderedFood>*/ convertedMultiSelect(List<FoodPropertyMultiSelect> multiSelects) {
 
 
+    // collection('categoriesOld').doc(x.fireStoreFieldName.trim()).set(<String, dynamic>{
     DocumentReference document = await FirebaseFirestore.instance.collection(
         "restaurants").
     doc('kebab_bank').
-    collection('foodItems2').add(<String, dynamic>{
+    collection('foodItems2').doc(x.shorItemName.trim()).set(<String, dynamic>{
       'category': x.categoryName,
       'categoryShort': x.shorCategoryName,
       // 'default_juusto': x.defaultJuusto,
@@ -512,7 +513,10 @@ await postsRef.document(postID).setData(postData);
         print("called when future completes for food Item insert...."))
         .then((document) {
       //  print('Added document with ID: ${document.id}');
-      orderDocId = document.id;
+      // orderDocId = document.id;
+
+      print('Added document with ID:');
+      orderDocId = x.shorItemName;
 //      return document;
 //                            _handleSignIn();
     }).catchError((onError) {
