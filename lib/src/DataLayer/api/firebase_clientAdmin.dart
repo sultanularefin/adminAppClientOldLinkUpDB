@@ -372,6 +372,62 @@ await postsRef.document(postID).setData(postData);
     return orderDocId;
   }
 
+
+  List <String> /*<OrderedFood>*/ foodItemIngredientsInsertDummy(
+      List<NewIngredient> ingredients) {
+    print('at here... foodItemIngredientsInsertDummy %%%%% ECHO');
+//    print('multiSelects: $multiSelects');
+
+    List<String> multiSelectStrings = new List<String>();
+
+    if (ingredients == null) {
+      multiSelectStrings.add('kebab');
+
+      multiSelectStrings.add('salaatti');
+
+      multiSelectStrings.add('salami');
+
+      return multiSelectStrings;
+    }
+
+    int counter = 0;
+
+    List<NewIngredient> selectedMultiSelects = new List<NewIngredient>();
+
+    selectedMultiSelects = ingredients;
+
+    if (selectedMultiSelects.length != 0) {
+      selectedMultiSelects.forEach((oneFoodPropertyMultiSelect) {
+        print('--------------------------------------');
+        // print(
+        //     'oneFoodPropertyMultiSelect.itemFullName}: ${oneFoodPropertyMultiSelect
+        //         .itemFullName}');
+
+        print('--------------------------------------');
+
+        // FOR MAP
+        /*
+      var identifier = {
+        'multiSelectName': oneFoodPropertyMultiSelect.itemFullName,
+      };
+      */
+
+        // FOR ARRAY..
+        multiSelectStrings.add(oneFoodPropertyMultiSelect.ingredientName);
+        counter ++;
+      });
+
+
+      print('counter: $counter');
+      return multiSelectStrings;
+    }
+
+    else {
+      multiSelectStrings.add("");
+      return multiSelectStrings;
+    }
+  }
+
   Future<String> insertFoodItems(
       /*Order currentOrderToFirebase, String orderBy, String paidType, String restaurantName */
 //      String name,int sequenceNo,
@@ -415,60 +471,6 @@ await postsRef.document(postID).setData(postData);
 
 
 //  List <String> /*<OrderedFood>*/ convertedMultiSelect(List<FoodPropertyMultiSelect> multiSelects) {
-    List <String> /*<OrderedFood>*/ foodItemIngredientsInsertDummy(
-        List<NewIngredient> ingredients) {
-      print('at here... foodItemIngredientsInsertDummy %%%%% ECHO');
-//    print('multiSelects: $multiSelects');
-
-      List<String> multiSelectStrings = new List<String>();
-
-      if (ingredients == null) {
-        multiSelectStrings.add('kebab');
-
-        multiSelectStrings.add('salaatti');
-
-        multiSelectStrings.add('salami');
-
-        return multiSelectStrings;
-      }
-
-      int counter = 0;
-
-      List<NewIngredient> selectedMultiSelects = new List<NewIngredient>();
-
-      selectedMultiSelects = ingredients;
-
-      if (selectedMultiSelects.length != 0) {
-        selectedMultiSelects.forEach((oneFoodPropertyMultiSelect) {
-          print('--------------------------------------');
-          // print(
-          //     'oneFoodPropertyMultiSelect.itemFullName}: ${oneFoodPropertyMultiSelect
-          //         .itemFullName}');
-
-          print('--------------------------------------');
-
-          // FOR MAP
-          /*
-      var identifier = {
-        'multiSelectName': oneFoodPropertyMultiSelect.itemFullName,
-      };
-      */
-
-          // FOR ARRAY..
-          multiSelectStrings.add(oneFoodPropertyMultiSelect.ingredientName);
-          counter ++;
-        });
-
-
-        print('counter: $counter');
-        return multiSelectStrings;
-      }
-
-      else {
-        multiSelectStrings.add("");
-        return multiSelectStrings;
-      }
-    }
 
 
     DocumentReference document = await FirebaseFirestore.instance.collection(
@@ -477,8 +479,8 @@ await postsRef.document(postID).setData(postData);
     collection('foodItems2').add(<String, dynamic>{
       'category': x.categoryName,
       'categoryShort': x.shorCategoryName,
-      'default_juusto': x.defaultJuusto,
-      'default_kastike': x.defaultKastike,
+      // 'default_juusto': x.defaultJuusto,
+      // 'default_kastike': x.defaultKastike,
       'ingredients': x.ingredients,
       //foodItemIngredientsInsertDummy(null),
       'name': x.itemName,
