@@ -197,10 +197,30 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
   Widget about(BuildContext context){
 
     return SingleChildScrollView(
-        child:
-          titleWidget(),
+      child:Container(
+
+
+        height: displayHeight(context)/5,
+        padding: EdgeInsets.fromLTRB(8,8,8,4),
+
+        decoration: BoxDecoration(
+          // color: Color(0xffFFE18E),
+          color:Colors.blueGrey,
+
+          border: Border.all(
+            color: Colors.blueGrey,
+            style: BorderStyle.solid,
+            width: 0.2,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(14)),
+        ),
+        child: titleWidget(),
+      ),
 
     );
+
+
+
   }
 
 
@@ -342,6 +362,8 @@ class _FoodGalleryState extends State<FoodGalleryAdminHome2> {
 
                         Container(child:displayHeight(context)>800?about(context):
                         Container(
+
+
                           child: Text('the app was designed for 10-inch tablet (e.g. Samsung Galaxy '
                               'Tab S6 or emulators where screen size is 10-inch ) , or check the '
                               'login page for details.'),
